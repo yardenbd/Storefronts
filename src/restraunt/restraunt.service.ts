@@ -1,11 +1,18 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import { CreateRestrauntInput } from './dto/create-restraunt.input';
 import { UpdateRestrauntInput } from './dto/update-restraunt.input';
-
+import { Repository } from 'typeorm';
+import { Restraunt } from './entities/restraunt.entity';
 @Injectable()
 export class RestrauntService {
-  create(createRestrauntInput: CreateRestrauntInput) {
-    return 'This action adds a new restraunt';
+  constructor(
+    @InjectRepository(Restraunt)
+    private restrauntRepository: Repository<Restraunt>,
+  ) {}
+  create(createRestrauntInput: CreateRestrauntInput): Promise<Restraunt> {
+    const emp = this.restrauntRepository.create(createRestrauntInput);
+    return this.restrauntRepository.save(emp);
   }
 
   findAll() {

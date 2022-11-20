@@ -14,18 +14,22 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
     }),
-    RestrauntModule,
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      name: 'yarden',
-      port: 5432,
-      username: 'postgres',
-      password: 'Yb212081046',
-      database: 'postgres',
-      entities: ['dist/**/*.entity{.ts,.js}'],
-      synchronize: true,
+    TypeOrmModule.forRootAsync({
+      useFactory: () => ({
+        type: 'postgres',
+        host: 'localhost',
+        name: 'yarden',
+        port: 5432,
+        username: 'postgres',
+        password: 'Yb212081046',
+        database: 'postgres',
+        entities: ['dist/**/*.entity{.ts,.js}'],
+        synchronize: true,
+        logging:
+          process.env.NODE_ENV !== 'prod' && process.env.NODE_ENV !== 'test',
+      }),
     }),
+    RestrauntModule,
   ],
 })
 export class AppModule {}

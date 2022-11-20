@@ -9,11 +9,12 @@ export class RestrauntResolver {
   constructor(private readonly restrauntService: RestrauntService) {}
 
   @Mutation(() => Restraunt)
-  // createRestraunt(
-  //   @Args({ defaultValue: {} }) createRestrauntInput: CreateRestrauntInput,
-  // ) {
-  //   return this.restrauntService.create(createRestrauntInput);
-  // }
+  createRestraunt(
+    @Args('createRestrauntInput') createRestrauntInput: CreateRestrauntInput,
+  ) {
+    return this.restrauntService.create(createRestrauntInput);
+  }
+
   @Query(() => [Restraunt], { name: 'restraunt' })
   findAll() {
     return this.restrauntService.findAll();

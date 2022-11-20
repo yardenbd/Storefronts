@@ -2,18 +2,12 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-interface Menu {
-  mealName: String!
-  price: Float!
-}
-
 type Restraunt {
   id: String!
   name: String!
   address: String!
   image: String!
-  menu: [Menu!]!
-  zip: Float!
+  zip: [Float!]!
   coupon: [Float!]!
 }
 
@@ -22,12 +16,24 @@ type Query {
 }
 
 type Mutation {
-  findAll: Restraunt!
+  createRestraunt(createRestrauntInput: CreateRestrauntInput!): Restraunt!
   updateRestraunt(updateRestrauntInput: UpdateRestrauntInput!): Restraunt!
   removeRestraunt(id: Int!): Restraunt!
 }
 
+input CreateRestrauntInput {
+  name: String!
+  address: String!
+  image: String!
+  zip: [Float!]!
+  coupon: [Float!]!
+}
+
 input UpdateRestrauntInput {
+  name: String
+  address: String
+  image: String
+  zip: [Float!]
   coupon: Int!
   id: Int!
 }
