@@ -1,0 +1,33 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+interface Menu {
+  mealName: String!
+  price: Float!
+}
+
+type Restraunt {
+  id: String!
+  name: String!
+  address: String!
+  image: String!
+  menu: [Menu!]!
+  zip: Float!
+  coupon: [Float!]!
+}
+
+type Query {
+  restraunt(id: Int!): Restraunt!
+}
+
+type Mutation {
+  findAll: Restraunt!
+  updateRestraunt(updateRestrauntInput: UpdateRestrauntInput!): Restraunt!
+  removeRestraunt(id: Int!): Restraunt!
+}
+
+input UpdateRestrauntInput {
+  coupon: Int!
+  id: Int!
+}
