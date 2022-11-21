@@ -29,11 +29,11 @@ export class Restraunt {
     type: 'json',
     nullable: false,
   })
-  menu: [MenuItem];
+  menu: MenuItem[];
   @Field(() => [Number])
   @Column('int', { array: true, nullable: false })
-  zip: [number];
+  zip: number[];
   @Field(() => [Number])
   @Column('int', { array: true, nullable: false })
-  coupon: [number];
+  coupon: number[];
 }

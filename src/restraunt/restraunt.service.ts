@@ -11,8 +11,7 @@ export class RestrauntService {
     private restrauntRepository: Repository<Restraunt>,
   ) {}
   create(createRestrauntInput: CreateRestrauntInput): Promise<Restraunt> {
-    const newRestraunt = this.restrauntRepository.create(createRestrauntInput);
-    return this.restrauntRepository.save(newRestraunt);
+    return this.restrauntRepository.save(createRestrauntInput);
   }
   findBasedOnZipCode(zip: number) {
     return this.restrauntRepository

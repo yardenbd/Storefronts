@@ -17,9 +17,9 @@ export class CreateRestrauntInput {
   @Field()
   image: string;
   @Field(() => [MenuItemInput], { defaultValue: [] })
-  menu: [MenuItemInput];
+  menu: MenuItemInput[];
   @Field(() => [Number])
-  zip: [number];
+  zip: number[];
   @Field(() => [Number])
-  coupon: [number];
+  coupon: number[];
 }
