@@ -12,7 +12,11 @@ export class OrdersService {
   ) {}
 
   create(newOrderArgs: CreateOrderInput): Promise<Order> {
-    const newOrder = this.ordersRepository.create(newOrderArgs);
+    const { order_details, user_id } = newOrderArgs;
+    const newOrder = this.ordersRepository.create({
+      order_details,
+      user_id,
+    });
     return this.ordersRepository.save(newOrder);
   }
 

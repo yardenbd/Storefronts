@@ -21,6 +21,13 @@ type Order {
   order_id: String!
   user_id: String!
   order_details: [MenuItem!]!
+  copoun: [String!]!
+}
+
+type Copoun {
+  id: String!
+  code: String!
+  discount: Int!
 }
 
 type Query {
@@ -29,6 +36,7 @@ type Query {
   getMenu(id: String!): MenuItem!
   orders: [Order!]!
   order(id: Int!): Order!
+  copoun(id: Int!): Copoun!
 }
 
 type Mutation {
@@ -37,6 +45,9 @@ type Mutation {
   createOrder(createOrder: CreateOrderInput!): Order!
   updateOrder(updateOrderInput: UpdateOrderInput!): Order!
   removeOrder(id: Int!): Order!
+  createCopoun(createCopounInput: CreateCopounInput!): Copoun!
+  updateCopoun(updateCopounInput: UpdateCopounInput!): Copoun!
+  removeCopoun(id: Int!): Copoun!
 }
 
 input CreateRestrauntInput {
@@ -55,11 +66,24 @@ input MenuItemInput {
 
 input CreateOrderInput {
   user_id: String!
-  order_details: [MenuItemInput!] = []
+  order_details: [MenuItemInput!]!
+  cupoun: Int
 }
 
 input UpdateOrderInput {
   user_id: String
-  order_details: [MenuItemInput!] = []
+  order_details: [MenuItemInput!]
+  cupoun: Int
+  id: Int!
+}
+
+input CreateCopounInput {
+  code: String!
+  discount: Int!
+}
+
+input UpdateCopounInput {
+  code: String
+  discount: Int
   id: Int!
 }

@@ -12,10 +12,13 @@ export class Order {
   @Field()
   @Column()
   user_id: string;
-  @Field(() => [MenuItem], { defaultValue: [] })
+  @Field(() => [MenuItem])
   @Column({
     type: 'json',
     nullable: false,
   })
-  order_details: MenuItem;
+  order_details: [MenuItem];
+  @Field(() => [String])
+  @Column('text', { array: true })
+  copoun?: [string];
 }

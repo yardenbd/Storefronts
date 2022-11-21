@@ -7,6 +7,7 @@ import { AppService } from './app.service';
 import { RestrauntModule } from './restraunt/restraunt.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { OrdersModule } from './orders/orders.module';
+import { CopounModule } from './copoun/copoun.module';
 @Module({
   controllers: [AppController],
   providers: [AppService],
@@ -31,6 +32,7 @@ import { OrdersModule } from './orders/orders.module';
     }),
     RestrauntModule,
     OrdersModule,
+    CopounModule,
   ],
 })
 export class AppModule {}

@@ -10,6 +10,13 @@ export class OrdersResolver {
 
   @Mutation(() => Order)
   createOrder(@Args('createOrder') createOrderInput: CreateOrderInput) {
+    const { order_details } = createOrderInput;
+    const agg: number = order_details
+      .map((menuItem) => menuItem.price)
+      .reduce((prevPrice, currPrice) => {
+        return prevPrice + currPrice;
+      });
+    console.log('aggregated price', agg);
     return this.ordersService.create(createOrderInput);
   }
 
