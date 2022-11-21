@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { RestrauntService } from './restraunt.service';
 import { MenuItem, Restraunt } from './entities/restraunt.entity';
 import { CreateRestrauntInput } from './dto/create-restraunt.input';
@@ -10,9 +10,21 @@ export class RestrauntResolver {
 
   @Mutation(() => Restraunt)
   createRestraunt(
-    @Args('createRestrauntInput') createRestrauntInput: CreateRestrauntInput,
+    @Args('createRestrauntInput', { type: () => CreateRestrauntInput })
+    createRestrauntInput: CreateRestrauntInput,
   ) {
     return this.restrauntService.create(createRestrauntInput);
+  }
+  @Mutation(() => Restraunt, { name: 'updateRestraunt' })
+  updateRestraunt(
+    @Args('updateRestrauntInput', { type: () => CreateRestrauntInput })
+    updateRestrauntInput: UpdateRestrauntInput,
+  ) {
+    return this.restrauntService.update(updateRestrauntInput);
+  }
+  @Mutation(() => Restraunt, { name: 'removeRestraunt' })
+  removeRestraunt(@Args('id', { type: () => String }) id: string) {
+    return this.restrauntService.remove(id);
   }
 
   @Query(() => [Restraunt], { name: 'restrauntFindAll' })
@@ -21,22 +33,15 @@ export class RestrauntResolver {
   }
 
   @Query(() => [Restraunt], { name: 'findByZip' })
-  findBasedOnZipCode(@Args('zip') zip: number) {
+  findBasedOnZipCode(@Args('zip', { type: () => Number }) zip: number) {
     return this.restrauntService.findBasedOnZipCode(zip);
   }
   @Query(() => MenuItem, { name: 'getMenu' })
-  getRestrauntMenu(@Args('id') id: string) {
+  getRestrauntMenu(@Args('id', { type: () => String }) id: string) {
     return this.restrauntService.getMenu(id);
   }
-
-  // @Mutation(() => Restraunt)
-  // updateRestraunt(
-  //   @Args('updateRestrauntInput') updateRestrauntInput: UpdateRestrauntInput,
-  // ) {
-  //   return this.restrauntService.update(updateRestrauntInput.id);
-  // }
-  @Mutation(() => Restraunt)
-  removeRestraunt(@Args('id', { type: () => String }) id: number) {
-    return this.restrauntService.remove(id);
+  @Query(() => Restraunt, { name: 'findOneRestraunt' })
+  findOne(@Args('id', { type: () => String }) id: string) {
+    return this.restrauntService.findOne(id);
   }
 }

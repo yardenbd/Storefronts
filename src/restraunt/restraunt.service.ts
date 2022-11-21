@@ -30,14 +30,20 @@ export class RestrauntService {
     return this.restrauntRepository.createQueryBuilder().getMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} restraunt`;
+  findOne(id: string) {
+    return this.restrauntRepository.findOne({ where: { id } });
   }
-  update(id: string, updateRestrauntInput: UpdateRestrauntInput) {
-    return `This action updates a #${id} restraunt`;
+  update(updateRestrauntInput: UpdateRestrauntInput) {
+    return this.restrauntRepository.save({
+      ...updateRestrauntInput,
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} restraunt`;
+  remove(id: string) {
+    return this.restrauntRepository
+      .createQueryBuilder()
+      .delete()
+      .where('id = :id', { id })
+      .execute();
   }
 }

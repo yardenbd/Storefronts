@@ -24,7 +24,7 @@ export class Restraunt {
   @Field()
   @Column()
   image: string;
-  @Field(() => [MenuItem], { defaultValue: [] })
+  @Field(() => [MenuItem])
   @Column({
     type: 'json',
     nullable: false,

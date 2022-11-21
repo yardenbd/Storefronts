@@ -35,6 +35,7 @@ type Query {
   restrauntFindAll: [Restraunt!]!
   findByZip(zip: Float!): [Restraunt!]!
   getMenu(id: String!): MenuItem!
+  findOneRestraunt(id: String!): Restraunt!
   orders: [Order!]!
   order(id: Int!): Order!
   copoun(id: Int!): Copoun!
@@ -42,6 +43,7 @@ type Query {
 
 type Mutation {
   createRestraunt(createRestrauntInput: CreateRestrauntInput!): Restraunt!
+  updateRestraunt(updateRestrauntInput: CreateRestrauntInput!): Restraunt!
   removeRestraunt(id: String!): Restraunt!
   createOrder(createOrderInput: CreateOrderInput!): Order!
   updateOrder(updateOrderInput: UpdateOrderInput!): Order!
