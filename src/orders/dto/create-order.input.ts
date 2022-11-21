@@ -4,9 +4,11 @@ import { MenuItemInput } from 'src/restraunt/dto/create-restraunt.input';
 @InputType()
 export class CreateOrderInput {
   @Field()
-  user_id: string;
+  customerName: string;
+  @Field()
+  customerAddress: string;
   @Field(() => [MenuItemInput])
-  order_details: [MenuItemInput];
-  @Field(() => Int, { nullable: true })
-  cupoun?: number;
+  orderDetails: [MenuItemInput];
+  @Field(() => [Number], { nullable: true })
+  copoun?: [number];
 }

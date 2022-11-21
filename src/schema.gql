@@ -18,10 +18,11 @@ type Restraunt {
 }
 
 type Order {
-  order_id: String!
-  user_id: String!
-  order_details: [MenuItem!]!
-  copoun: [String!]!
+  orderId: String!
+  customerName: String!
+  customerAddress: String!
+  orderDetails: [MenuItem!]!
+  copoun: [Float!]
 }
 
 type Copoun {
@@ -42,7 +43,7 @@ type Query {
 type Mutation {
   createRestraunt(createRestrauntInput: CreateRestrauntInput!): Restraunt!
   removeRestraunt(id: String!): Restraunt!
-  createOrder(createOrder: CreateOrderInput!): Order!
+  createOrder(createOrderInput: CreateOrderInput!): Order!
   updateOrder(updateOrderInput: UpdateOrderInput!): Order!
   removeOrder(id: Int!): Order!
   createCopoun(createCopounInput: CreateCopounInput!): Copoun!
@@ -65,15 +66,17 @@ input MenuItemInput {
 }
 
 input CreateOrderInput {
-  user_id: String!
-  order_details: [MenuItemInput!]!
-  cupoun: Int
+  customerName: String!
+  customerAddress: String!
+  orderDetails: [MenuItemInput!]!
+  copoun: [Float!]
 }
 
 input UpdateOrderInput {
-  user_id: String
-  order_details: [MenuItemInput!]
-  cupoun: Int
+  customerName: String
+  customerAddress: String
+  orderDetails: [MenuItemInput!]
+  copoun: [Float!]
   id: Int!
 }
 

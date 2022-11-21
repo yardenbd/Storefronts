@@ -12,7 +12,6 @@ export class RestrauntResolver {
   createRestraunt(
     @Args('createRestrauntInput') createRestrauntInput: CreateRestrauntInput,
   ) {
-    console.log('createRestrauntInput', createRestrauntInput);
     return this.restrauntService.create(createRestrauntInput);
   }
 

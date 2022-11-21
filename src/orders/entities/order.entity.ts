@@ -1,4 +1,4 @@
-import { ObjectType, Field, Int, InterfaceType } from '@nestjs/graphql';
+import { ObjectType, Field } from '@nestjs/graphql';
 import { MenuItem } from 'src/restraunt/entities/restraunt.entity';
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
@@ -8,17 +8,20 @@ export class Order {
   @Field()
   @Column()
   @PrimaryGeneratedColumn('uuid')
-  order_id: string;
+  orderId: string;
   @Field()
   @Column()
-  user_id: string;
+  customerName: string;
+  @Field()
+  @Column()
+  customerAddress: string;
   @Field(() => [MenuItem])
   @Column({
     type: 'json',
     nullable: false,
   })
-  order_details: [MenuItem];
-  @Field(() => [String])
-  @Column('text', { array: true })
-  copoun?: [string];
+  orderDetails: [MenuItem];
+  @Field(() => [Number], { nullable: true })
+  @Column('int', { array: true, nullable: true })
+  copoun?: [number];
 }

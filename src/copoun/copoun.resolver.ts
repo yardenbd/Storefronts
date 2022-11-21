@@ -9,7 +9,9 @@ export class CopounResolver {
   constructor(private readonly copounService: CopounService) {}
 
   @Mutation(() => Copoun)
-  createCopoun(@Args('createCopounInput') createCopounInput: CreateCopounInput) {
+  createCopoun(
+    @Args('createCopounInput') createCopounInput: CreateCopounInput,
+  ) {
     return this.copounService.create(createCopounInput);
   }
 
@@ -24,7 +26,9 @@ export class CopounResolver {
   }
 
   @Mutation(() => Copoun)
-  updateCopoun(@Args('updateCopounInput') updateCopounInput: UpdateCopounInput) {
+  updateCopoun(
+    @Args('updateCopounInput') updateCopounInput: UpdateCopounInput,
+  ) {
     return this.copounService.update(updateCopounInput.id, updateCopounInput);
   }
 

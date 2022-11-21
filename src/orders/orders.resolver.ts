@@ -8,15 +8,8 @@ import { UpdateOrderInput } from './dto/update-order.input';
 export class OrdersResolver {
   constructor(private readonly ordersService: OrdersService) {}
 
-  @Mutation(() => Order)
-  createOrder(@Args('createOrder') createOrderInput: CreateOrderInput) {
-    const { order_details } = createOrderInput;
-    const agg: number = order_details
-      .map((menuItem) => menuItem.price)
-      .reduce((prevPrice, currPrice) => {
-        return prevPrice + currPrice;
-      });
-    console.log('aggregated price', agg);
+  @Mutation(() => Order, { name: 'createOrder' })
+  createOrder(@Args('createOrderInput') createOrderInput: CreateOrderInput) {
     return this.ordersService.create(createOrderInput);
   }
 
