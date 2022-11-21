@@ -11,19 +11,29 @@ export class RestrauntService {
     private restrauntRepository: Repository<Restraunt>,
   ) {}
   create(createRestrauntInput: CreateRestrauntInput): Promise<Restraunt> {
-    const emp = this.restrauntRepository.create(createRestrauntInput);
-    return this.restrauntRepository.save(emp);
+    const newRestraunt = this.restrauntRepository.create(createRestrauntInput);
+    return this.restrauntRepository.save(newRestraunt);
   }
-
+  findBasedOnZipCode(zip: number) {
+    return this.restrauntRepository.query(
+      'SELECT * FROM restraunt WHERE $1 = ANY(zip)',
+      [zip],
+    );
+  }
+  getMenu(id: string) {
+    return this.restrauntRepository.query(
+      'SELECT menu FROM restraunt WHERE id = $1',
+      [id],
+    );
+  }
   findAll() {
-    return `This action returns all restraunt`;
+    return this.restrauntRepository.query('SELECT * FROM restraunt');
   }
 
   findOne(id: number) {
     return `This action returns a #${id} restraunt`;
   }
-
-  update(id: number, updateRestrauntInput: UpdateRestrauntInput) {
+  update(id: string, updateRestrauntInput: UpdateRestrauntInput) {
     return `This action updates a #${id} restraunt`;
   }
 

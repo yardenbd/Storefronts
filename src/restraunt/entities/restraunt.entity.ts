@@ -1,5 +1,14 @@
-import { ObjectType, Field } from '@nestjs/graphql';
+import { ObjectType, Field, InterfaceType, Int } from '@nestjs/graphql';
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+@InterfaceType()
+export class MenuItem {
+  @Field(() => String)
+  mealName: string;
+
+  @Field(() => Int)
+  price: number;
+}
+
 @ObjectType()
 @Entity()
 export class Restraunt {
@@ -15,9 +24,12 @@ export class Restraunt {
   @Field()
   @Column()
   image: string;
-  // @Field(() => [Menu])
-  // @Column('json', { array: true, nullable: false })
-  // menu: [Menu];
+  @Field(() => [MenuItem], { defaultValue: [] })
+  @Column({
+    type: 'json',
+    nullable: false,
+  })
+  menu: [MenuItem];
   @Field(() => [Number], {})
   @Column('int', { array: true, nullable: false })
   zip: [number];

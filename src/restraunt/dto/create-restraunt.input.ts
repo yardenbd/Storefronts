@@ -1,4 +1,12 @@
-import { InputType, Field } from '@nestjs/graphql';
+import { InputType, Field, Int } from '@nestjs/graphql';
+@InputType()
+export class MenuItemInput {
+  @Field(() => String)
+  mealName: string;
+
+  @Field(() => Int)
+  price: number;
+}
 
 @InputType()
 export class CreateRestrauntInput {
@@ -8,8 +16,8 @@ export class CreateRestrauntInput {
   address: string;
   @Field()
   image: string;
-  // @Field(() => [Menu])
-  // menu: [Menu];
+  @Field(() => [MenuItemInput], { defaultValue: [] })
+  menu: [MenuItemInput];
   @Field(() => [Number])
   zip: [number];
   @Field(() => [Number])

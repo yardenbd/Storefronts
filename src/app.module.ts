@@ -6,6 +6,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { RestrauntModule } from './restraunt/restraunt.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { OrdersModule } from './orders/orders.module';
 @Module({
   controllers: [AppController],
   providers: [AppService],
@@ -25,11 +26,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
         database: 'postgres',
         entities: ['dist/**/*.entity{.ts,.js}'],
         synchronize: true,
-        logging:
-          process.env.NODE_ENV !== 'prod' && process.env.NODE_ENV !== 'test',
+        logging: false,
       }),
     }),
     RestrauntModule,
+    OrdersModule,
   ],
 })
 export class AppModule {}

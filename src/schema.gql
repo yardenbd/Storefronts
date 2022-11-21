@@ -2,38 +2,64 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+interface MenuItem {
+  mealName: String!
+  price: Int!
+}
+
 type Restraunt {
   id: String!
   name: String!
   address: String!
   image: String!
+  menu: [MenuItem!]!
   zip: [Float!]!
   coupon: [Float!]!
 }
 
+type Order {
+  order_id: String!
+  user_id: String!
+  order_details: [MenuItem!]!
+}
+
 type Query {
-  restraunt(id: Int!): Restraunt!
+  restrauntFindAll: [Restraunt!]!
+  findByZip(zip: Float!): [Restraunt!]!
+  getMenu(id: String!): MenuItem!
+  orders: [Order!]!
+  order(id: Int!): Order!
 }
 
 type Mutation {
   createRestraunt(createRestrauntInput: CreateRestrauntInput!): Restraunt!
-  updateRestraunt(updateRestrauntInput: UpdateRestrauntInput!): Restraunt!
-  removeRestraunt(id: Int!): Restraunt!
+  removeRestraunt(id: String!): Restraunt!
+  createOrder(createOrder: CreateOrderInput!): Order!
+  updateOrder(updateOrderInput: UpdateOrderInput!): Order!
+  removeOrder(id: Int!): Order!
 }
 
 input CreateRestrauntInput {
   name: String!
   address: String!
   image: String!
+  menu: [MenuItemInput!] = []
   zip: [Float!]!
   coupon: [Float!]!
 }
 
-input UpdateRestrauntInput {
-  name: String
-  address: String
-  image: String
-  zip: [Float!]
-  coupon: Int!
+input MenuItemInput {
+  mealName: String!
+  price: Int!
+}
+
+input CreateOrderInput {
+  user_id: String!
+  order_details: [MenuItemInput!] = []
+}
+
+input UpdateOrderInput {
+  user_id: String
+  order_details: [MenuItemInput!] = []
   id: Int!
 }

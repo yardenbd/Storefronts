@@ -1,6 +1,6 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { RestrauntService } from './restraunt.service';
-import { Restraunt } from './entities/restraunt.entity';
+import { MenuItem, Restraunt } from './entities/restraunt.entity';
 import { CreateRestrauntInput } from './dto/create-restraunt.input';
 import { UpdateRestrauntInput } from './dto/update-restraunt.input';
 
@@ -12,31 +12,32 @@ export class RestrauntResolver {
   createRestraunt(
     @Args('createRestrauntInput') createRestrauntInput: CreateRestrauntInput,
   ) {
+    console.log('createRestrauntInput', createRestrauntInput);
     return this.restrauntService.create(createRestrauntInput);
   }
 
-  @Query(() => [Restraunt], { name: 'restraunt' })
-  findAll() {
+  @Query(() => [Restraunt], { name: 'restrauntFindAll' })
+  async findAll() {
     return this.restrauntService.findAll();
   }
 
-  @Query(() => Restraunt, { name: 'restraunt' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.restrauntService.findOne(id);
+  @Query(() => [Restraunt], { name: 'findByZip' })
+  findBasedOnZipCode(@Args('zip') zip: number) {
+    return this.restrauntService.findBasedOnZipCode(zip);
+  }
+  @Query(() => MenuItem, { name: 'getMenu' })
+  getRestrauntMenu(@Args('id') id: string) {
+    return this.restrauntService.getMenu(id);
   }
 
+  // @Mutation(() => Restraunt)
+  // updateRestraunt(
+  //   @Args('updateRestrauntInput') updateRestrauntInput: UpdateRestrauntInput,
+  // ) {
+  //   return this.restrauntService.update(updateRestrauntInput.id);
+  // }
   @Mutation(() => Restraunt)
-  updateRestraunt(
-    @Args('updateRestrauntInput') updateRestrauntInput: UpdateRestrauntInput,
-  ) {
-    return this.restrauntService.update(
-      updateRestrauntInput.id,
-      updateRestrauntInput,
-    );
-  }
-
-  @Mutation(() => Restraunt)
-  removeRestraunt(@Args('id', { type: () => Int }) id: number) {
+  removeRestraunt(@Args('id', { type: () => String }) id: number) {
     return this.restrauntService.remove(id);
   }
 }
