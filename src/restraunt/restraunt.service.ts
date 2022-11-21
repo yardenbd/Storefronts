@@ -15,19 +15,19 @@ export class RestrauntService {
     return this.restrauntRepository.save(newRestraunt);
   }
   findBasedOnZipCode(zip: number) {
-    return this.restrauntRepository.query(
-      'SELECT * FROM restraunt WHERE $1 = ANY(zip)',
-      [zip],
-    );
+    return this.restrauntRepository
+      .createQueryBuilder()
+      .where(':zip = ANY(zip)', { zip })
+      .getMany();
   }
   getMenu(id: string) {
-    return this.restrauntRepository.query(
-      'SELECT menu FROM restraunt WHERE id = $1',
-      [id],
-    );
+    return this.restrauntRepository
+      .createQueryBuilder()
+      .select('menu')
+      .where('id = :id', { id });
   }
   findAll() {
-    return this.restrauntRepository.query('SELECT * FROM restraunt');
+    return this.restrauntRepository.createQueryBuilder().getMany();
   }
 
   findOne(id: number) {
