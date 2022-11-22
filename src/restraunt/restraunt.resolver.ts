@@ -28,7 +28,7 @@ export class RestrauntResolver {
   }
 
   @Query(() => [Restraunt], { name: 'restrauntFindAll' })
-  async findAll() {
+  findAll() {
     return this.restrauntService.findAll();
   }
 

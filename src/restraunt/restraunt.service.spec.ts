@@ -23,30 +23,30 @@ describe('RestrauntService', () => {
     findOne: jest.fn(),
     find: jest.fn(),
     remove: jest.fn(),
-    // update: jest.fn(),
     createQueryBuilder: jest.fn(),
     save: jest.fn(),
     findBy: jest.fn(),
+    delete: jest.fn(),
   };
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [
-        TypeOrmModule.forRootAsync({
-          useFactory: () => ({
-            type: 'postgres',
-            host: 'localhost',
-            name: 'yarden',
-            port: 5432,
-            username: 'postgres',
-            password: 'Yb212081046',
-            database: 'postgres',
-            entities: [Restraunt],
-            synchronize: true,
-            logging: false,
-          }),
-        }),
-        TypeOrmModule.forFeature([Restraunt]),
-      ],
+      // imports: [
+      //   TypeOrmModule.forRootAsync({
+      //     useFactory: () => ({
+      //       type: 'postgres',
+      //       host: 'localhost',
+      //       name: 'yarden',
+      //       port: 5432,
+      //       username: 'postgres',
+      //       password: 'Yb212081046',
+      //       database: 'postgres',
+      //       entities: [Restraunt],
+      //       synchronize: true,
+      //       logging: false,
+      //     }),
+      //   }),
+      //   TypeOrmModule.forFeature([Restraunt]),
+      // ],
       providers: [
         RestrauntService,
         {
@@ -60,65 +60,67 @@ describe('RestrauntService', () => {
   it('Should be defined', () => {
     expect(service).toBeDefined();
   });
-  // describe('Create restraunt', () => {
-  //   it('should create a new restraunt', async () => {
-  //     restrauntRepositoryMock.save.mockReturnValue(restrauntObj);
-  //     const newRestarunt = await service.create(restrauntObj);
-  //     expect(newRestarunt).toMatchObject(restrauntObj);
-  //   });
-  // });
-  // describe('Find all', () => {
-  //   it('should get all restraunts', async () => {
-  //     restrauntRepositoryMock.find.mockReturnValue([restrauntObj]);
-  //     const allRestratuns = await service.findAll();
-  //     expect(allRestratuns).toEqual(
-  //       expect.arrayContaining([expect.objectContaining(desiredRestraunt)]),
-  //     );
-  //   });
-  // });
-  // describe('Find one menu', () => {
-  //   it('should get a restraunt menu', async () => {
-  //     restrauntRepositoryMock.findOne.mockReturnValue(restrauntObj.menu);
-  //     const response = await service.getMenu(restrauntTestId);
-  //     expect(response.menu).toEqual(
-  //       expect.arrayContaining([expect.objectContaining(desiredMenuItem)]),
-  //     );
-  //   });
-  // });
-  // describe('Find all based on zip', () => {
-  //   it('should get a restraunt nearby based on zip code', async () => {
-  //     restrauntRepositoryMock.findBy.mockReturnValue([restrauntObj]);
-  //     const response = await service.findBasedOnZipCode(222);
-  //     expect(response).toEqual(
-  //       expect.arrayContaining([expect.objectContaining(desiredRestraunt)]),
-  //     );
-  //   });
-  // });
-  // describe('Find one restraunt', () => {
-  //   it('should get a single restraunt ', async () => {
-  //     restrauntRepositoryMock.findOne.mockReturnValue(restrauntObj);
-  //     const response = await service.findOne(restrauntTestId);
-  //     expect(response).toMatchObject(desiredRestraunt);
-  //   });
-  // });
+  describe('Create restraunt', () => {
+    it('should create a new restraunt', async () => {
+      restrauntRepositoryMock.save.mockReturnValue(restrauntObj);
+      const newRestarunt = await service.create(restrauntObj);
+      expect(newRestarunt).toMatchObject(restrauntObj);
+    });
+  });
+  describe('Find all', () => {
+    it('should get all restraunts', async () => {
+      restrauntRepositoryMock.find.mockReturnValue([restrauntObj]);
+      const allRestratuns = await service.findAll();
+      expect(allRestratuns).toEqual(
+        expect.arrayContaining([expect.objectContaining(desiredRestraunt)]),
+      );
+    });
+  });
+  describe('Find one menu', () => {
+    it('should get a restraunt menu', async () => {
+      restrauntRepositoryMock.findOne.mockReturnValue(restrauntObj.menu);
+      const response = await service.getMenu(restrauntObj.id);
+      expect(response).toEqual(
+        expect.arrayContaining([expect.objectContaining(desiredMenuItem)]),
+      );
+    });
+  });
+  describe('Find all based on zip', () => {
+    it('should get a restraunt nearby based on zip code', async () => {
+      restrauntRepositoryMock.findBy.mockReturnValue([restrauntObj]);
+      const response = await service.findBasedOnZipCode(222);
+      expect(response).toEqual(
+        expect.arrayContaining([expect.objectContaining(desiredRestraunt)]),
+      );
+    });
+  });
+  describe('Find one restraunt', () => {
+    it('should get a single restraunt ', async () => {
+      restrauntRepositoryMock.findOne.mockReturnValue(restrauntObj);
+      const response = await service.findOne(restrauntTestId);
+      expect(response).toMatchObject(desiredRestraunt);
+    });
+  });
   describe('Update restraunt', () => {
     it('should updates a single restraunt ', async () => {
       const updateRestrauntObj: UpdateRestrauntInput = {
         id: restrauntTestId,
-        name: 'yayyyyyyyyyasdsadadsa',
-        address: 'aaccss',
+        name: 'testname',
+        address: 'testadress',
       };
-      // restrauntRepositoryMock.update.mockReturnValue(updateRestrauntObj);
+      restrauntRepositoryMock.save.mockReturnValue(updateRestrauntObj);
       const response = await service.update(updateRestrauntObj);
-      console.log('response', response);
       expect(response).toEqual(expect.objectContaining(updateRestrauntObj));
     });
   });
-  // describe('Delete restraunt', () => {
-  //   it('should updates a single restraunt ', async () => {
-  //     restrauntRepositoryMock.remove.mockReturnValue(restrauntId);
-  //     const response = await service.remove(restrauntId);
-  //     expect(response).toBeDefined();
-  //   });
-  // });
+  describe('Delete restraunt', () => {
+    it('should updates a single restraunt ', async () => {
+      const deleted = { raw: [], affected: expect.any(Number) };
+      restrauntRepositoryMock.delete.mockReturnValue(deleted);
+      const response = await service.remove(
+        '072dac46-68f2-4397-9371-9b2ac6c7e63c',
+      );
+      expect(response).toBeDefined();
+    });
+  });
 });
