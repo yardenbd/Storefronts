@@ -34,7 +34,7 @@ type Copoun {
 type Query {
   restrauntFindAll: [Restraunt!]!
   findByZip(zip: Float!): [Restraunt!]!
-  getMenu(id: String!): MenuItem!
+  getMenu(id: String!): [MenuItem!]!
   findOneRestraunt(id: String!): Restraunt!
   orders: [Order!]!
   order(id: Int!): Order!

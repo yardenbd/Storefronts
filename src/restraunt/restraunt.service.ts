@@ -19,7 +19,7 @@ export class RestrauntService {
   findBasedOnZipCode(zip: number) {
     return this.restrauntRepository.findBy({ zip: Any[zip] });
   }
-  async getMenu(id: string) {
+  getMenu(id: string) {
     return this.restrauntRepository.findOne({
       select: ['menu'],
       where: { id },

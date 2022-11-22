@@ -36,7 +36,7 @@ export class RestrauntResolver {
   findBasedOnZipCode(@Args('zip', { type: () => Number }) zip: number) {
     return this.restrauntService.findBasedOnZipCode(zip);
   }
-  @Query(() => MenuItem, { name: 'getMenu' })
+  @Query(() => [MenuItem], { name: 'getMenu' })
   getRestrauntMenu(@Args('id', { type: () => String }) id: string) {
     return this.restrauntService.getMenu(id);
   }

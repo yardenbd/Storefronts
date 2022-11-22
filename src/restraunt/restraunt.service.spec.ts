@@ -12,7 +12,7 @@ import {
   restrauntTestId,
   desiredMenuItem,
 } from '../constants';
-type MockType<T> = {
+export type MockType<T> = {
   [P in keyof T]?: jest.Mock<{}>;
 };
 
@@ -106,7 +106,7 @@ describe('RestrauntService', () => {
       const updateRestrauntObj: UpdateRestrauntInput = {
         id: restrauntTestId,
         name: 'testname',
-        address: 'testadress',
+        address: 'testaddress',
       };
       restrauntRepositoryMock.save.mockReturnValue(updateRestrauntObj);
       const response = await service.update(updateRestrauntObj);
@@ -117,10 +117,8 @@ describe('RestrauntService', () => {
     it('should updates a single restraunt ', async () => {
       const deleted = { raw: [], affected: expect.any(Number) };
       restrauntRepositoryMock.delete.mockReturnValue(deleted);
-      const response = await service.remove(
-        '072dac46-68f2-4397-9371-9b2ac6c7e63c',
-      );
-      expect(response).toBeDefined();
+      const response = await service.remove(restrauntObj.id);
+      expect(response).toMatchObject(restrauntObj);
     });
   });
 });
