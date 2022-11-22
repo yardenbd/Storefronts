@@ -7,22 +7,27 @@ interface MenuItem {
   price: Int!
 }
 
+interface LineItems {
+  mealName: String!
+  quantity: Int!
+}
+
 type Restraunt {
   id: String!
   name: String!
   address: String!
   image: String!
   menu: [MenuItem!]!
-  zip: [Float!]!
-  coupon: [Float!]!
+  zip: [Int!]!
+  coupons: [Int!]!
 }
 
 type Order {
   orderId: String!
   customerName: String!
   customerAddress: String!
-  orderDetails: [MenuItem!]!
-  copoun: [Float!]
+  lineItems: [LineItems!]!
+  coupons: [Float!]
 }
 
 type Copoun {
@@ -59,7 +64,7 @@ input CreateRestrauntInput {
   image: String!
   menu: [MenuItemInput!] = []
   zip: [Float!]!
-  coupon: [Float!]!
+  coupons: [Float!]!
 }
 
 input MenuItemInput {

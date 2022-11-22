@@ -21,5 +21,5 @@ export class CreateRestrauntInput {
   @Field(() => [Number])
   zip: number[];
   @Field(() => [Number])
-  coupon: number[];
+  coupons: number[];
 }

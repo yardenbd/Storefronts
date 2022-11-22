@@ -30,10 +30,10 @@ export class Restraunt {
     nullable: false,
   })
   menu: MenuItem[];
-  @Field(() => [Number])
+  @Field(() => [Int])
   @Column('int', { array: true, nullable: false })
   zip: number[];
-  @Field(() => [Number])
+  @Field(() => [Int])
   @Column('int', { array: true, nullable: false })
-  coupon: number[];
+  coupons: number[];
 }

@@ -4,7 +4,7 @@ export const restrauntId: string = uuidv4();
 export const restrauntTestId: string = '81eca88a-a730-4785-99cf-97757fd0f151';
 export const restrauntObj: Restraunt = {
   address: 'yay 48',
-  coupon: [10, 4, 5],
+  coupons: [10, 4, 5],
   image: 'https://picsum.photos/200/300',
   id: restrauntId,
   name: 'yayyyyyyyyyyyyyyy',
@@ -15,7 +15,7 @@ export const restrauntObj: Restraunt = {
   zip: [223, 1, 111],
 };
 export const desiredRestraunt = {
-  coupon: expect.arrayContaining([expect.any(Number)]),
+  coupons: expect.arrayContaining([expect.any(Number)]),
   zip: expect.arrayContaining([expect.any(Number)]),
   menu: expect.arrayContaining([
     expect.objectContaining({
