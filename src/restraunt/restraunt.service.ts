@@ -7,6 +7,7 @@ import {
 import { UpdateRestrauntInput } from './dto/update-restraunt.input';
 import { Repository } from 'typeorm';
 import { MenuItem, Restraunt } from './entities/restraunt.entity';
+import { Any } from 'typeorm';
 @Injectable()
 export class RestrauntService {
   constructor(
@@ -17,10 +18,11 @@ export class RestrauntService {
     return this.restrauntRepository.save(createRestrauntInput);
   }
   findBasedOnZipCode(zip: number) {
-    return this.restrauntRepository
-      .createQueryBuilder()
-      .where(':zip = ANY(zip)', { zip })
-      .getMany();
+    return this.restrauntRepository.findBy({
+      zip: Any([zip]),
+    });
+    // .where(':zip = ANY(zip)', { zip })
+    // .getMany();
   }
   getMenu(id: string) {
     return this.restrauntRepository.findOne({
