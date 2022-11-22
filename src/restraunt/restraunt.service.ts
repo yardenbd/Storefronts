@@ -1,9 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreateRestrauntInput } from './dto/create-restraunt.input';
+import {
+  CreateRestrauntInput,
+  MenuItemInput,
+} from './dto/create-restraunt.input';
 import { UpdateRestrauntInput } from './dto/update-restraunt.input';
 import { Repository } from 'typeorm';
-import { Restraunt } from './entities/restraunt.entity';
+import { MenuItem, Restraunt } from './entities/restraunt.entity';
 @Injectable()
 export class RestrauntService {
   constructor(
@@ -20,13 +23,13 @@ export class RestrauntService {
       .getMany();
   }
   getMenu(id: string) {
-    return this.restrauntRepository
-      .createQueryBuilder()
-      .select('menu')
-      .where('id = :id', { id });
+    return this.restrauntRepository.findOne({
+      select: ['menu'],
+      where: { id },
+    });
   }
   findAll() {
-    return this.restrauntRepository.createQueryBuilder().getMany();
+    return this.restrauntRepository.find();
   }
 
   findOne(id: string) {
