@@ -3,7 +3,8 @@ import { RestrauntService } from './restraunt.service';
 import { MenuItem, Restraunt } from './entities/restraunt.entity';
 import { CreateRestrauntInput } from './dto/create-restraunt.input';
 import { UpdateRestrauntInput } from './dto/update-restraunt.input';
-import { CreateCopounInput } from 'src/copoun/dto/create-copoun.input';
+import { CreateCopounInput } from '../copoun/dto/create-copoun.input';
+import { Pagination } from '../types';
 
 @Resolver(() => Restraunt)
 export class RestrauntResolver {
@@ -29,13 +30,25 @@ export class RestrauntResolver {
   }
 
   @Query(() => [Restraunt], { name: 'restrauntFindAll' })
-  findAll() {
-    return this.restrauntService.findAll();
+  findAll(
+    @Args('query', {
+      type: () => Pagination,
+    })
+    query: Pagination,
+  ) {
+    return this.restrauntService.findAll(query);
   }
 
   @Query(() => [Restraunt], { name: 'findByZip' })
-  findBasedOnZipCode(@Args('zip', { type: () => Number }) zip: number) {
-    return this.restrauntService.findBasedOnZipCode(zip);
+  findBasedOnZipCode(
+    @Args('zip', { type: () => Number })
+    zip: number,
+    @Args('query', {
+      type: () => Pagination,
+    })
+    query: Pagination,
+  ) {
+    return this.restrauntService.findBasedOnZipCode(zip, query);
   }
   @Query(() => [MenuItem], { name: 'getMenu' })
   getRestrauntMenu(@Args('id', { type: () => String }) id: string) {
@@ -52,7 +65,12 @@ export class RestrauntResolver {
     return this.restrauntService.createCoupon(createCouponInput);
   }
   @Query(() => [Number], { name: 'FindAllCoupons' })
-  findAllCouons() {
-    return this.restrauntService.findAllCoupons();
+  findAllCoupons(
+    @Args('query', {
+      type: () => Pagination,
+    })
+    query: Pagination,
+  ) {
+    return this.restrauntService.findAllCoupons(query);
   }
 }

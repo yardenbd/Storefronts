@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import {
   desiredMenuItem,
   desiredRestraunt,
+  pagintaionObj,
   restrauntObj,
   restrauntTestId,
 } from '../constants';
@@ -39,9 +40,7 @@ describe('Restraunt Resolver', () => {
         },
       ],
       imports: [
-        TypeOrmModule.forRootAsync({
-          useFactory: () => createDbConfig<Restraunt>(Restraunt),
-        }),
+        TypeOrmModule.forRootAsync(createDbConfig<Restraunt>(Restraunt)),
         TypeOrmModule.forFeature([Restraunt]),
       ],
     }).compile();
@@ -58,7 +57,7 @@ describe('Restraunt Resolver', () => {
   });
   describe('Find all Storefronts', () => {
     it('should find and return a list of customers', async () => {
-      const allRestratuns = await resolver.findAll();
+      const allRestratuns = await resolver.findAll(pagintaionObj);
       console.log('allRestratuns', allRestratuns);
       expect(allRestratuns).toEqual(
         expect.arrayContaining([expect.objectContaining(desiredRestraunt)]),
@@ -76,7 +75,7 @@ describe('Restraunt Resolver', () => {
   });
   describe('Find all based on zip', () => {
     it('should find and return a customer invoice', async () => {
-      const response = await resolver.findBasedOnZipCode(4245);
+      const response = await resolver.findBasedOnZipCode(4245, pagintaionObj);
       expect(response).toEqual(
         expect.arrayContaining([expect.objectContaining(desiredRestraunt)]),
       );

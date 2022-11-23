@@ -32,12 +32,16 @@ type Order {
 }
 
 type Query {
-  restrauntFindAll: [Restraunt!]!
-  findByZip(zip: Float!): [Restraunt!]!
+  restrauntFindAll(query: Pagination!): [Restraunt!]!
+  findByZip(zip: Float!, query: Pagination!): [Restraunt!]!
   getMenu(id: String!): [MenuItem!]!
   findOneRestraunt(id: String!): Restraunt!
-  FindAllCoupons: [Float!]!
-  copoun(id: Int!): Float!
+  FindAllCoupons(query: Pagination!): [Float!]!
+}
+
+input Pagination {
+  take: Int!
+  skip: Int!
 }
 
 type Mutation {
@@ -46,8 +50,6 @@ type Mutation {
   removeRestraunt(id: String!): Restraunt!
   createCopoun(CreateCouponInput: CreateCopounInput!): Boolean!
   createOrder(createOrderInput: CreateOrderInput!): Order!
-  updateCopoun(updateCopounInput: UpdateCopounInput!): Float!
-  removeCopoun(id: Int!): Float!
 }
 
 input CreateRestrauntInput {
@@ -79,9 +81,4 @@ input CreateOrderInput {
 input LineItemsInput {
   mealName: String!
   price: Int!
-}
-
-input UpdateCopounInput {
-  id: String
-  coupon: Float
 }

@@ -21,9 +21,7 @@ describe('Restraunt Resolver', () => {
         },
       ],
       imports: [
-        TypeOrmModule.forRootAsync({
-          useFactory: () => createDbConfig<Order>(Order),
-        }),
+        TypeOrmModule.forRootAsync(createDbConfig<Order>(Order)),
         TypeOrmModule.forFeature([Order]),
       ],
     }).compile();

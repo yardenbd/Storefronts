@@ -5,6 +5,7 @@ import { UpdateRestrauntInput } from './dto/update-restraunt.input';
 import { Repository, Any } from 'typeorm';
 import { Restraunt } from './entities/restraunt.entity';
 import { CreateCopounInput } from 'src/copoun/dto/create-copoun.input';
+import { Pagination } from '../types';
 @Injectable()
 export class RestrauntService {
   constructor(
@@ -14,8 +15,13 @@ export class RestrauntService {
   create(createRestrauntInput: CreateRestrauntInput): Promise<Restraunt> {
     return this.restrauntRepository.save(createRestrauntInput);
   }
-  findBasedOnZipCode(zip: number) {
-    return this.restrauntRepository.findBy({ zip: Any[zip] });
+  findBasedOnZipCode(zip: number, query: Pagination) {
+    const { skip, take } = query;
+    return this.restrauntRepository.find({
+      where: { zip: Any[zip] },
+      take,
+      skip,
+    });
   }
   getMenu(id: string) {
     return this.restrauntRepository.findOne({
@@ -23,8 +29,11 @@ export class RestrauntService {
       where: { id },
     });
   }
-  findAll() {
-    return this.restrauntRepository.find();
+  async findAll(query: Pagination = { skip: 0, take: 5 }) {
+    const { skip, take } = query;
+    const t = await this.restrauntRepository.find({ take, skip });
+    console.log('t', t);
+    return t;
   }
 
   findOne(id: string) {
@@ -47,7 +56,13 @@ export class RestrauntService {
       createCouponInput.id,
     ]);
   }
-  findAllCoupons() {
-    return this.restrauntRepository.createQueryBuilder().select('coupons');
+  findAllCoupons(query: Pagination = { skip: 0, take: 5 }) {
+    const { skip, take } = query;
+    return this.restrauntRepository
+      .createQueryBuilder()
+      .select('coupons')
+      .skip(skip)
+      .take(take)
+      .execute();
   }
 }

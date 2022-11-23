@@ -10,6 +10,7 @@ import {
   restrauntTestId,
   desiredMenuItem,
   storefrontArray,
+  pagintaionObj,
 } from '../constants';
 import { MockType } from 'src/types';
 
@@ -77,7 +78,7 @@ describe('RestrauntService', () => {
       restrauntRepositoryMock.findBy.mockReturnValue(
         storefrontAvailableBasedOnZip,
       );
-      const response = await service.findBasedOnZipCode(4245);
+      const response = await service.findBasedOnZipCode(4245, pagintaionObj);
       expect(response).toEqual(
         expect.arrayContaining([expect.objectContaining(desiredRestraunt)]),
       );
