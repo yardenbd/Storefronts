@@ -8,7 +8,7 @@ export class CreateOrderInput {
   @Field(() => String)
   customerAddress: string;
   @Field(() => [LineItemsInput])
-  lineItems: [LineItemsInput];
+  lineItems: LineItemsInput[];
   @Field(() => [Number], { nullable: true })
-  coupons?: [number];
+  coupons?: number[];
 }

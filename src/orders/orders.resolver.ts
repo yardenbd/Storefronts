@@ -2,8 +2,8 @@ import { Resolver, Mutation, Args } from '@nestjs/graphql';
 import { OrdersService } from './orders.service';
 import { Order } from './entities/order.entity';
 import { CreateOrderInput } from './dto/create-order.input';
-import { calcOrderPrice, calcTotalMealsQuantity } from 'src/utils';
-import { IOrderInput } from 'src/types';
+import { calcOrderPrice, calcTotalMealsQuantity } from '../utils';
+import { IOrderInput } from '../types';
 
 @Resolver(() => Order)
 export class OrdersResolver {
@@ -19,7 +19,6 @@ export class OrdersResolver {
       totalPrice,
       lineItems: totalMeals,
     };
-    console.log('createOrderObject', createOrderObject);
     return this.ordersService.create(createOrderObject);
   }
 }

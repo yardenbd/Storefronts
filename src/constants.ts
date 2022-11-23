@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
+import { CreateOrderInput } from './orders/dto/create-order.input';
 import { Restraunt } from './restraunt/entities/restraunt.entity';
-export const restrauntId: string = uuidv4();
 export const restrauntTestId: string = '81eca88a-a730-4785-99cf-97757fd0f151';
 export const restrauntObj: Restraunt = {
   address: 'Tel Aviv',
@@ -45,21 +45,36 @@ const restrauntObj3: Restraunt = {
   zip: [4245, 143, 442, 7751, 523, 662],
 };
 
-export const storefrontArray = [restrauntObj, restrauntObj2, restrauntObj3];
-export const desiredRestraunt = {
-  coupons: expect.arrayContaining([expect.any(Number)]),
-  zip: expect.arrayContaining([expect.any(Number)]),
-  menu: expect.arrayContaining([
-    expect.objectContaining({
-      mealName: expect.any(String),
-      price: expect.any(Number),
-    }),
-  ]),
-  address: expect.any(String),
-  id: expect.any(String),
-  image: expect.any(String),
+export const orderObject: CreateOrderInput = {
+  customerAddress: 'Tel Aviv',
+  customerName: 'Yarden',
+  lineItems: [
+    { mealName: 'Sushi', price: 70 },
+    { mealName: 'Nigiri', price: 40 },
+    { mealName: 'Noodels', price: 60 },
+  ],
+  coupons: [10, 20],
 };
 export const desiredMenuItem = {
   mealName: expect.any(String),
   price: expect.any(Number),
+};
+const menuItemsExpectations = expect.arrayContaining([
+  expect.objectContaining(desiredMenuItem),
+]);
+export const desiredOrder: CreateOrderInput = {
+  customerAddress: expect.any(String),
+  customerName: expect.any(String),
+  lineItems: menuItemsExpectations,
+  coupons: [10, 20],
+};
+export const storefrontArray = [restrauntObj, restrauntObj2, restrauntObj3];
+
+export const desiredRestraunt = {
+  coupons: expect.arrayContaining([expect.any(Number)]),
+  zip: expect.arrayContaining([expect.any(Number)]),
+  menu: menuItemsExpectations,
+  address: expect.any(String),
+  id: expect.any(String),
+  image: expect.any(String),
 };

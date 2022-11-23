@@ -4,18 +4,14 @@ import { Restraunt } from './entities/restraunt.entity';
 import { RestrauntService } from './restraunt.service';
 import { Repository } from 'typeorm';
 import { UpdateRestrauntInput } from './dto/update-restraunt.input';
-import { createDbConfig } from '../config/db.config';
 import {
   desiredRestraunt,
-  restrauntId,
   restrauntObj,
   restrauntTestId,
   desiredMenuItem,
   storefrontArray,
 } from '../constants';
-export type MockType<T> = {
-  [P in keyof T]?: jest.Mock<{}>;
-};
+import { MockType } from 'src/types';
 
 describe('RestrauntService', () => {
   let service: RestrauntService;
@@ -88,7 +84,16 @@ describe('RestrauntService', () => {
   });
   describe('Find all based on zip', () => {
     it('should get a restraunt nearby based on zip code', async () => {
-      restrauntRepositoryMock.findBy.mockReturnValue(storefrontArray);
+      const storefrontAvailableBasedOnZip = storefrontArray.filter(
+        (storefront) => {
+          if (storefront.zip.includes(4245)) {
+            return storefront;
+          }
+        },
+      );
+      restrauntRepositoryMock.findBy.mockReturnValue(
+        storefrontAvailableBasedOnZip,
+      );
       const response = await service.findBasedOnZipCode(4245);
       expect(response).toEqual(
         expect.arrayContaining([expect.objectContaining(desiredRestraunt)]),

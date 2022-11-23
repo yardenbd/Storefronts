@@ -41,10 +41,10 @@ export class Order {
     type: 'json',
     nullable: false,
   })
-  lineItems: [LineItems];
+  lineItems: LineItems[];
   @Field(() => [Number], { nullable: true })
   @Column('int', { array: true, nullable: true })
-  coupons?: [number];
+  coupons?: number[];
   @Field(() => Int)
   @Column()
   totalPrice: number;
