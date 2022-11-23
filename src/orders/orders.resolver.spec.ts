@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { desiredOrder, desiredRestraunt, orderObject } from '../constants';
+import { desiredOrder, orderObject } from '../constants';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { createDbConfig } from '../config/db.config';
 import { OrdersResolver } from './orders.resolver';

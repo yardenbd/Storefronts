@@ -5,7 +5,6 @@ import {
   Int,
   InputType,
 } from '@nestjs/graphql';
-import { MenuItem } from 'src/restraunt/entities/restraunt.entity';
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @InputType()

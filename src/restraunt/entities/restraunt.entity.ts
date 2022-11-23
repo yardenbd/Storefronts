@@ -34,6 +34,6 @@ export class Restraunt {
   @Column('int', { array: true, nullable: false })
   zip: number[];
   @Field(() => [Int])
-  @Column('int', { array: true, nullable: false })
+  @Column('bigint', { array: true, nullable: false })
   coupons: number[];
 }

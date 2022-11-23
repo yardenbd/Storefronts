@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { getRepositoryToken, TypeOrmModule } from '@nestjs/typeorm';
+import { getRepositoryToken } from '@nestjs/typeorm';
 import { Restraunt } from './entities/restraunt.entity';
 import { RestrauntService } from './restraunt.service';
 import { Repository } from 'typeorm';
@@ -27,23 +27,6 @@ describe('RestrauntService', () => {
   };
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      // imports: [
-      //   TypeOrmModule.forRootAsync({
-      //     useFactory: () => ({
-      //       type: 'postgres',
-      //       host: 'localhost',
-      //       name: 'yarden',
-      //       port: 5432,
-      //       username: 'postgres',
-      //       password: 'Yb212081046',
-      //       database: 'postgres',
-      //       entities: [Restraunt],
-      //       synchronize: true,
-      //       logging: false,
-      //     }),
-      //   }),
-      //   TypeOrmModule.forFeature([Restraunt]),
-      // ],
       providers: [
         RestrauntService,
         {

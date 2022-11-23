@@ -31,28 +31,23 @@ type Order {
   totalPrice: Int!
 }
 
-type Copoun {
-  id: String!
-  code: String!
-  discount: Int!
-}
-
 type Query {
   restrauntFindAll: [Restraunt!]!
   findByZip(zip: Float!): [Restraunt!]!
   getMenu(id: String!): [MenuItem!]!
   findOneRestraunt(id: String!): Restraunt!
-  copoun(id: Int!): Copoun!
+  FindAllCoupons: [Float!]!
+  copoun(id: Int!): Float!
 }
 
 type Mutation {
   createRestraunt(createRestrauntInput: CreateRestrauntInput!): Restraunt!
   updateRestraunt(updateRestrauntInput: CreateRestrauntInput!): Restraunt!
   removeRestraunt(id: String!): Restraunt!
+  createCopoun(CreateCouponInput: CreateCopounInput!): Boolean!
   createOrder(createOrderInput: CreateOrderInput!): Order!
-  createCopoun(createCopounInput: CreateCopounInput!): Copoun!
-  updateCopoun(updateCopounInput: UpdateCopounInput!): Copoun!
-  removeCopoun(id: Int!): Copoun!
+  updateCopoun(updateCopounInput: UpdateCopounInput!): Float!
+  removeCopoun(id: Int!): Float!
 }
 
 input CreateRestrauntInput {
@@ -69,6 +64,11 @@ input MenuItemInput {
   price: Int!
 }
 
+input CreateCopounInput {
+  id: String!
+  coupon: Float!
+}
+
 input CreateOrderInput {
   customerName: String!
   customerAddress: String!
@@ -81,13 +81,7 @@ input LineItemsInput {
   price: Int!
 }
 
-input CreateCopounInput {
-  code: String!
-  discount: Int!
-}
-
 input UpdateCopounInput {
-  code: String
-  discount: Int
-  id: Int!
+  id: String
+  coupon: Float
 }

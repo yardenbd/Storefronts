@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import { CreateOrderInput } from './orders/dto/create-order.input';
 import { Restraunt } from './restraunt/entities/restraunt.entity';
-export const restrauntTestId: string = '81eca88a-a730-4785-99cf-97757fd0f151';
+export const restrauntTestId = '81eca88a-a730-4785-99cf-97757fd0f151';
 export const restrauntObj: Restraunt = {
   address: 'Tel Aviv',
   coupons: [10, 20, 30],

@@ -1,4 +1,5 @@
 import { InputType, Field, Int } from '@nestjs/graphql';
+import { IsAlpha } from 'class-validator';
 @InputType()
 export class MenuItemInput {
   @Field(() => String)
@@ -10,10 +11,13 @@ export class MenuItemInput {
 
 @InputType()
 export class CreateRestrauntInput {
+  @IsAlpha()
   @Field()
   name: string;
+  @IsAlpha()
   @Field()
   address: string;
+  @IsAlpha()
   @Field()
   image: string;
   @Field(() => [MenuItemInput], { defaultValue: [] })

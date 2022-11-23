@@ -1,12 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import {
-  CreateRestrauntInput,
-  MenuItemInput,
-} from './dto/create-restraunt.input';
+import { CreateRestrauntInput } from './dto/create-restraunt.input';
 import { UpdateRestrauntInput } from './dto/update-restraunt.input';
 import { Repository, Any } from 'typeorm';
-import { MenuItem, Restraunt } from './entities/restraunt.entity';
+import { Restraunt } from './entities/restraunt.entity';
+import { CreateCopounInput } from 'src/copoun/dto/create-copoun.input';
 @Injectable()
 export class RestrauntService {
   constructor(
@@ -40,5 +38,16 @@ export class RestrauntService {
 
   remove(id: string) {
     return this.restrauntRepository.delete({ id });
+  }
+  createCoupon(createCouponInput: CreateCopounInput) {
+    const updateQuery =
+      'update restraunt set coupons = array_append(coupons,$1) where id =$2';
+    return this.restrauntRepository.query(updateQuery, [
+      createCouponInput.coupon,
+      createCouponInput.id,
+    ]);
+  }
+  findAllCoupons() {
+    return this.restrauntRepository.createQueryBuilder().select('coupons');
   }
 }

@@ -1,7 +1,7 @@
 import { CreateOrderInput } from './orders/dto/create-order.input';
 
 export type MockType<T> = {
-  [P in keyof T]?: jest.Mock<{}>;
+  [P in keyof T]?: jest.Mock<unknown>;
 };
 
 export interface ILineItems {

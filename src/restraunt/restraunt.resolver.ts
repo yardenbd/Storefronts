@@ -3,6 +3,7 @@ import { RestrauntService } from './restraunt.service';
 import { MenuItem, Restraunt } from './entities/restraunt.entity';
 import { CreateRestrauntInput } from './dto/create-restraunt.input';
 import { UpdateRestrauntInput } from './dto/update-restraunt.input';
+import { CreateCopounInput } from 'src/copoun/dto/create-copoun.input';
 
 @Resolver(() => Restraunt)
 export class RestrauntResolver {
@@ -43,5 +44,15 @@ export class RestrauntResolver {
   @Query(() => Restraunt, { name: 'findOneRestraunt' })
   findOne(@Args('id', { type: () => String }) id: string) {
     return this.restrauntService.findOne(id);
+  }
+  @Mutation(() => Boolean)
+  createCopoun(
+    @Args('CreateCouponInput') createCouponInput: CreateCopounInput,
+  ) {
+    return this.restrauntService.createCoupon(createCouponInput);
+  }
+  @Query(() => [Number], { name: 'FindAllCoupons' })
+  findAllCouons() {
+    return this.restrauntService.findAllCoupons();
   }
 }
