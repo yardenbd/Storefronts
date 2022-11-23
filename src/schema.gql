@@ -28,6 +28,7 @@ type Order {
   customerAddress: String!
   lineItems: [LineItems!]!
   coupons: [Float!]
+  totalPrice: Int!
 }
 
 type Copoun {
@@ -75,15 +76,20 @@ input MenuItemInput {
 input CreateOrderInput {
   customerName: String!
   customerAddress: String!
-  orderDetails: [MenuItemInput!]!
-  copoun: [Float!]
+  lineItems: [LineItemsInput!]!
+  coupons: [Float!]
+}
+
+input LineItemsInput {
+  mealName: String!
+  price: Int!
 }
 
 input UpdateOrderInput {
   customerName: String
   customerAddress: String
-  orderDetails: [MenuItemInput!]
-  copoun: [Float!]
+  lineItems: [LineItemsInput!]
+  coupons: [Float!]
   id: Int!
 }
 

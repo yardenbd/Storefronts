@@ -4,6 +4,7 @@ import { CreateOrderInput } from './dto/create-order.input';
 import { UpdateOrderInput } from './dto/update-order.input';
 import { Order } from './entities/order.entity';
 import { Repository } from 'typeorm';
+import { IOrderInput } from 'src/types';
 @Injectable()
 export class OrdersService {
   constructor(
@@ -11,7 +12,7 @@ export class OrdersService {
     private ordersRepository: Repository<Order>,
   ) {}
 
-  create(newOrderArgs: CreateOrderInput): Promise<Order> {
+  create(newOrderArgs: IOrderInput): Promise<Order> {
     const newOrder = this.ordersRepository.create(newOrderArgs);
     return this.ordersRepository.save(newOrder);
   }

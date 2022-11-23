@@ -1,9 +1,23 @@
-import { ObjectType, Field, InterfaceType, Int } from '@nestjs/graphql';
+import {
+  ObjectType,
+  Field,
+  InterfaceType,
+  Int,
+  InputType,
+} from '@nestjs/graphql';
 import { MenuItem } from 'src/restraunt/entities/restraunt.entity';
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
+@InputType()
+export class LineItemsInput {
+  @Field(() => String)
+  mealName: string;
+  @Field(() => Int)
+  price: number;
+}
+
 @InterfaceType()
-class LineItems {
+export class LineItems {
   @Field(() => String)
   mealName: string;
   @Field(() => Int)
@@ -24,7 +38,6 @@ export class Order {
   customerAddress: string;
   @Field(() => [LineItems])
   @Column({
-    array: true,
     type: 'json',
     nullable: false,
   })
@@ -32,4 +45,7 @@ export class Order {
   @Field(() => [Number], { nullable: true })
   @Column('int', { array: true, nullable: true })
   coupons?: [number];
+  @Field(() => Int)
+  @Column()
+  totalPrice: number;
 }

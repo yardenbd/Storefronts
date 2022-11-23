@@ -1,14 +1,14 @@
 import { InputType, Int, Field } from '@nestjs/graphql';
-import { MenuItemInput } from 'src/restraunt/dto/create-restraunt.input';
+import { LineItemsInput } from '../entities/order.entity';
 
 @InputType()
 export class CreateOrderInput {
-  @Field()
+  @Field(() => String)
   customerName: string;
-  @Field()
+  @Field(() => String)
   customerAddress: string;
-  @Field(() => [MenuItemInput])
-  orderDetails: [MenuItemInput];
+  @Field(() => [LineItemsInput])
+  lineItems: [LineItemsInput];
   @Field(() => [Number], { nullable: true })
-  copoun?: [number];
+  coupons?: [number];
 }

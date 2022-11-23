@@ -3,6 +3,8 @@ import { OrdersService } from './orders.service';
 import { Order } from './entities/order.entity';
 import { CreateOrderInput } from './dto/create-order.input';
 import { UpdateOrderInput } from './dto/update-order.input';
+import { calcOrderPrice, calcTotalMealsQuantity } from 'src/utils';
+import { IOrderInput } from 'src/types';
 
 @Resolver(() => Order)
 export class OrdersResolver {
@@ -10,7 +12,16 @@ export class OrdersResolver {
 
   @Mutation(() => Order, { name: 'createOrder' })
   createOrder(@Args('createOrderInput') createOrderInput: CreateOrderInput) {
-    return this.ordersService.create(createOrderInput);
+    const { lineItems, coupons } = createOrderInput;
+    const totalMeals = calcTotalMealsQuantity(lineItems);
+    const totalPrice = calcOrderPrice(coupons, lineItems);
+    const createOrderObject: IOrderInput = {
+      ...createOrderInput,
+      totalPrice,
+      lineItems: totalMeals,
+    };
+    console.log('createOrderObject', createOrderObject);
+    return this.ordersService.create(createOrderObject);
   }
 
   @Query(() => [Order], { name: 'orders' })
