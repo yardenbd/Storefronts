@@ -8,11 +8,9 @@ import {
 import { CreateRestrauntInput } from './dto/create-restraunt.input';
 import { RestrauntResolver } from './restraunt.resolver';
 import { RestrauntService } from './restraunt.service';
-import { v4 as uuidv4 } from 'uuid';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { createDbConfig } from '../config/db.config';
 import { Restraunt } from './entities/restraunt.entity';
-import { RestrauntModule } from './restraunt.module';
 import { UpdateRestrauntInput } from './dto/update-restraunt.input';
 
 describe('Restraunt Resolver', () => {
@@ -78,7 +76,7 @@ describe('Restraunt Resolver', () => {
   });
   describe('Find all based on zip', () => {
     it('should find and return a customer invoice', async () => {
-      const response = await resolver.findBasedOnZipCode(222);
+      const response = await resolver.findBasedOnZipCode(4245);
       expect(response).toEqual(
         expect.arrayContaining([expect.objectContaining(desiredRestraunt)]),
       );
@@ -105,7 +103,7 @@ describe('Restraunt Resolver', () => {
   describe('Delete restraunt', () => {
     it('should updates a single restraunt ', async () => {
       const response = await resolver.removeRestraunt(restrauntObj.id);
-      expect(response).toMatchObject(restrauntObj);
+      expect(response).toMatchObject(desiredRestraunt);
     });
   });
 });

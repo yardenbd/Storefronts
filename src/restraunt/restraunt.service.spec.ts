@@ -11,6 +11,7 @@ import {
   restrauntObj,
   restrauntTestId,
   desiredMenuItem,
+  storefrontArray,
 } from '../constants';
 export type MockType<T> = {
   [P in keyof T]?: jest.Mock<{}>;
@@ -64,7 +65,7 @@ describe('RestrauntService', () => {
     it('should create a new restraunt', async () => {
       restrauntRepositoryMock.save.mockReturnValue(restrauntObj);
       const newRestarunt = await service.create(restrauntObj);
-      expect(newRestarunt).toMatchObject(restrauntObj);
+      expect(newRestarunt).toMatchObject(desiredRestraunt);
     });
   });
   describe('Find all', () => {
@@ -87,8 +88,8 @@ describe('RestrauntService', () => {
   });
   describe('Find all based on zip', () => {
     it('should get a restraunt nearby based on zip code', async () => {
-      restrauntRepositoryMock.findBy.mockReturnValue([restrauntObj]);
-      const response = await service.findBasedOnZipCode(222);
+      restrauntRepositoryMock.findBy.mockReturnValue(storefrontArray);
+      const response = await service.findBasedOnZipCode(4245);
       expect(response).toEqual(
         expect.arrayContaining([expect.objectContaining(desiredRestraunt)]),
       );
@@ -118,7 +119,7 @@ describe('RestrauntService', () => {
       const deleted = { raw: [], affected: expect.any(Number) };
       restrauntRepositoryMock.delete.mockReturnValue(deleted);
       const response = await service.remove(restrauntObj.id);
-      expect(response).toMatchObject(restrauntObj);
+      expect(response).toMatchObject(deleted);
     });
   });
 });
