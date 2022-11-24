@@ -37,6 +37,7 @@ type Query {
   getMenu(id: String!): [MenuItem!]!
   findOneStorefront(id: String!): Storefront!
   FindAllCoupons(query: Pagination!): [Float!]!
+  findOneCoupon(id: CopounInput!): Int!
 }
 
 input Pagination {
@@ -44,12 +45,19 @@ input Pagination {
   skip: Int!
 }
 
+input CopounInput {
+  id: String!
+  coupon: Int!
+}
+
 type Mutation {
   createStorefront(createStorefrontInput: CreateStorefrontInput!): Storefront!
   updateStorefront(updateStorefrontInput: CreateStorefrontInput!): Storefront!
   removeStorefront(id: String!): Storefront!
-  createCopoun(CreateCouponInput: CreateCopounInput!): Boolean!
   createOrder(createOrderInput: CreateOrderInput!): Order!
+  createCopoun(CreateCouponInput: CopounInput!): Int!
+  updateCoupon(updateCouponInput: UpdateCopounInput!): Int!
+  removeCoupon(CopounInput: CopounInput!): Int!
 }
 
 input CreateStorefrontInput {
@@ -66,11 +74,6 @@ input MenuItemInput {
   price: Int!
 }
 
-input CreateCopounInput {
-  id: String!
-  coupon: Float!
-}
-
 input CreateOrderInput {
   customerName: String!
   customerAddress: String!
@@ -81,4 +84,10 @@ input CreateOrderInput {
 input LineItemsInput {
   mealName: String!
   price: Int!
+}
+
+input UpdateCopounInput {
+  id: String!
+  coupon: Int!
+  couponToUpdate: Int!
 }

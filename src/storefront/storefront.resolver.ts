@@ -3,7 +3,6 @@ import { StorefrontService } from './storefront.service';
 import { MenuItem, Storefront } from './entities/storefront.entity';
 import { CreateStorefrontInput } from './dto/create-storefront.input';
 import { UpdateStorefrontInput } from './dto/update-storefront.input';
-import { CreateCopounInput } from '../copoun/dto/create-copoun.input';
 import { Pagination } from '../types';
 @Resolver(() => Storefront)
 export class StorefrontResolver {
@@ -56,20 +55,5 @@ export class StorefrontResolver {
   @Query(() => Storefront, { name: 'findOneStorefront' })
   findOne(@Args('id', { type: () => String }) id: string) {
     return this.storefrontService.findOne(id);
-  }
-  @Mutation(() => Boolean)
-  createCopoun(
-    @Args('CreateCouponInput') createCouponInput: CreateCopounInput,
-  ) {
-    return this.storefrontService.createCoupon(createCouponInput);
-  }
-  @Query(() => [Number], { name: 'FindAllCoupons' })
-  findAllCoupons(
-    @Args('query', {
-      type: () => Pagination,
-    })
-    query: Pagination,
-  ) {
-    return this.storefrontService.findAllCoupons(query);
   }
 }

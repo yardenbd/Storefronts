@@ -9,6 +9,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { OrdersModule } from './orders/orders.module';
 import { ConfigModule } from '@nestjs/config';
 import { createDbConfig } from './config/db.config';
+import { CouponModule } from './copoun/coupon.module';
 @Module({
   controllers: [AppController],
   providers: [AppService],
@@ -25,6 +26,7 @@ import { createDbConfig } from './config/db.config';
     }),
     StorefrontModule,
     OrdersModule,
+    CouponModule,
   ],
 })
 export class AppModule {}

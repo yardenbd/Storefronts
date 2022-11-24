@@ -4,7 +4,6 @@ import { CreateStorefrontInput } from './dto/create-storefront.input';
 import { UpdateStorefrontInput } from './dto/update-storefront.input';
 import { Repository, Any } from 'typeorm';
 import { Storefront } from './entities/storefront.entity';
-import { CreateCopounInput } from 'src/copoun/dto/create-copoun.input';
 import { Pagination } from '../types';
 @Injectable()
 export class StorefrontService {
@@ -29,11 +28,9 @@ export class StorefrontService {
       where: { id },
     });
   }
-  async findAll(query: Pagination = { skip: 0, take: 5 }) {
+  findAll(query: Pagination = { skip: 0, take: 5 }) {
     const { skip, take } = query;
-    const t = await this.storefrontRepository.find({ take, skip });
-    console.log('t', t);
-    return t;
+    return this.storefrontRepository.find({ take, skip });
   }
 
   findOne(id: string) {
@@ -47,22 +44,5 @@ export class StorefrontService {
 
   remove(id: string) {
     return this.storefrontRepository.delete({ id });
-  }
-  createCoupon(createCouponInput: CreateCopounInput) {
-    const updateQuery =
-      'update storefront set coupons = array_append(coupons,$1) where id =$2';
-    return this.storefrontRepository.query(updateQuery, [
-      createCouponInput.coupon,
-      createCouponInput.id,
-    ]);
-  }
-  findAllCoupons(query: Pagination = { skip: 0, take: 5 }) {
-    const { skip, take } = query;
-    return this.storefrontRepository
-      .createQueryBuilder()
-      .select('coupons')
-      .skip(skip)
-      .take(take)
-      .execute();
   }
 }
