@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, Any } from 'typeorm';
-import { CopounInput } from 'src/copoun/dto/create-copoun.input';
+import { CopounInput } from '../copoun/dto/create-copoun.input';
 import { Pagination } from '../types';
-import { Storefront } from 'src/storefront/entities/storefront.entity';
+import { Storefront } from '../storefront/entities/storefront.entity';
 @Injectable()
 export class CouponService {
   constructor(

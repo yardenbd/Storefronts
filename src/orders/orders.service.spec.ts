@@ -1,10 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { orderObject, desiredOrder } from '../constants';
+import {
+  orderObject,
+  desiredOrder,
+  desiredCalcOrderDetails,
+} from '../constants';
 import { IOrderInput, MockType } from '../types';
 import { OrdersService } from './orders.service';
-import { Order } from './entities/order.entity';
+import { CalcOrderInput, Order } from './entities/order.entity';
 import { calcOrderPrice, calcTotalMealsQuantity } from '../utils';
 
 describe('OrdersService', () => {
@@ -15,23 +19,6 @@ describe('OrdersService', () => {
   };
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      // imports: [
-      //   TypeOrmModule.forRootAsync({
-      //     useFactory: () => ({
-      //       type: 'postgres',
-      //       host: 'localhost',
-      //       name: 'yarden',
-      //       port: 5432,
-      //       username: 'postgres',
-      //       password: 'Yb212081046',
-      //       database: 'postgres',
-      //       entities: [Storefront],
-      //       synchronize: true,
-      //       logging: false,
-      //     }),
-      //   }),
-      //   TypeOrmModule.forFeature([Storefront]),
-      // ],
       providers: [
         OrdersService,
         {
@@ -58,6 +45,21 @@ describe('OrdersService', () => {
       };
       const newRestarunt = await service.create(createOrderObject);
       expect(newRestarunt).toMatchObject(desiredOrder);
+    });
+  });
+  describe('Calcultae order totals', () => {
+    it('should Calcultae order totals', async () => {
+      const orderInput: CalcOrderInput = {
+        lineItems: [
+          { mealName: 'Sushi', price: 70 },
+          { mealName: 'Fish', price: 80 },
+          { mealName: 'Fish', price: 80 },
+          { mealName: 'Fries', price: 30 },
+        ],
+        coupons: [10, 20, 30],
+      };
+      const order = service.calcOrderTotals(orderInput);
+      expect(order).toMatchObject(desiredCalcOrderDetails);
     });
   });
 });

@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
-import * as request from 'supertest';
-import { AppModule } from './../src/app.module';
+import request = require('supertest');
+import { AppModule } from '../src/app.module';
 
-describe('AppController (e2e)', () => {
+describe('CustomerResolver (e2e)', () => {
   let app: INestApplication;
 
   beforeEach(async () => {
@@ -15,10 +15,30 @@ describe('AppController (e2e)', () => {
     await app.init();
   });
 
-  it('/ (GET)', () => {
-    return request(app.getHttpServer())
-      .get('/')
-      .expect(200)
-      .expect('Hello World!');
+  afterAll(async () => {
+    await app.close();
+  });
+
+  const gql = '/graphql';
+
+  describe('createCustomer', () => {
+    it('should get all Storefronts', () => {
+      console.log('here');
+      return request(app.getHttpServer())
+        .post(gql)
+        .send({
+          query:
+            'query {storefrontFindAll(query: { take: 10, skip: 0 }) { id name address image zip coupons menu { mealName price } } } ',
+        })
+        .expect(200)
+        .expect((res) => {
+          expect(res.body.data.createCustomer).toEqual({
+            name: 'John Doe',
+            email: 'john.doe@example.com',
+            phone: '145677312965',
+            address: '123 Road, Springfied, MO',
+          });
+        });
+    });
   });
 });

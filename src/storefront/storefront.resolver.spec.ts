@@ -13,7 +13,7 @@ import { UpdateStorefrontInput } from './dto/update-storefront.input';
 
 describe('Storefront Resolver', () => {
   let resolver: StorefrontResolver;
-  const storeFrontServiceMock = {
+  const storefrontServiceMock = {
     create: jest.fn((storefront: CreateStorefrontInput) => storefront),
     findAll: jest.fn(() => [storefrontObj]),
     findOne: jest.fn((id: string) => storefrontObj),
@@ -34,7 +34,7 @@ describe('Storefront Resolver', () => {
         StorefrontResolver,
         {
           provide: StorefrontService,
-          useValue: storeFrontServiceMock,
+          useValue: storefrontServiceMock,
         },
       ],
     }).compile();
@@ -52,7 +52,6 @@ describe('Storefront Resolver', () => {
   describe('Find all Storefronts', () => {
     it('should find and return a list of customers', async () => {
       const allRestratuns = await resolver.findAll(pagintaionObj);
-      console.log('allRestratuns', allRestratuns);
       expect(allRestratuns).toEqual(
         expect.arrayContaining([expect.objectContaining(desiredStorefront)]),
       );
@@ -61,7 +60,6 @@ describe('Storefront Resolver', () => {
   describe('Find one menu', () => {
     it('should find and return a storefront menu', async () => {
       const response = await resolver.getStorefrontMenu(storefrontObj.id);
-      console.log('response', response);
       expect(response).toEqual(
         expect.arrayContaining([expect.objectContaining(desiredMenuItem)]),
       );

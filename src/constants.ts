@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { CreateOrderInput } from './orders/dto/create-order.input';
+import { CalcOrder, LineItems } from './orders/entities/order.entity';
 import { Storefront } from './storefront/entities/storefront.entity';
 import { Pagination } from './types';
 export const storefrontTestId = '81eca88a-a730-4785-99cf-97757fd0f151';
@@ -68,6 +69,18 @@ export const desiredOrder: CreateOrderInput = {
   customerName: expect.any(String),
   lineItems: menuItemsExpectations,
   coupons: [10, 20],
+};
+
+export const desiredLineItem: LineItems = {
+  mealName: expect.any(String),
+  quantity: expect.any(Number),
+};
+
+export const desiredCalcOrderDetails: CalcOrder = {
+  totalMeals: expect.arrayContaining([
+    expect.objectContaining(desiredLineItem),
+  ]),
+  totalPrice: expect.any(Number),
 };
 export const storefrontArray = [storefrontObj, storefrontObj2, storefrontObj3];
 

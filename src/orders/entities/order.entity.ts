@@ -1,11 +1,6 @@
-import {
-  ObjectType,
-  Field,
-  InterfaceType,
-  Int,
-  InputType,
-} from '@nestjs/graphql';
+import { ObjectType, Field, Int, InputType } from '@nestjs/graphql';
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { CreateOrderInput } from '../dto/create-order.input';
 
 @InputType()
 export class LineItemsInput {
@@ -15,12 +10,27 @@ export class LineItemsInput {
   price: number;
 }
 
-@InterfaceType()
+@ObjectType()
 export class LineItems {
   @Field(() => String)
   mealName: string;
   @Field(() => Int)
   quantity: number;
+}
+
+@InputType()
+export class CalcOrderInput {
+  @Field(() => [LineItemsInput])
+  lineItems: LineItemsInput[];
+  @Field(() => [Number], { nullable: true })
+  coupons?: number[];
+}
+@ObjectType()
+export class CalcOrder {
+  @Field(() => [LineItems])
+  totalMeals: LineItems[];
+  @Field(() => Number)
+  totalPrice: number;
 }
 @ObjectType()
 @Entity()

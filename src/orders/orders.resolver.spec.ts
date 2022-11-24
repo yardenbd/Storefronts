@@ -1,34 +1,33 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { desiredOrder, orderObject } from '../constants';
+import {
+  desiredCalcOrderDetails,
+  desiredOrder,
+  orderObject,
+} from '../constants';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { createDbConfig } from '../config/db.config';
 import { OrdersResolver } from './orders.resolver';
-import { Order } from './entities/order.entity';
+import { CalcOrder, CalcOrderInput, Order } from './entities/order.entity';
 import { CreateOrderInput } from './dto/create-order.input';
 import { OrdersService } from './orders.service';
 import { ConfigModule } from '@nestjs/config';
 
 describe('Storefront Resolver', () => {
   let resolver: OrdersResolver;
+  const orderResolverMock = {
+    create: jest.fn((order: CreateOrderInput) => orderObject),
+    calcOrderTotals: jest.fn(
+      (orderCalcInput: CalcOrderInput) => desiredCalcOrderDetails,
+    ),
+  };
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         OrdersResolver,
         {
           provide: OrdersService,
-          useFactory: () => ({
-            create: jest.fn((order: CreateOrderInput) => orderObject),
-          }),
+          useValue: orderResolverMock,
         },
-      ],
-      imports: [
-        ConfigModule.forRoot({
-          isGlobal: true,
-        }),
-        TypeOrmModule.forRootAsync({
-          useFactory: async () => createDbConfig(),
-        }),
-        TypeOrmModule.forFeature([Order]),
       ],
     }).compile();
     resolver = module.get<OrdersResolver>(OrdersResolver);
@@ -36,10 +35,26 @@ describe('Storefront Resolver', () => {
   it('should be defined', () => {
     expect(resolver).toBeDefined();
   });
-  describe('create', () => {
+  describe('Create order', () => {
     it('should create a Stroefront', async () => {
       const order = await resolver.createOrder(orderObject);
       expect(order).toMatchObject(desiredOrder);
+    });
+  });
+  describe('Calcultae order totals', () => {
+    it('should Calcultae order totals', async () => {
+      const orderInput: CalcOrderInput = {
+        lineItems: [
+          { mealName: 'Sushi', price: 70 },
+          { mealName: 'Fish', price: 80 },
+          { mealName: 'Fish', price: 80 },
+          { mealName: 'Fries', price: 30 },
+        ],
+        coupons: [10, 20, 30],
+      };
+      const order = resolver.calcOrderTotals(orderInput);
+      console.log('order', order);
+      expect(order).toMatchObject(desiredCalcOrderDetails);
     });
   });
 });

@@ -2,11 +2,6 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-interface LineItems {
-  mealName: String!
-  quantity: Int!
-}
-
 type MenuItem {
   mealName: String!
   price: Int!
@@ -20,6 +15,16 @@ type Storefront {
   menu: [MenuItem!]!
   zip: [Int!]!
   coupons: [Int!]!
+}
+
+type LineItems {
+  mealName: String!
+  quantity: Int!
+}
+
+type CalcOrder {
+  totalMeals: [LineItems!]!
+  totalPrice: Float!
 }
 
 type Order {
@@ -36,6 +41,7 @@ type Query {
   findByZip(zip: Float!, query: Pagination!): [Storefront!]!
   getMenu(id: String!): [MenuItem!]!
   findOneStorefront(id: String!): Storefront!
+  CalcOrder(createOrderInput: CalcOrderInput!): CalcOrder!
   FindAllCoupons(query: Pagination!): [Float!]!
   findOneCoupon(copounInput: CopounInput!): Int!
 }
@@ -43,6 +49,16 @@ type Query {
 input Pagination {
   take: Int!
   skip: Int!
+}
+
+input CalcOrderInput {
+  lineItems: [LineItemsInput!]!
+  coupons: [Float!]
+}
+
+input LineItemsInput {
+  mealName: String!
+  price: Int!
 }
 
 input CopounInput {
@@ -79,11 +95,6 @@ input CreateOrderInput {
   customerAddress: String!
   lineItems: [LineItemsInput!]!
   coupons: [Float!]
-}
-
-input LineItemsInput {
-  mealName: String!
-  price: Int!
 }
 
 input UpdateCopounInput {
