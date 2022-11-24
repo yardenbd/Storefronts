@@ -9,47 +9,33 @@ import {
 import { CreateStorefrontInput } from './dto/create-storefront.input';
 import { StorefrontResolver } from './storefront.resolver';
 import { StorefrontService } from './storefront.service';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { createDbConfig } from '../config/db.config';
-import { Storefront } from './entities/storefront.entity';
 import { UpdateStorefrontInput } from './dto/update-storefront.input';
-import { ConfigModule } from '@nestjs/config';
 
 describe('Storefront Resolver', () => {
   let resolver: StorefrontResolver;
+  const storeFrontServiceMock = {
+    create: jest.fn((storefront: CreateStorefrontInput) => storefront),
+    findAll: jest.fn(() => [storefrontObj]),
+    findOne: jest.fn((id: string) => storefrontObj),
+    removeStorefront: jest.fn((id: string) => storefrontObj),
+    remove: jest.fn((id: string) => storefrontObj),
+    updateStorefront: jest.fn(
+      (updateStorefrontObj: UpdateStorefrontInput) => updateStorefrontObj,
+    ),
+    update: jest.fn(
+      (updateStorefrontObj: UpdateStorefrontInput) => updateStorefrontObj,
+    ),
+    getMenu: jest.fn(() => [desiredMenuItem]),
+    findBasedOnZipCode: jest.fn((zip: number) => [storefrontObj]),
+  };
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         StorefrontResolver,
         {
           provide: StorefrontService,
-          useFactory: () => ({
-            create: jest.fn((storefront: CreateStorefrontInput) => storefront),
-            findAll: jest.fn(() => [storefrontObj]),
-            findOne: jest.fn((id: string) => storefrontObj),
-            removeStorefront: jest.fn((id: string) => storefrontObj),
-            remove: jest.fn((id: string) => storefrontObj),
-            updateStorefront: jest.fn(
-              (updateStorefrontObj: UpdateStorefrontInput) =>
-                updateStorefrontObj,
-            ),
-            update: jest.fn(
-              (updateStorefrontObj: UpdateStorefrontInput) =>
-                updateStorefrontObj,
-            ),
-            getMenu: jest.fn(() => [desiredMenuItem]),
-            findBasedOnZipCode: jest.fn((zip: number) => [storefrontObj]),
-          }),
+          useValue: storeFrontServiceMock,
         },
-      ],
-      imports: [
-        ConfigModule.forRoot({
-          isGlobal: true,
-        }),
-        TypeOrmModule.forRootAsync({
-          useFactory: async () => createDbConfig(),
-        }),
-        TypeOrmModule.forFeature([Storefront]),
       ],
     }).compile();
     resolver = module.get<StorefrontResolver>(StorefrontResolver);

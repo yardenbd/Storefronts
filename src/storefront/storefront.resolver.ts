@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args, Parent } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { StorefrontService } from './storefront.service';
 import { MenuItem, Storefront } from './entities/storefront.entity';
 import { CreateStorefrontInput } from './dto/create-storefront.input';
@@ -40,7 +40,6 @@ export class StorefrontResolver {
 
   @Query(() => [Storefront], { name: 'findByZip' })
   findBasedOnZipCode(
-    @Parent()
     @Args('zip', { type: () => Number })
     zip: number,
     @Args('query', {
