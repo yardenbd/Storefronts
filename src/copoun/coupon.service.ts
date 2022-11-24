@@ -52,8 +52,14 @@ export class CouponService {
   }
   async findOne(couponToFind: CopounInput) {
     const { coupon, id } = couponToFind;
-    return this.storefrontRepository.find({
-      where: { coupons: Any[coupon], id },
-    });
+    const selectedCoupon = await this.storefrontRepository
+      .createQueryBuilder()
+      .select('coupons')
+      .where('id = :id', { id })
+      .andWhere(':coupon = ANY(coupons)', { coupon })
+      .execute()
+      .then((response) => response[0].coupons);
+
+    return selectedCoupon[0];
   }
 }

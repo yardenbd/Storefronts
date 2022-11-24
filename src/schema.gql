@@ -37,7 +37,7 @@ type Query {
   getMenu(id: String!): [MenuItem!]!
   findOneStorefront(id: String!): Storefront!
   FindAllCoupons(query: Pagination!): [Float!]!
-  findOneCoupon(id: CopounInput!): Int!
+  findOneCoupon(copounInput: CopounInput!): Int!
 }
 
 input Pagination {

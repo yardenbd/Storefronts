@@ -35,7 +35,9 @@ export class CouponResolver {
     return this.couponService.findAll(query);
   }
   @Query(() => Int, { name: 'findOneCoupon' })
-  findOne(@Args('id', { type: () => CopounInput }) copounInput: CopounInput) {
+  findOne(
+    @Args('copounInput', { type: () => CopounInput }) copounInput: CopounInput,
+  ) {
     return this.couponService.findOne(copounInput);
   }
 }
