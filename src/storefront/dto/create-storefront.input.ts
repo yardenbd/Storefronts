@@ -10,7 +10,7 @@ export class MenuItemInput {
 }
 
 @InputType()
-export class CreateRestrauntInput {
+export class CreateStorefrontInput {
   @IsAlpha()
   @Field()
   name: string;

@@ -1,11 +1,4 @@
-import {
-  TypeOrmModuleAsyncOptions,
-  TypeOrmModuleOptions,
-} from '@nestjs/typeorm';
-import { EntitySchema } from 'typeorm';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { existsSync } from 'fs';
-import { resolve } from 'path';
+import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 
 export const createDbConfig = (): TypeOrmModuleOptions => {
   return {

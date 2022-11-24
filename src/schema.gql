@@ -12,7 +12,7 @@ type MenuItem {
   price: Int!
 }
 
-type Restraunt {
+type Storefront {
   id: String!
   name: String!
   address: String!
@@ -32,10 +32,10 @@ type Order {
 }
 
 type Query {
-  restrauntFindAll(query: Pagination!): [Restraunt!]!
-  findByZip(zip: Float!, query: Pagination!): [Restraunt!]!
+  storefrontFindAll(query: Pagination!): [Storefront!]!
+  findByZip(zip: Float!, query: Pagination!): [Storefront!]!
   getMenu(id: String!): [MenuItem!]!
-  findOneRestraunt(id: String!): Restraunt!
+  findOneStorefront(id: String!): Storefront!
   FindAllCoupons(query: Pagination!): [Float!]!
 }
 
@@ -45,14 +45,14 @@ input Pagination {
 }
 
 type Mutation {
-  createRestraunt(createRestrauntInput: CreateRestrauntInput!): Restraunt!
-  updateRestraunt(updateRestrauntInput: CreateRestrauntInput!): Restraunt!
-  removeRestraunt(id: String!): Restraunt!
+  createStorefront(createStorefrontInput: CreateStorefrontInput!): Storefront!
+  updateStorefront(updateStorefrontInput: CreateStorefrontInput!): Storefront!
+  removeStorefront(id: String!): Storefront!
   createCopoun(CreateCouponInput: CreateCopounInput!): Boolean!
   createOrder(createOrderInput: CreateOrderInput!): Order!
 }
 
-input CreateRestrauntInput {
+input CreateStorefrontInput {
   name: String!
   address: String!
   image: String!

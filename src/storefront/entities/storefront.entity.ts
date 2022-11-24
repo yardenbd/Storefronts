@@ -1,4 +1,4 @@
-import { ObjectType, Field, InterfaceType, Int } from '@nestjs/graphql';
+import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 @ObjectType()
 export class MenuItem {
@@ -11,7 +11,7 @@ export class MenuItem {
 
 @ObjectType()
 @Entity()
-export class Restraunt {
+export class Storefront {
   @Field()
   @PrimaryGeneratedColumn('uuid')
   id: string;

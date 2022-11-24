@@ -8,7 +8,7 @@ import { CreateOrderInput } from './dto/create-order.input';
 import { OrdersService } from './orders.service';
 import { ConfigModule } from '@nestjs/config';
 
-describe('Restraunt Resolver', () => {
+describe('Storefront Resolver', () => {
   let resolver: OrdersResolver;
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({

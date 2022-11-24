@@ -1,10 +1,10 @@
 import { ApolloDriverConfig, ApolloDriver } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
-import { join, resolve } from 'path';
+import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { RestrauntModule } from './restraunt/restraunt.module';
+import { StorefrontModule } from './storefront/storefront.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { OrdersModule } from './orders/orders.module';
 import { ConfigModule } from '@nestjs/config';
@@ -23,7 +23,7 @@ import { createDbConfig } from './config/db.config';
     TypeOrmModule.forRootAsync({
       useFactory: async () => createDbConfig(),
     }),
-    RestrauntModule,
+    StorefrontModule,
     OrdersModule,
   ],
 })

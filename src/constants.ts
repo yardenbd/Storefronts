@@ -1,9 +1,9 @@
 import { v4 as uuidv4 } from 'uuid';
 import { CreateOrderInput } from './orders/dto/create-order.input';
-import { Restraunt } from './restraunt/entities/restraunt.entity';
+import { Storefront } from './storefront/entities/storefront.entity';
 import { Pagination } from './types';
-export const restrauntTestId = '81eca88a-a730-4785-99cf-97757fd0f151';
-export const restrauntObj: Restraunt = {
+export const storefrontTestId = '81eca88a-a730-4785-99cf-97757fd0f151';
+export const storefrontObj: Storefront = {
   address: 'Tel Aviv',
   coupons: [10, 20, 30],
   image: 'https://picsum.photos/200/300',
@@ -17,7 +17,7 @@ export const restrauntObj: Restraunt = {
   ],
   zip: [223, 143, 111, 546, 982, 412],
 };
-const restrauntObj2: Restraunt = {
+const storefrontObj2: Storefront = {
   address: 'Ramat Gan',
   coupons: [20, 30, 40],
   image: 'https://picsum.photos/200/300',
@@ -31,7 +31,7 @@ const restrauntObj2: Restraunt = {
   ],
   zip: [4245, 143, 234, 7751, 223, 412],
 };
-const restrauntObj3: Restraunt = {
+const storefrontObj3: Storefront = {
   address: 'Givaataim',
   coupons: [15, 25, 35],
   image: 'https://picsum.photos/200/300',
@@ -69,9 +69,9 @@ export const desiredOrder: CreateOrderInput = {
   lineItems: menuItemsExpectations,
   coupons: [10, 20],
 };
-export const storefrontArray = [restrauntObj, restrauntObj2, restrauntObj3];
+export const storefrontArray = [storefrontObj, storefrontObj2, storefrontObj3];
 
-export const desiredRestraunt = {
+export const desiredStorefront = {
   coupons: expect.arrayContaining([expect.any(Number)]),
   zip: expect.arrayContaining([expect.any(Number)]),
   menu: menuItemsExpectations,
