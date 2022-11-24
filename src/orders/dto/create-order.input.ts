@@ -1,6 +1,6 @@
 import { InputType, Field } from '@nestjs/graphql';
 import { IsAlpha } from 'class-validator';
-import { LineItemsInput } from '../entities/lineItems.entity';
+import { OrderDetailInput } from '../entities/orderDetail.entity';
 @InputType()
 export class CreateOrderInput {
   @IsAlpha()
@@ -9,8 +9,8 @@ export class CreateOrderInput {
   @IsAlpha()
   @Field(() => String)
   customerAddress: string;
-  @Field(() => [LineItemsInput])
-  lineItems: LineItemsInput[];
+  @Field(() => [OrderDetailInput])
+  lineItems: OrderDetailInput[];
   @Field(() => [Number], { nullable: true })
   coupons?: number[];
 }

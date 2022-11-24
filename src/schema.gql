@@ -17,7 +17,7 @@ type Storefront {
   coupons: [Int!]!
 }
 
-type LineItems {
+type OrderDetail {
   mealName: String!
   price: Int!
 }
@@ -26,12 +26,12 @@ type Order {
   orderId: String!
   customerName: String!
   customerAddress: String!
-  lineItems: [LineItems!]!
+  lineItems: [OrderDetail!]!
   coupons: [Float!]
 }
 
 type CalcOrder {
-  totalMeals: [LineItems!]!
+  totalMeals: [OrderDetail!]!
   totalPrice: Float!
 }
 
@@ -82,11 +82,11 @@ input MenuItemInput {
 input CreateOrderInput {
   customerName: String!
   customerAddress: String!
-  lineItems: [LineItemsInput!]!
+  lineItems: [OrderDetailInput!]!
   coupons: [Float!]
 }
 
-input LineItemsInput {
+input OrderDetailInput {
   mealName: String!
   price: Int!
 }

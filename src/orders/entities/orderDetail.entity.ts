@@ -1,7 +1,7 @@
 import { Field, InputType, Int, ObjectType } from '@nestjs/graphql';
 
 @InputType()
-export class LineItemsInput {
+export class OrderDetailInput {
   @Field(() => String)
   mealName: string;
   @Field(() => Int)
@@ -9,7 +9,7 @@ export class LineItemsInput {
 }
 
 @ObjectType()
-export class LineItems {
+export class OrderDetail {
   @Field(() => String)
   mealName: string;
   @Field(() => Int)

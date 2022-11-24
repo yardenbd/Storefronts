@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { CreateOrderInput } from './orders/dto/create-order.input';
 import { CalcOrder } from './orders/entities/calcOrder.entity';
-import { LineItems } from './orders/entities/lineItems.entity';
+import { OrderDetail } from './orders/entities/orderDetail.entity';
 import { Order } from './orders/entities/order.entity';
 import { Storefront } from './storefront/entities/storefront.entity';
 import { Pagination } from './types';
@@ -83,7 +83,7 @@ export const desiredOrder: CreateOrderInput = {
   coupons: [10, 20],
 };
 
-export const desiredLineItem: LineItems = {
+export const desiredLineItem: OrderDetail = {
   mealName: expect.any(String),
   price: expect.any(Number),
 };
