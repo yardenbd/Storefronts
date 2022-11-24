@@ -13,5 +13,5 @@ export class LineItems {
   @Field(() => String)
   mealName: string;
   @Field(() => Int)
-  quantity: number;
+  price: number;
 }

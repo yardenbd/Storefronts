@@ -15,21 +15,13 @@ export class OrdersResolver {
   })
   calcOrderTotals(
     @Args('createOrderInput')
-    CalcOrdetInput: CalcOrderInput,
+    orderId: string,
   ) {
-    return this.ordersService.calcOrderTotals(CalcOrdetInput);
+    return this.ordersService.calcOrderTotals(orderId);
   }
 
   @Mutation(() => Order, { name: 'createOrder' })
   createOrder(@Args('createOrderInput') createOrderInput: CreateOrderInput) {
-    const { lineItems, coupons } = createOrderInput;
-    const totalMeals = calcTotalMealsQuantity(lineItems);
-    const totalPrice = calcOrderPrice(coupons, lineItems);
-    const createOrderObject: IOrderInput = {
-      ...createOrderInput,
-      totalPrice,
-      lineItems: totalMeals,
-    };
-    return this.ordersService.create(createOrderObject);
+    return this.ordersService.create(createOrderInput);
   }
 }

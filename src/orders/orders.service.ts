@@ -5,6 +5,7 @@ import { CalcOrderInput } from './entities/calcOrder.entity';
 import { Repository } from 'typeorm';
 import { IOrderInput } from '../types';
 import { calcOrderPrice, calcTotalMealsQuantity } from '../utils';
+import { CreateOrderInput } from './dto/create-order.input';
 @Injectable()
 export class OrdersService {
   constructor(
@@ -12,13 +13,18 @@ export class OrdersService {
     private ordersRepository: Repository<Order>,
   ) {}
 
-  create(newOrderArgs: IOrderInput): Promise<Order> {
+  create(newOrderArgs: CreateOrderInput): Promise<Order> {
     const newOrder = this.ordersRepository.create(newOrderArgs);
     return this.ordersRepository.save(newOrder);
   }
 
-  calcOrderTotals(CalcOrdetInput: CalcOrderInput) {
-    const { lineItems, coupons } = CalcOrdetInput;
+  async calcOrderTotals(orderId: string) {
+    const selectedOrder = await this.ordersRepository.findOne({
+      where: { orderId },
+    });
+    const { lineItems, coupons } = selectedOrder;
+    console.log('lineItems', lineItems);
+    console.log('coupons', coupons);
     const totalMeals = calcTotalMealsQuantity(lineItems);
     const totalPrice = calcOrderPrice(coupons, lineItems);
     return { totalMeals, totalPrice };

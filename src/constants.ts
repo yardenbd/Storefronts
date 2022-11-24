@@ -1,10 +1,19 @@
 import { v4 as uuidv4 } from 'uuid';
+
 import { CreateOrderInput } from './orders/dto/create-order.input';
 import { CalcOrder } from './orders/entities/calcOrder.entity';
 import { LineItems } from './orders/entities/lineItems.entity';
+import { Order } from './orders/entities/order.entity';
 import { Storefront } from './storefront/entities/storefront.entity';
 import { Pagination } from './types';
 export const storefrontTestId = '81eca88a-a730-4785-99cf-97757fd0f151';
+export const desiredMenuItem = {
+  mealName: expect.any(String),
+  price: expect.any(Number),
+};
+const menuItemsExpectations = expect.arrayContaining([
+  expect.objectContaining(desiredMenuItem),
+]);
 export const storefrontObj: Storefront = {
   address: 'Tel Aviv',
   coupons: [10, 20, 30],
@@ -48,7 +57,16 @@ const storefrontObj3: Storefront = {
   zip: [4245, 143, 442, 7751, 523, 662],
 };
 
-export const orderObject: CreateOrderInput = {
+export const desiredStorefront = {
+  coupons: expect.arrayContaining([expect.any(Number)]),
+  zip: expect.arrayContaining([expect.any(Number)]),
+  menu: menuItemsExpectations,
+  address: expect.any(String),
+  id: expect.any(String),
+  image: expect.any(String),
+};
+export const orderObject: Order = {
+  orderId: uuidv4(),
   customerAddress: 'Tel Aviv',
   customerName: 'Yarden',
   lineItems: [
@@ -58,13 +76,6 @@ export const orderObject: CreateOrderInput = {
   ],
   coupons: [10, 20],
 };
-export const desiredMenuItem = {
-  mealName: expect.any(String),
-  price: expect.any(Number),
-};
-const menuItemsExpectations = expect.arrayContaining([
-  expect.objectContaining(desiredMenuItem),
-]);
 export const desiredOrder: CreateOrderInput = {
   customerAddress: expect.any(String),
   customerName: expect.any(String),
@@ -74,7 +85,7 @@ export const desiredOrder: CreateOrderInput = {
 
 export const desiredLineItem: LineItems = {
   mealName: expect.any(String),
-  quantity: expect.any(Number),
+  price: expect.any(Number),
 };
 
 export const desiredCalcOrderDetails: CalcOrder = {
@@ -85,12 +96,4 @@ export const desiredCalcOrderDetails: CalcOrder = {
 };
 export const storefrontArray = [storefrontObj, storefrontObj2, storefrontObj3];
 
-export const desiredStorefront = {
-  coupons: expect.arrayContaining([expect.any(Number)]),
-  zip: expect.arrayContaining([expect.any(Number)]),
-  menu: menuItemsExpectations,
-  address: expect.any(String),
-  id: expect.any(String),
-  image: expect.any(String),
-};
 export const pagintaionObj: Pagination = { skip: 0, take: 10 };

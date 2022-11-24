@@ -1,8 +1,8 @@
 import { LineItemsInput } from './orders/entities/lineItems.entity';
-import { ILineItems } from './types';
+import { ITotalOrder } from './types';
 
 export const calcTotalMealsQuantity = (lineItems: LineItemsInput[]) => {
-  const totalMeals: ILineItems[] = [];
+  const totalMeals: ITotalOrder[] = [];
   lineItems.forEach((currentMeal) => {
     const alreadyInTotalMeals = totalMeals.find(
       (meal) => meal.mealName === currentMeal.mealName,

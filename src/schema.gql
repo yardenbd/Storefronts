@@ -19,7 +19,7 @@ type Storefront {
 
 type LineItems {
   mealName: String!
-  quantity: Int!
+  price: Int!
 }
 
 type Order {
@@ -28,7 +28,6 @@ type Order {
   customerAddress: String!
   lineItems: [LineItems!]!
   coupons: [Float!]
-  totalPrice: Int!
 }
 
 type CalcOrder {
@@ -41,7 +40,7 @@ type Query {
   findByZip(zip: Float!, query: Pagination!): [Storefront!]!
   getMenu(id: String!): [MenuItem!]!
   findOneStorefront(id: String!): Storefront!
-  CalcOrder(createOrderInput: CalcOrderInput!): CalcOrder!
+  CalcOrder(createOrderInput: String!): CalcOrder!
   FindAllCoupons(query: Pagination!): [Float!]!
   findOneCoupon(copounInput: CopounInput!): Int!
 }
@@ -49,16 +48,6 @@ type Query {
 input Pagination {
   take: Int!
   skip: Int!
-}
-
-input CalcOrderInput {
-  lineItems: [LineItemsInput!]!
-  coupons: [Float!]
-}
-
-input LineItemsInput {
-  mealName: String!
-  price: Int!
 }
 
 input CopounInput {
@@ -95,6 +84,11 @@ input CreateOrderInput {
   customerAddress: String!
   lineItems: [LineItemsInput!]!
   coupons: [Float!]
+}
+
+input LineItemsInput {
+  mealName: String!
+  price: Int!
 }
 
 input UpdateCopounInput {

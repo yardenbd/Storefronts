@@ -5,16 +5,15 @@ export type MockType<T> = {
   [P in keyof T]?: jest.Mock<unknown>;
 };
 
-export interface ILineItems {
+export interface ITotalOrder {
   mealName: string;
   quantity: number;
   price: number;
 }
 
-type OmmitedCreateOrderInput = Omit<CreateOrderInput, 'lineItems'>;
-export interface IOrderInput extends OmmitedCreateOrderInput {
+export interface IOrderInput {
   totalPrice: number;
-  lineItems: ILineItems[];
+  lineItems: ITotalOrder[];
 }
 
 @InputType()

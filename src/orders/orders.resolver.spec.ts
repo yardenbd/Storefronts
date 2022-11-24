@@ -40,16 +40,7 @@ describe('Storefront Resolver', () => {
   });
   describe('Calcultae order totals', () => {
     it('should Calcultae order totals', async () => {
-      const orderInput: CalcOrderInput = {
-        lineItems: [
-          { mealName: 'Sushi', price: 70 },
-          { mealName: 'Fish', price: 80 },
-          { mealName: 'Fish', price: 80 },
-          { mealName: 'Fries', price: 30 },
-        ],
-        coupons: [10, 20, 30],
-      };
-      const order = resolver.calcOrderTotals(orderInput);
+      const order = resolver.calcOrderTotals(orderObject.orderId);
       console.log('order', order);
       expect(order).toMatchObject(desiredCalcOrderDetails);
     });

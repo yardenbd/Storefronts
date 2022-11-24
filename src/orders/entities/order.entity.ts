@@ -24,7 +24,4 @@ export class Order {
   @Field(() => [Number], { nullable: true })
   @Column('int', { array: true, nullable: true })
   coupons?: number[];
-  @Field(() => Int)
-  @Column()
-  totalPrice: number;
 }
