@@ -4,13 +4,10 @@ import {
   desiredOrder,
   orderObject,
 } from '../constants';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { createDbConfig } from '../config/db.config';
+import { CalcOrderInput } from './entities/calcOrder.entity';
 import { OrdersResolver } from './orders.resolver';
-import { CalcOrder, CalcOrderInput, Order } from './entities/order.entity';
 import { CreateOrderInput } from './dto/create-order.input';
 import { OrdersService } from './orders.service';
-import { ConfigModule } from '@nestjs/config';
 
 describe('Storefront Resolver', () => {
   let resolver: OrdersResolver;

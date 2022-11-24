@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import { CreateOrderInput } from './orders/dto/create-order.input';
-import { CalcOrder, LineItems } from './orders/entities/order.entity';
+import { CalcOrder } from './orders/entities/calcOrder.entity';
+import { LineItems } from './orders/entities/lineItems.entity';
 import { Storefront } from './storefront/entities/storefront.entity';
 import { Pagination } from './types';
 export const storefrontTestId = '81eca88a-a730-4785-99cf-97757fd0f151';

@@ -22,11 +22,6 @@ type LineItems {
   quantity: Int!
 }
 
-type CalcOrder {
-  totalMeals: [LineItems!]!
-  totalPrice: Float!
-}
-
 type Order {
   orderId: String!
   customerName: String!
@@ -34,6 +29,11 @@ type Order {
   lineItems: [LineItems!]!
   coupons: [Float!]
   totalPrice: Int!
+}
+
+type CalcOrder {
+  totalMeals: [LineItems!]!
+  totalPrice: Float!
 }
 
 type Query {

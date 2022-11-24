@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CalcOrderInput, Order } from './entities/order.entity';
+import { Order } from './entities/order.entity';
+import { CalcOrderInput } from './entities/calcOrder.entity';
 import { Repository } from 'typeorm';
 import { IOrderInput } from '../types';
 import { calcOrderPrice, calcTotalMealsQuantity } from '../utils';

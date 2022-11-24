@@ -8,8 +8,9 @@ import {
 } from '../constants';
 import { IOrderInput, MockType } from '../types';
 import { OrdersService } from './orders.service';
-import { CalcOrderInput, Order } from './entities/order.entity';
+import { Order } from './entities/order.entity';
 import { calcOrderPrice, calcTotalMealsQuantity } from '../utils';
+import { CalcOrderInput } from './entities/calcOrder.entity';
 
 describe('OrdersService', () => {
   let service: OrdersService;

@@ -1,6 +1,6 @@
 import { InputType, Field } from '@nestjs/graphql';
-import { LineItemsInput } from '../entities/order.entity';
 import { IsAlpha } from 'class-validator';
+import { LineItemsInput } from '../entities/lineItems.entity';
 @InputType()
 export class CreateOrderInput {
   @IsAlpha()

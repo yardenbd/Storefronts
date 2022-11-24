@@ -1,9 +1,10 @@
 import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
 import { OrdersService } from './orders.service';
-import { CalcOrder, CalcOrderInput, Order } from './entities/order.entity';
+import { Order } from './entities/order.entity';
 import { CreateOrderInput } from './dto/create-order.input';
 import { calcOrderPrice, calcTotalMealsQuantity } from '../utils';
 import { IOrderInput } from '../types';
+import { CalcOrder, CalcOrderInput } from './entities/calcOrder.entity';
 
 @Resolver(() => Order)
 export class OrdersResolver {

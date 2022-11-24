@@ -1,4 +1,4 @@
-import { LineItemsInput } from './orders/entities/order.entity';
+import { LineItemsInput } from './orders/entities/lineItems.entity';
 import { ILineItems } from './types';
 
 export const calcTotalMealsQuantity = (lineItems: LineItemsInput[]) => {
