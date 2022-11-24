@@ -1,11 +1,18 @@
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
+import {
+  Resolver,
+  Query,
+  Mutation,
+  Args,
+  ResolveField,
+  Parent,
+} from '@nestjs/graphql';
 import { RestrauntService } from './restraunt.service';
 import { MenuItem, Restraunt } from './entities/restraunt.entity';
 import { CreateRestrauntInput } from './dto/create-restraunt.input';
 import { UpdateRestrauntInput } from './dto/update-restraunt.input';
 import { CreateCopounInput } from '../copoun/dto/create-copoun.input';
 import { Pagination } from '../types';
-
+import { ConfigService } from '@nestjs/config/dist';
 @Resolver(() => Restraunt)
 export class RestrauntResolver {
   constructor(private readonly restrauntService: RestrauntService) {}
@@ -41,6 +48,7 @@ export class RestrauntResolver {
 
   @Query(() => [Restraunt], { name: 'findByZip' })
   findBasedOnZipCode(
+    @Parent()
     @Args('zip', { type: () => Number })
     zip: number,
     @Args('query', {

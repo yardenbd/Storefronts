@@ -1,6 +1,6 @@
 import { ObjectType, Field, InterfaceType, Int } from '@nestjs/graphql';
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
-@InterfaceType()
+@ObjectType()
 export class MenuItem {
   @Field(() => String)
   mealName: string;

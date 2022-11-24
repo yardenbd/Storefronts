@@ -2,14 +2,14 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-interface MenuItem {
-  mealName: String!
-  price: Int!
-}
-
 interface LineItems {
   mealName: String!
   quantity: Int!
+}
+
+type MenuItem {
+  mealName: String!
+  price: Int!
 }
 
 type Restraunt {

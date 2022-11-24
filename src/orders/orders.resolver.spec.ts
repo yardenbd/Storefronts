@@ -6,6 +6,7 @@ import { OrdersResolver } from './orders.resolver';
 import { Order } from './entities/order.entity';
 import { CreateOrderInput } from './dto/create-order.input';
 import { OrdersService } from './orders.service';
+import { ConfigModule } from '@nestjs/config';
 
 describe('Restraunt Resolver', () => {
   let resolver: OrdersResolver;
@@ -21,7 +22,12 @@ describe('Restraunt Resolver', () => {
         },
       ],
       imports: [
-        TypeOrmModule.forRootAsync(createDbConfig<Order>(Order)),
+        ConfigModule.forRoot({
+          isGlobal: true,
+        }),
+        TypeOrmModule.forRootAsync({
+          useFactory: async () => createDbConfig(),
+        }),
         TypeOrmModule.forFeature([Order]),
       ],
     }).compile();

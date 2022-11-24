@@ -13,6 +13,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { createDbConfig } from '../config/db.config';
 import { Restraunt } from './entities/restraunt.entity';
 import { UpdateRestrauntInput } from './dto/update-restraunt.input';
+import { ConfigModule } from '@nestjs/config';
 
 describe('Restraunt Resolver', () => {
   let resolver: RestrauntResolver;
@@ -40,7 +41,12 @@ describe('Restraunt Resolver', () => {
         },
       ],
       imports: [
-        TypeOrmModule.forRootAsync(createDbConfig<Restraunt>(Restraunt)),
+        ConfigModule.forRoot({
+          isGlobal: true,
+        }),
+        TypeOrmModule.forRootAsync({
+          useFactory: async () => createDbConfig(),
+        }),
         TypeOrmModule.forFeature([Restraunt]),
       ],
     }).compile();
