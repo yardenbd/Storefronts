@@ -1,22 +1,31 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Order } from './entities/order.entity';
+import { Orders } from './entities/order.entity';
 import { Repository } from 'typeorm';
 import { calcOrderPrice, calcTotalMealsQuantity } from '../utils';
 import { CreateOrderInput } from './dto/create-order.input';
-import { OrderDetail } from '../order-details/entities/order-details.entity';
+import { OrderDetail } from 'src/order-details/entities/order-detail.entity';
+import { v4 as uuidv4 } from 'uuid';
 @Injectable()
 export class OrdersService {
   constructor(
-    @InjectRepository(Order)
-    private ordersRepository: Repository<Order>,
+    @InjectRepository(Orders)
+    private ordersRepository: Repository<Orders>,
     @InjectRepository(OrderDetail)
-    private orderDetailRepository: Repository<OrderDetail>,
+    private orderDetailsRepository: Repository<OrderDetail>,
   ) {}
 
-  create(newOrderArgs: CreateOrderInput): Promise<Order> {
-    this.orderDetailRepository.save({});
-    return this.ordersRepository.save(newOrderArgs);
+  async create(newOrderArgs: CreateOrderInput): Promise<Orders> {
+    const orderId = uuidv4();
+    const { lineItems } = newOrderArgs;
+    lineItems.forEach(async (item) => {
+      await this.orderDetailsRepository.save({
+        orderId: orderId,
+        quantity: 2,
+        menuItemId: item.id,
+      });
+    });
+    return this.ordersRepository.save({ id: orderId, ...newOrderArgs });
   }
 
   async calcOrderTotals(orderId: string) {

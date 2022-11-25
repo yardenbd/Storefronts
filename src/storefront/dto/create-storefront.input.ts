@@ -23,7 +23,6 @@ export class CreateStorefrontInput {
   image: string;
   @Field(() => [Number])
   zip: number[];
-
   @Field(() => [MenuItemInput], { defaultValue: [] })
   menu: MenuItemInput[];
   @Field(() => [CouponInputType], { defaultValue: [] })

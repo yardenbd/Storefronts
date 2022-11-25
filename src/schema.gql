@@ -23,17 +23,18 @@ type Storefront {
   coupon: [Coupon!]!
 }
 
-type OrderDetail {
-  id: String!
-  quantity: Int!
-}
-
-type Order {
+type Orders {
   id: String!
   customerName: String!
   customerAddress: String!
   coupons: [Coupon!]!
-  order: [OrderDetail!]!
+}
+
+type OrderDetail {
+  id: String!
+  quantity: Int!
+  menuItemId: String!
+  orderId: String!
 }
 
 type CalcOrder {
@@ -49,6 +50,8 @@ type Query {
   FindAllCoupons(query: Pagination!): [Float!]!
   findOneCoupon(copounInput: CopounInput!): Int!
   menuItem(id: Int!): MenuItem!
+  orderDetails: [OrderDetail!]!
+  orderDetail(id: Int!): OrderDetail!
 }
 
 input Pagination {
@@ -65,13 +68,16 @@ type Mutation {
   createStorefront(createStorefrontInput: CreateStorefrontInput!): Storefront!
   updateStorefront(updateStorefrontInput: CreateStorefrontInput!): Storefront!
   removeStorefront(id: String!): Storefront!
-  createOrder(createOrderInput: CreateOrderInput!): Order!
+  createOrder(createOrderInput: CreateOrderInput!): Orders!
   createCopoun(CreateCouponInput: CopounInput!): Int!
   updateCoupon(updateCouponInput: UpdateCopounInput!): Int!
   removeCoupon(CopounInput: CopounInput!): Int!
   createMenuItem(createMenuItemInput: CreateMenuItemInput!): MenuItem!
   updateMenuItem(updateMenuItemInput: UpdateMenuItemInput!): MenuItem!
   removeMenuItem(id: Int!): MenuItem!
+  createOrderDetail(createOrderDetailInput: CreateOrderDetailInput!): OrderDetail!
+  updateOrderDetail(updateOrderDetailInput: UpdateOrderDetailInput!): OrderDetail!
+  removeOrderDetail(id: Int!): OrderDetail!
 }
 
 input CreateStorefrontInput {
@@ -95,11 +101,12 @@ input CouponInputType {
 input CreateOrderInput {
   customerName: String!
   customerAddress: String!
-  orderDetail: [OrderDetailInput!]!
+  lineItems: [DetailsInput!]!
   coupons: [CouponInputType!]
 }
 
-input OrderDetailInput {
+input DetailsInput {
+  id: String!
   mealName: String!
   price: Int!
 }
@@ -119,4 +126,16 @@ input UpdateMenuItemInput {
   """Example field (placeholder)"""
   exampleField: Int
   id: Int!
+}
+
+input CreateOrderDetailInput {
+  id: String!
+  quantity: Int!
+  orderid: String!
+}
+
+input UpdateOrderDetailInput {
+  id: String!
+  quantity: Int
+  orderid: String
 }

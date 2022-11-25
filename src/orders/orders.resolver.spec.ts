@@ -1,9 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import {
-  desiredCalcOrderDetails,
-  desiredOrder,
-  orderObject,
-} from '../constants';
+import { desiredCalcDetails, desiredOrder, orderObject } from '../constants';
 import { CalcOrderInput } from './entities/calcOrder.entity';
 import { OrdersResolver } from './orders.resolver';
 import { CreateOrderInput } from './dto/create-order.input';
@@ -14,7 +10,7 @@ describe('Storefront Resolver', () => {
   const orderResolverMock = {
     create: jest.fn((order: CreateOrderInput) => orderObject),
     calcOrderTotals: jest.fn(
-      (orderCalcInput: CalcOrderInput) => desiredCalcOrderDetails,
+      (orderCalcInput: CalcOrderInput) => desiredCalcDetails,
     ),
   };
   beforeEach(async () => {
@@ -42,7 +38,7 @@ describe('Storefront Resolver', () => {
     it('should Calcultae order totals', async () => {
       const order = resolver.calcOrderTotals(orderObject.orderId);
       console.log('order', order);
-      expect(order).toMatchObject(desiredCalcOrderDetails);
+      expect(order).toMatchObject(desiredCalcDetails);
     });
   });
 });

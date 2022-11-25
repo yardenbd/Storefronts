@@ -80,7 +80,7 @@ export const desiredLineItem = {
   price: expect.any(Number),
 };
 
-export const desiredCalcOrderDetails: CalcOrder = {
+export const desiredCalcDetails: CalcOrder = {
   totalMeals: expect.arrayContaining([
     expect.objectContaining(desiredLineItem),
   ]),

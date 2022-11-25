@@ -5,15 +5,29 @@ import { UpdateStorefrontInput } from './dto/update-storefront.input';
 import { Repository, Any } from 'typeorm';
 import { Storefront } from './entities/storefront.entity';
 import { Pagination } from '../types';
+import { MenuItem } from 'src/menu-item/entities/menu-item.entity';
+import { v4 as uuidv4 } from 'uuid';
 @Injectable()
 export class StorefrontService {
   constructor(
     @InjectRepository(Storefront)
     private storefrontRepository: Repository<Storefront>,
+    @InjectRepository(MenuItem)
+    private menuItemRepository: Repository<MenuItem>,
   ) {}
   create(createStorefrontInput: CreateStorefrontInput): Promise<Storefront> {
-    console.log('new', createStorefrontInput);
-    return this.storefrontRepository.save(createStorefrontInput);
+    const { menu } = createStorefrontInput;
+    const menuItemWithId = menu.map((item) => {
+      return {
+        ...item,
+        id: uuidv4(),
+      };
+    });
+    const storefrontToCreate: CreateStorefrontInput = {
+      ...createStorefrontInput,
+      menu: menuItemWithId,
+    };
+    return this.storefrontRepository.save(storefrontToCreate);
   }
   findBasedOnZipCode(zip: number, query: Pagination) {
     const { skip, take } = query;
@@ -24,9 +38,8 @@ export class StorefrontService {
     });
   }
   getMenu(id: string) {
-    return this.storefrontRepository.findOne({
-      select: ['menu'],
-      where: { id },
+    return this.menuItemRepository.find({
+      where: { storefront: { id } },
     });
   }
   findAll(query: Pagination = { skip: 0, take: 5 }) {

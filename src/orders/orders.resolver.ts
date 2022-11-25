@@ -1,12 +1,12 @@
 import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
 import { OrdersService } from './orders.service';
-import { Order } from './entities/order.entity';
+import { Orders } from './entities/order.entity';
 import { CreateOrderInput } from './dto/create-order.input';
 import { calcOrderPrice, calcTotalMealsQuantity } from '../utils';
 import { IOrderInput } from '../types';
 import { CalcOrder, CalcOrderInput } from './entities/calcOrder.entity';
 
-@Resolver(() => Order)
+@Resolver(() => Orders)
 export class OrdersResolver {
   constructor(private readonly ordersService: OrdersService) {}
 
@@ -20,7 +20,7 @@ export class OrdersResolver {
     return this.ordersService.calcOrderTotals(orderId);
   }
 
-  @Mutation(() => Order, { name: 'createOrder' })
+  @Mutation(() => Orders, { name: 'createOrder' })
   createOrder(@Args('createOrderInput') createOrderInput: CreateOrderInput) {
     return this.ordersService.create(createOrderInput);
   }

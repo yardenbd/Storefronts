@@ -1,18 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import {
-  orderObject,
-  desiredOrder,
-  desiredCalcOrderDetails,
-} from '../constants';
+import { orderObject, desiredOrder, desiredCalcDetails } from '../constants';
 import { MockType } from '../types';
 import { OrdersService } from './orders.service';
-import { Order } from './entities/order.entity';
+import { Orders } from './entities/order.entity';
 
 describe('OrdersService', () => {
   let service: OrdersService;
-  const orderRepositoryMock: MockType<Repository<Order>> = {
+  const orderRepositoryMock: MockType<Repository<Orders>> = {
     create: jest.fn(),
     save: jest.fn(),
     findOne: jest.fn(),
@@ -22,7 +18,7 @@ describe('OrdersService', () => {
       providers: [
         OrdersService,
         {
-          provide: getRepositoryToken(Order),
+          provide: getRepositoryToken(Orders),
           useValue: orderRepositoryMock,
         },
       ],
@@ -43,7 +39,7 @@ describe('OrdersService', () => {
     it('should Calcultae order totals', async () => {
       orderRepositoryMock.findOne.mockReturnValue(orderObject);
       const order = await service.calcOrderTotals(orderObject.orderId);
-      expect(order).toMatchObject(desiredCalcOrderDetails);
+      expect(order).toMatchObject(desiredCalcDetails);
     });
   });
 });

@@ -1,9 +1,9 @@
 import { Field, InputType, Int, ObjectType } from '@nestjs/graphql';
-import { OrderDetailInput } from './orderDetail.entity';
+import { DetailsInput } from './orderDetail.entity';
 @InputType()
 export class CalcOrderInput {
-  @Field(() => [OrderDetailInput])
-  orderDetail: OrderDetailInput[];
+  @Field(() => [DetailsInput])
+  orderDetail: DetailsInput[];
   @Field(() => [Number], { nullable: true })
   coupons?: number[];
 }
