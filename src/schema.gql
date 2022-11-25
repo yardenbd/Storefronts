@@ -34,7 +34,6 @@ type OrderDetail {
   id: String!
   quantity: Int!
   menuItemId: String!
-  orderId: String!
 }
 
 type CalcOrder {

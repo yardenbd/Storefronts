@@ -15,17 +15,17 @@ export class OrdersService {
     private orderDetailsRepository: Repository<OrderDetail>,
   ) {}
 
-  async create(newOrderArgs: CreateOrderInput): Promise<Orders> {
+  async create(newOrderArgs: CreateOrderInput) {
     const orderId = uuidv4();
+    await this.ordersRepository.save({ id: orderId, ...newOrderArgs });
     const { lineItems } = newOrderArgs;
     lineItems.forEach(async (item) => {
       await this.orderDetailsRepository.save({
-        orderId: orderId,
-        quantity: 2,
+        orderId,
+        quantity: 3,
         menuItemId: item.id,
       });
     });
-    return this.ordersRepository.save({ id: orderId, ...newOrderArgs });
   }
 
   async calcOrderTotals(orderId: string) {
