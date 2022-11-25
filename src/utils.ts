@@ -1,9 +1,9 @@
 import { OrderDetailInput } from './orders/entities/orderDetail.entity';
 import { ITotalOrder } from './types';
 
-export const calcTotalMealsQuantity = (lineItems: OrderDetailInput[]) => {
+export const calcTotalMealsQuantity = (orderDetail: OrderDetailInput[]) => {
   const totalMeals: ITotalOrder[] = [];
-  lineItems.forEach((currentMeal) => {
+  orderDetail.forEach((currentMeal) => {
     const alreadyInTotalMeals = totalMeals.find(
       (meal) => meal.mealName === currentMeal.mealName,
     );
@@ -22,9 +22,9 @@ export const calcTotalMealsQuantity = (lineItems: OrderDetailInput[]) => {
 
 export const calcOrderPrice = (
   coupons: number[] = [],
-  lineItems: OrderDetailInput[],
+  orderDetail: OrderDetailInput[],
 ) => {
-  const totalPriceBeforeCoupons: number = lineItems
+  const totalPriceBeforeCoupons: number = orderDetail
     .map((meal) => meal.price)
     .reduce((accumulator, currentValue) => accumulator + currentValue);
   const couponsTotalPrice = coupons.reduce(

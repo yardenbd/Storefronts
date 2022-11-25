@@ -1,9 +1,10 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { StorefrontService } from './storefront.service';
-import { MenuItem, Storefront } from './entities/storefront.entity';
+import { Storefront } from './entities/storefront.entity';
 import { CreateStorefrontInput } from './dto/create-storefront.input';
 import { UpdateStorefrontInput } from './dto/update-storefront.input';
 import { Pagination } from '../types';
+import { MenuItem } from '../menu-item/entities/menu-item.entity';
 @Resolver(() => Storefront)
 export class StorefrontResolver {
   constructor(private readonly storefrontService: StorefrontService) {}

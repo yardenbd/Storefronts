@@ -1,27 +1,26 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
-import { OrderDetail } from './orderDetail.entity';
+import { OrderDetail } from '../../order-details/entities/order-details.entity';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Coupon } from '../../copoun/entities/coupon.entity';
 
 @ObjectType()
 @Entity()
 export class Order {
   @Field()
-  @Column()
   @PrimaryGeneratedColumn('uuid')
-  orderId: string;
+  id: string;
   @Field()
   @Column()
   customerName: string;
   @Field()
   @Column()
   customerAddress: string;
+  @Field(() => [Coupon])
+  @Column('json', { nullable: true })
+  coupons?: Coupon[];
   @Field(() => [OrderDetail])
-  @Column({
-    type: 'json',
-    nullable: false,
+  @OneToMany(() => OrderDetail, (orderDetail) => orderDetail.order, {
+    cascade: true,
   })
-  lineItems: OrderDetail[];
-  @Field(() => [Number], { nullable: true })
-  @Column('int', { array: true, nullable: true })
-  coupons?: number[];
+  order: OrderDetail[];
 }

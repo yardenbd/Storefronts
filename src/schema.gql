@@ -3,8 +3,14 @@
 # ------------------------------------------------------
 
 type MenuItem {
+  id: String!
   mealName: String!
   price: Int!
+}
+
+type Coupon {
+  id: String!
+  discount: Int!
 }
 
 type Storefront {
@@ -12,26 +18,25 @@ type Storefront {
   name: String!
   address: String!
   image: String!
-  menu: [MenuItem!]!
   zip: [Int!]!
-  coupons: [Int!]!
+  menu: [MenuItem!]!
+  coupon: [Coupon!]!
 }
 
 type OrderDetail {
-  mealName: String!
-  price: Int!
+  id: String!
+  quantity: Int!
 }
 
 type Order {
-  orderId: String!
+  id: String!
   customerName: String!
   customerAddress: String!
-  lineItems: [OrderDetail!]!
-  coupons: [Float!]
+  coupons: [Coupon!]!
+  order: [OrderDetail!]!
 }
 
 type CalcOrder {
-  totalMeals: [OrderDetail!]!
   totalPrice: Float!
 }
 
@@ -43,6 +48,7 @@ type Query {
   CalcOrder(createOrderInput: String!): CalcOrder!
   FindAllCoupons(query: Pagination!): [Float!]!
   findOneCoupon(copounInput: CopounInput!): Int!
+  menuItem(id: Int!): MenuItem!
 }
 
 input Pagination {
@@ -63,15 +69,18 @@ type Mutation {
   createCopoun(CreateCouponInput: CopounInput!): Int!
   updateCoupon(updateCouponInput: UpdateCopounInput!): Int!
   removeCoupon(CopounInput: CopounInput!): Int!
+  createMenuItem(createMenuItemInput: CreateMenuItemInput!): MenuItem!
+  updateMenuItem(updateMenuItemInput: UpdateMenuItemInput!): MenuItem!
+  removeMenuItem(id: Int!): MenuItem!
 }
 
 input CreateStorefrontInput {
   name: String!
   address: String!
   image: String!
-  menu: [MenuItemInput!] = []
   zip: [Float!]!
-  coupons: [Float!]!
+  menu: [MenuItemInput!] = []
+  coupon: [CouponInputType!] = []
 }
 
 input MenuItemInput {
@@ -79,11 +88,15 @@ input MenuItemInput {
   price: Int!
 }
 
+input CouponInputType {
+  discount: Int!
+}
+
 input CreateOrderInput {
   customerName: String!
   customerAddress: String!
-  lineItems: [OrderDetailInput!]!
-  coupons: [Float!]
+  orderDetail: [OrderDetailInput!]!
+  coupons: [CouponInputType!]
 }
 
 input OrderDetailInput {
@@ -95,4 +108,15 @@ input UpdateCopounInput {
   id: String!
   coupon: Int!
   couponToUpdate: Int!
+}
+
+input CreateMenuItemInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateMenuItemInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
 }

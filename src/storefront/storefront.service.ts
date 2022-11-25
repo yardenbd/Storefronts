@@ -12,6 +12,7 @@ export class StorefrontService {
     private storefrontRepository: Repository<Storefront>,
   ) {}
   create(createStorefrontInput: CreateStorefrontInput): Promise<Storefront> {
+    console.log('new', createStorefrontInput);
     return this.storefrontRepository.save(createStorefrontInput);
   }
   findBasedOnZipCode(zip: number, query: Pagination) {

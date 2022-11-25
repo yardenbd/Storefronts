@@ -10,6 +10,8 @@ import { OrdersModule } from './orders/orders.module';
 import { ConfigModule } from '@nestjs/config';
 import { createDbConfig } from './config/db.config';
 import { CouponModule } from './copoun/coupon.module';
+import { MenuItemModule } from './menu-item/menu-item.module';
+import { OrderDetailsModule } from './order-details/order-details.module';
 @Module({
   controllers: [AppController],
   providers: [AppService],
@@ -27,6 +29,8 @@ import { CouponModule } from './copoun/coupon.module';
     StorefrontModule,
     OrdersModule,
     CouponModule,
+    MenuItemModule,
+    OrderDetailsModule,
   ],
 })
 export class AppModule {}

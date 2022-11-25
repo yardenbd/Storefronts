@@ -3,8 +3,12 @@ import { StorefrontService } from './storefront.service';
 import { StorefrontResolver } from './storefront.resolver';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Storefront } from './entities/storefront.entity';
+import { MenuItem } from 'src/menu-item/entities/menu-item.entity';
 @Module({
-  imports: [TypeOrmModule.forFeature([Storefront])],
+  imports: [
+    TypeOrmModule.forFeature([Storefront]),
+    TypeOrmModule.forFeature([MenuItem]),
+  ],
   providers: [StorefrontResolver, StorefrontService],
 })
 export class StorefrontModule {}

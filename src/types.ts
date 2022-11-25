@@ -13,7 +13,7 @@ export interface ITotalOrder {
 
 export interface IOrderInput {
   totalPrice: number;
-  lineItems: ITotalOrder[];
+  orderDetail: ITotalOrder[];
 }
 
 @InputType()

@@ -2,9 +2,6 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { CreateOrderInput } from './orders/dto/create-order.input';
 import { CalcOrder } from './orders/entities/calcOrder.entity';
-import { OrderDetail } from './orders/entities/orderDetail.entity';
-import { Order } from './orders/entities/order.entity';
-import { Storefront } from './storefront/entities/storefront.entity';
 import { Pagination } from './types';
 export const storefrontTestId = '81eca88a-a730-4785-99cf-97757fd0f151';
 export const desiredMenuItem = {
@@ -14,21 +11,21 @@ export const desiredMenuItem = {
 const menuItemsExpectations = expect.arrayContaining([
   expect.objectContaining(desiredMenuItem),
 ]);
-export const storefrontObj: Storefront = {
+export const storefrontObj = {
   address: 'Tel Aviv',
   coupons: [10, 20, 30],
   image: 'https://picsum.photos/200/300',
   id: uuidv4(),
   name: 'McDonalds',
   menu: [
-    { mealName: 'Burger', price: 50 },
-    { mealName: 'Fries', price: 30 },
-    { mealName: 'Chips', price: 30 },
-    { mealName: 'Big America', price: 60 },
+    { id: uuidv4(), mealName: 'Burger', price: 50 },
+    { id: uuidv4(), mealName: 'Fries', price: 30 },
+    { id: uuidv4(), mealName: 'Chips', price: 30 },
+    { id: uuidv4(), mealName: 'Big America', price: 60 },
   ],
   zip: [223, 143, 111, 546, 982, 412],
 };
-const storefrontObj2: Storefront = {
+const storefrontObj2 = {
   address: 'Ramat Gan',
   coupons: [20, 30, 40],
   image: 'https://picsum.photos/200/300',
@@ -42,7 +39,7 @@ const storefrontObj2: Storefront = {
   ],
   zip: [4245, 143, 234, 7751, 223, 412],
 };
-const storefrontObj3: Storefront = {
+const storefrontObj3 = {
   address: 'Givaataim',
   coupons: [15, 25, 35],
   image: 'https://picsum.photos/200/300',
@@ -65,25 +62,20 @@ export const desiredStorefront = {
   id: expect.any(String),
   image: expect.any(String),
 };
-export const orderObject: Order = {
+export const orderObject = {
   orderId: uuidv4(),
   customerAddress: 'Tel Aviv',
   customerName: 'Yarden',
-  lineItems: [
-    { mealName: 'Sushi', price: 70 },
-    { mealName: 'Nigiri', price: 40 },
-    { mealName: 'Noodels', price: 60 },
-  ],
   coupons: [10, 20],
 };
-export const desiredOrder: CreateOrderInput = {
+export const desiredOrder = {
   customerAddress: expect.any(String),
   customerName: expect.any(String),
-  lineItems: menuItemsExpectations,
+  orderDetail: menuItemsExpectations,
   coupons: [10, 20],
 };
 
-export const desiredLineItem: OrderDetail = {
+export const desiredLineItem = {
   mealName: expect.any(String),
   price: expect.any(Number),
 };

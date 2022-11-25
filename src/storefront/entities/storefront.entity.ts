@@ -1,13 +1,7 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
-@ObjectType()
-export class MenuItem {
-  @Field(() => String)
-  mealName: string;
-
-  @Field(() => Int)
-  price: number;
-}
+import { MenuItem } from '../../menu-item/entities/menu-item.entity';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Coupon } from 'src/copoun/entities/coupon.entity';
 
 @ObjectType()
 @Entity()
@@ -24,16 +18,17 @@ export class Storefront {
   @Field()
   @Column()
   image: string;
-  @Field(() => [MenuItem])
-  @Column({
-    type: 'json',
-    nullable: false,
-  })
-  menu: MenuItem[];
   @Field(() => [Int])
   @Column('int', { array: true, nullable: false })
   zip: number[];
-  @Field(() => [Int])
-  @Column('int', { array: true, nullable: false })
-  coupons: number[];
+  @Field(() => [MenuItem])
+  @OneToMany(() => MenuItem, (menuItem) => menuItem.storefront, {
+    cascade: true,
+  })
+  menu: MenuItem[];
+  @Field(() => [Coupon])
+  @OneToMany(() => Coupon, (coupon) => coupon.storefront, {
+    cascade: true,
+  })
+  coupon: Coupon[];
 }
