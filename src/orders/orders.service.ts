@@ -2,7 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Orders } from './entities/order.entity';
 import { Repository } from 'typeorm';
-import { calcOrderPrice, calcTotalMealsQuantity } from '../utils';
+import {
+  calcOrderPrice,
+  calcTotalMealsQuantity,
+  removeMealDuplication,
+} from '../utils';
 import { CreateOrderInput } from './dto/create-order.input';
 import { OrderDetail } from 'src/order-details/entities/order-detail.entity';
 import { v4 as uuidv4 } from 'uuid';
@@ -17,15 +21,22 @@ export class OrdersService {
 
   async create(newOrderArgs: CreateOrderInput) {
     const orderId = uuidv4();
-    await this.ordersRepository.save({ id: orderId, ...newOrderArgs });
+    const createdOrder = this.ordersRepository.create({
+      id: orderId,
+      ...newOrderArgs,
+    });
+    await this.ordersRepository.save(createdOrder);
     const { lineItems } = newOrderArgs;
-    lineItems.forEach(async (item) => {
+    const quantity = calcTotalMealsQuantity(lineItems);
+    const unduplicatedItems = removeMealDuplication(lineItems);
+    unduplicatedItems.forEach(async (item) => {
       await this.orderDetailsRepository.save({
         orderId,
-        quantity: 3,
+        quantity: quantity[item.mealName],
         menuItemId: item.id,
       });
     });
+    return createdOrder;
   }
 
   async calcOrderTotals(orderId: string) {

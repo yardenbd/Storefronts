@@ -4,11 +4,31 @@ import { ITotalOrder } from './types';
 export const calcTotalMealsQuantity = (orderDetail: DetailsInput[]) => {
   let counter = {};
 
-  orderDetail.forEach((meal) => {
-    const key = JSON.stringify(meal);
-    counter[key] = (counter[key] || 0) + 1;
-  });
+  orderDetail
+    .map((order) => order.mealName)
+    .forEach((meal) => {
+      counter[meal] = (counter[meal] || 0) + 1;
+    });
   return counter;
+};
+
+export const removeMealDuplication = (orderDetails: DetailsInput[]) => {
+  const unduplicatedItems: DetailsInput[] = [];
+
+  const unique = orderDetails.filter((meal) => {
+    const isDuplicate = unduplicatedItems.find(
+      (unduplicatedMeal) => unduplicatedMeal.id === meal.id,
+    );
+
+    if (!isDuplicate) {
+      unduplicatedItems.push(meal);
+
+      return true;
+    }
+
+    return false;
+  });
+  return unduplicatedItems;
 };
 
 export const calcOrderPrice = (
