@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { Coupon } from './copoun/entities/coupon.entity';
+import { MenuItem } from './menu-item/entities/menu-item.entity';
 
 import { CalcOrder } from './orders/entities/calcOrder.entity';
 import { CreateStorefrontInput } from './storefront/dto/create-storefront.input';
@@ -50,15 +51,15 @@ const storefrontObj2: Partial<Storefront> = {
   address: 'Ramat Gan',
   image: 'https://picsum.photos/200/300',
   name: 'BP',
-
+  id: uuidv4(),
   zip: [4245, 143, 234, 7751, 223, 412],
 };
 const storefrontObj3: Partial<Storefront> = {
   address: 'Givaataim',
   image: 'https://picsum.photos/200/300',
   name: 'Japanika',
-
   zip: [4245, 143, 442, 7751, 523, 662],
+  id: uuidv4(),
 };
 
 const desiredCoupons: Partial<Coupon> = {
@@ -112,3 +113,10 @@ export const updateStorefrontObj: UpdateStorefrontInput = {
   name: 'testname',
   address: 'testaddress',
 };
+
+export const menu: Omit<MenuItem, 'storefront'>[] = [
+  { id: uuidv4(), mealName: 'Sushi', price: 70 },
+  { id: uuidv4(), mealName: 'Nigiri', price: 40 },
+  { id: uuidv4(), mealName: 'Soup', price: 30 },
+  { id: uuidv4(), mealName: 'Noodels', price: 60 },
+];

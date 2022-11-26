@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { getRepositoryToken } from '@nestjs/typeorm';
+import { getRepositoryToken, TypeOrmModule } from '@nestjs/typeorm';
 import { Storefront } from './entities/storefront.entity';
 import { StorefrontService } from './storefront.service';
 import { Repository } from 'typeorm';
@@ -11,8 +11,14 @@ import {
   desiredMenuItem,
   storefrontArray,
   pagintaionObj,
+  createStorefrontObj,
+  desiredCreatedStorefront,
+  menu,
 } from '../constants';
-import { MockType } from 'src/types';
+import { MockType } from '../types';
+import { MenuItemService } from '../menu-item/menu-item.service';
+import { MenuItemModule } from '../menu-item/menu-item.module';
+import { MenuItem } from '../menu-item/entities/menu-item.entity';
 
 describe('StorefrontService', () => {
   let service: StorefrontService;
@@ -26,13 +32,21 @@ describe('StorefrontService', () => {
     findBy: jest.fn(),
     delete: jest.fn(),
   };
+  const menuItemRepositoryMock: MockType<Repository<MenuItem>> = {
+    findOne: jest.fn(),
+  };
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         StorefrontService,
+        MenuItemService,
         {
           provide: getRepositoryToken(Storefront),
           useValue: storefrontRepositoryMock,
+        },
+        {
+          provide: getRepositoryToken(MenuItem),
+          useValue: menuItemRepositoryMock,
         },
       ],
     }).compile();
@@ -43,15 +57,15 @@ describe('StorefrontService', () => {
   });
   describe('Create storefront', () => {
     it('should create a new storefront', async () => {
-      storefrontRepositoryMock.save.mockReturnValue(storefrontObj);
-      const newRestarunt = await service.create(storefrontObj);
-      expect(newRestarunt).toMatchObject(desiredStorefront);
+      storefrontRepositoryMock.save.mockReturnValue(createStorefrontObj);
+      const newRestarunt = await service.create(createStorefrontObj);
+      expect(newRestarunt).toMatchObject(desiredCreatedStorefront);
     });
   });
   describe('Find all', () => {
     it('should get all storefronts', async () => {
       storefrontRepositoryMock.find.mockReturnValue([storefrontObj]);
-      const allRestratuns = await service.findAll();
+      const allRestratuns = await service.findAll(pagintaionObj);
       expect(allRestratuns).toEqual(
         expect.arrayContaining([expect.objectContaining(desiredStorefront)]),
       );
@@ -59,7 +73,7 @@ describe('StorefrontService', () => {
   });
   describe('Find one menu', () => {
     it('should get a storefront menu', async () => {
-      storefrontRepositoryMock.findOne.mockReturnValue(storefrontObj.menu);
+      menuItemRepositoryMock.findOne.mockReturnValue(menu);
       const response = await service.getMenu(storefrontObj.id);
       expect(response).toEqual(
         expect.arrayContaining([expect.objectContaining(desiredMenuItem)]),
@@ -75,9 +89,10 @@ describe('StorefrontService', () => {
           }
         },
       );
-      storefrontRepositoryMock.findBy.mockReturnValue(
+      storefrontRepositoryMock.find.mockReturnValue(
         storefrontAvailableBasedOnZip,
       );
+
       const response = await service.findBasedOnZipCode(4245, pagintaionObj);
       expect(response).toEqual(
         expect.arrayContaining([expect.objectContaining(desiredStorefront)]),

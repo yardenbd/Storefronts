@@ -38,7 +38,7 @@ export class StorefrontService {
     });
   }
   getMenu(id: string) {
-    return this.menuItemRepository.find({
+    return this.menuItemRepository.findOne({
       where: { storefront: { id } },
     });
   }
