@@ -7,7 +7,7 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
-import { MenuItem } from 'src/menu-item/entities/menu-item.entity';
+import { MenuItem } from '../../menu-item/entities/menu-item.entity';
 @ObjectType()
 @Entity()
 export class OrderDetail {

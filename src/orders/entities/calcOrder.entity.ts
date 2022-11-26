@@ -1,21 +1,42 @@
 import { Field, InputType, Int, ObjectType } from '@nestjs/graphql';
-import { Coupon } from 'src/copoun/entities/coupon.entity';
-import { DetailsInput } from './orderDetail.entity';
+import { MenuItem } from '../../menu-item/entities/menu-item.entity';
+import { OrderDetailsInput } from './orderDetail.entity';
 @InputType()
 export class CalcOrderInput {
-  @Field(() => [DetailsInput])
-  orderDetail: DetailsInput[];
+  @Field(() => [OrderDetailsInput])
+  orderDetail: OrderDetailsInput[];
   @Field(() => [Number], { nullable: true })
   coupons?: number[];
 }
 @ObjectType()
 export class CalcOrder {
   @Field()
-  id: string;
+  mealName: string;
   @Field(() => Int)
   quantity: number;
   @Field(() => Int)
   price: number;
-  @Field(() => Coupon)
-  coupons: Pick<Coupon, 'discount'>[];
+  @Field(() => Int)
+  totalPrice?: number;
+  @Field(() => [Int])
+  coupons?: number[];
+}
+
+@ObjectType()
+class OrderItem {
+  @Field()
+  mealName: string;
+  @Field(() => Int)
+  quantity: number;
+  @Field(() => Int)
+  price: number;
+}
+@ObjectType()
+export class OrderInformation {
+  @Field(() => Int)
+  totalPrice: number;
+  @Field(() => [Int])
+  coupons: number[];
+  @Field(() => [OrderItem])
+  menuItems: OrderItem[];
 }

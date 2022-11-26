@@ -1,6 +1,5 @@
 import { InputType, Field, Int } from '@nestjs/graphql';
-import { IsAlpha } from 'class-validator';
-import { Coupon, CouponInputType } from '../../copoun/entities/coupon.entity';
+import { IsAlpha, IsAlphanumeric, Matches } from 'class-validator';
 @InputType()
 export class MenuItemInput {
   @Field(() => String)
@@ -9,22 +8,22 @@ export class MenuItemInput {
   @Field(() => Int)
   price: number;
 }
-
+const capitalAndLowercaseRegex = /^[a-zA-Z ]*/;
 @InputType()
 export class CreateStorefrontInput {
-  @IsAlpha()
+  @Matches(capitalAndLowercaseRegex)
   @Field()
   name: string;
-  @IsAlpha()
+  @Matches(capitalAndLowercaseRegex)
   @Field()
   address: string;
-  @IsAlpha()
+  @Matches(/^\S*$/)
   @Field()
   image: string;
   @Field(() => [Number])
   zip: number[];
   @Field(() => [MenuItemInput], { defaultValue: [] })
   menu: MenuItemInput[];
-  @Field(() => [CouponInputType], { defaultValue: [] })
-  coupon: CouponInputType[];
+  @Field(() => [Int], { nullable: true })
+  coupons?: number[];
 }

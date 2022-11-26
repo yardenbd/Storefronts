@@ -1,10 +1,17 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { orderObject, desiredOrder, desiredCalcDetails } from '../constants';
+import {
+  orderObject,
+  desiredOrder,
+  desiredCalcOrder,
+  calcOrderObj,
+} from '../constants';
 import { MockType } from '../types';
 import { OrdersService } from './orders.service';
 import { Orders } from './entities/order.entity';
+import { OrderDetail } from '../order-details/entities/order-detail.entity';
+import { OrderDetailsService } from '../order-details/order-details.service';
 
 describe('OrdersService', () => {
   let service: OrdersService;
@@ -12,14 +19,24 @@ describe('OrdersService', () => {
     create: jest.fn(),
     save: jest.fn(),
     findOne: jest.fn(),
+    query: jest.fn(),
   };
+  const orderDetailRepositoryMock: MockType<Repository<Orders>> = {
+    save: jest.fn(),
+  };
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         OrdersService,
+        OrderDetailsService,
         {
           provide: getRepositoryToken(Orders),
           useValue: orderRepositoryMock,
+        },
+        {
+          provide: getRepositoryToken(OrderDetail),
+          useValue: orderDetailRepositoryMock,
         },
       ],
     }).compile();
@@ -30,16 +47,9 @@ describe('OrdersService', () => {
   });
   describe('Create order', () => {
     it('should create a new order', async () => {
-      orderRepositoryMock.save.mockReturnValue(orderObject);
-      const newRestarunt = await service.create(orderObject);
-      expect(newRestarunt).toMatchObject(desiredOrder);
-    });
-  });
-  describe('Calcultae order totals', () => {
-    it('should Calcultae order totals', async () => {
-      orderRepositoryMock.findOne.mockReturnValue(orderObject);
-      const order = await service.calcOrderTotals(orderObject.orderId);
-      expect(order).toMatchObject(desiredCalcDetails);
+      orderRepositoryMock.create.mockReturnValue(orderObject);
+      const newOrder = await service.create(orderObject);
+      expect(newOrder).toMatchObject(desiredOrder);
     });
   });
 });

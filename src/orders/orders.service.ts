@@ -22,8 +22,13 @@ export class OrdersService {
 
   async create(newOrderArgs: CreateOrderInput) {
     const orderId = uuidv4();
+    const orderTotalPrice = calcOrderPrice(
+      newOrderArgs.coupons,
+      newOrderArgs.lineItems,
+    );
     const createdOrder = this.ordersRepository.create({
       id: orderId,
+      totalPrice: orderTotalPrice,
       ...newOrderArgs,
     });
     await this.ordersRepository.save(createdOrder);
@@ -41,18 +46,24 @@ export class OrdersService {
   }
 
   async calcOrderTotals(orderId: string) {
-    const joinQuery = `SELECT coupons, quantity ,menu_item.id, price FROM orders 
+    const joinQuery = `SELECT coupons, quantity , "mealName", price, "totalPrice"  FROM orders
     JOIN order_detail ON orders.id = order_detail."orderId"
     JOIN menu_item ON order_detail."menuItemId" = menu_item.id
     WHERE orders.id = $1`;
     const allOrderItems = (await this.ordersRepository.query(joinQuery, [
       orderId,
     ])) as CalcOrder[];
-    const coupons = allOrderItems[0].coupons;
-    const calculatedOrderTotals = calcOrderPrice(
-      coupons,
-      allOrderItems.map((item) => item.price),
-    );
-    console.log('allOrderItems', allOrderItems);
+    console.log('allOrderItemss', allOrderItems);
+    const menuItems = allOrderItems.map(({ mealName, price, quantity }) => ({
+      mealName,
+      price,
+      quantity,
+    }));
+    const orderInformation = {
+      coupons: allOrderItems[0].coupons,
+      totalPrice: allOrderItems[0].totalPrice,
+      menuItems,
+    };
+    return orderInformation;
   }
 }

@@ -1,16 +1,16 @@
 import { v4 as uuidv4 } from 'uuid';
-import { Coupon } from './copoun/entities/coupon.entity';
 import { MenuItem } from './menu-item/entities/menu-item.entity';
 import { CreateOrderInput } from './orders/dto/create-order.input';
 
-import { CalcOrder } from './orders/entities/calcOrder.entity';
-import { Orders } from './orders/entities/order.entity';
+import { OrderInformation } from './orders/entities/calcOrder.entity';
 import { CreateStorefrontInput } from './storefront/dto/create-storefront.input';
 import { UpdateStorefrontInput } from './storefront/dto/update-storefront.input';
-import { Storefront } from './storefront/entities/storefront.entity';
-import { Pagination } from './types';
+import { OmittedMenuFromStorefront, Pagination } from './types';
 export const storefrontTestId = '81eca88a-a730-4785-99cf-97757fd0f151';
 
+export const arrayOfNumbersExpectation = expect.arrayContaining([
+  expect.any(Number),
+]);
 export const desiredMenuItem = {
   id: expect.any(String),
   mealName: expect.any(String),
@@ -35,7 +35,7 @@ export const menu: Omit<MenuItem, 'storefront' | 'orderDetail'>[] = [
 ];
 export const createStorefrontObj: CreateStorefrontInput = {
   address: 'Givaataim',
-  coupon: [{ discount: 20 }, { discount: 30 }, { discount: 40 }],
+  coupons: [20, 30, 40],
   image: 'https://picsum.photos/200/300',
   name: 'Japanika',
   menu: [
@@ -47,60 +47,71 @@ export const createStorefrontObj: CreateStorefrontInput = {
   zip: [4245, 143, 442, 7751, 523, 662],
 };
 
-export const storefrontObj: Partial<Storefront> = {
+export const storefrontObj: OmittedMenuFromStorefront = {
+  id: uuidv4(),
   address: 'Tel Aviv',
+  coupons: [10, 20, 30],
   image: 'https://picsum.photos/200/300',
   name: 'McDonalds',
   zip: [222, 333, 444],
-  id: uuidv4(),
 };
-const storefrontObj2: Partial<Storefront> = {
+const storefrontObj2: OmittedMenuFromStorefront = {
+  id: uuidv4(),
   address: 'Ramat Gan',
   image: 'https://picsum.photos/200/300',
   name: 'BP',
-  id: uuidv4(),
+  coupons: [15, 25, 35],
   zip: [4245, 143, 234, 7751, 223, 412],
 };
-const storefrontObj3: Partial<Storefront> = {
+const storefrontObj3: OmittedMenuFromStorefront = {
+  id: uuidv4(),
   address: 'Givaataim',
   image: 'https://picsum.photos/200/300',
   name: 'Japanika',
+  coupons: [20, 30, 40],
+
   zip: [4245, 143, 442, 7751, 523, 662],
-  id: uuidv4(),
 };
 
-const desiredCoupons: Partial<Coupon> = {
-  discount: expect.any(Number),
-};
 export const desiredCreatedStorefront = {
-  coupon: expect.arrayContaining([expect.objectContaining(desiredCoupons)]),
-  zip: expect.arrayContaining([expect.any(Number)]),
+  coupons: arrayOfNumbersExpectation,
+  zip: arrayOfNumbersExpectation,
   menu: menuItemsExpectations(false),
   address: expect.any(String),
   image: expect.any(String),
   name: expect.any(String),
 };
-export const desiredStorefront = {
-  zip: expect.arrayContaining([expect.any(Number)]),
+export const desiredStorefront: OmittedMenuFromStorefront = {
+  zip: arrayOfNumbersExpectation,
   address: expect.any(String),
   image: expect.any(String),
   name: expect.any(String),
   id: expect.any(String),
+  coupons: arrayOfNumbersExpectation,
 };
-export const orderObject: CreateOrderInput = {
+export const orderObject: CreateOrderInput & { id: string } = {
+  id: uuidv4(),
   customerAddress: 'Tel Aviv',
   customerName: 'Yarden Ben Dahan',
   lineItems: menu,
-  coupons: [{ discount: 10 }, { discount: 20 }],
+  coupons: [10, 20],
 };
 
 export const desiredOrder: CreateOrderInput = {
   customerAddress: expect.any(String),
   customerName: expect.any(String),
   lineItems: menuItemsExpectations(true),
-  coupons: expect.arrayContaining([
-    expect.objectContaining({ discount: expect.any(Number) }),
-  ]),
+  coupons: arrayOfNumbersExpectation,
+};
+
+export const calcOrderObj = {
+  coupons: [10, 20],
+  totalPrice: 180,
+  menuItems: [
+    { mealName: 'Sushi', price: 70, quantity: 2 },
+    { mealName: 'Nigiri', price: 40, quantity: 1 },
+    { mealName: 'Soup', price: 30, quantity: 1 },
+  ],
 };
 
 export const desiredLineItem = {
@@ -108,13 +119,16 @@ export const desiredLineItem = {
   price: expect.any(Number),
 };
 
-export const desiredCalcDetails: CalcOrder = {
-  id: expect.any(String),
-  coupons: expect.arrayContaining([
-    expect.objectContaining({ discount: expect.any(Number) }),
+export const desiredCalcOrder: OrderInformation = {
+  coupons: expect.arrayContaining(expect.any(Number)),
+  totalPrice: expect.any(Number),
+  menuItems: expect.arrayContaining([
+    expect.objectContaining({
+      mealName: expect.any(String),
+      price: expect.any(Number),
+      quantity: expect.any(Number),
+    }),
   ]),
-  price: expect.any(Number),
-  quantity: expect.any(Number),
 };
 export const storefrontArray = [storefrontObj, storefrontObj2, storefrontObj3];
 

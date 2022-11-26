@@ -8,26 +8,22 @@ type MenuItem {
   price: Int!
 }
 
-type Coupon {
-  id: String!
-  discount: Int!
-}
-
 type Storefront {
   id: String!
   name: String!
   address: String!
   image: String!
+  coupons: [Int!]!
   zip: [Int!]!
   menu: [MenuItem!]!
-  coupon: [Coupon!]!
 }
 
 type Orders {
   id: String!
   customerName: String!
   customerAddress: String!
-  coupons: [Coupon!]!
+  totalPrice: Int!
+  coupons: [Int!]!
 }
 
 type OrderDetail {
@@ -35,11 +31,16 @@ type OrderDetail {
   quantity: Int!
 }
 
-type CalcOrder {
-  id: String!
+type OrderItem {
+  mealName: String!
   quantity: Int!
   price: Int!
-  coupons: Coupon!
+}
+
+type OrderInformation {
+  totalPrice: Int!
+  coupons: [Int!]!
+  menuItems: [OrderItem!]!
 }
 
 type Query {
@@ -47,7 +48,7 @@ type Query {
   findByZip(zip: Float!, query: Pagination!): [Storefront!]!
   getMenu(id: String!): [MenuItem!]!
   findOneStorefront(id: String!): Storefront!
-  calcOrderTotals(orderId: String!): CalcOrder!
+  calcOrderTotals(orderId: String!): OrderInformation!
   FindAllCoupons(query: Pagination!): [Float!]!
   findOneCoupon(copounInput: CopounInput!): Int!
   menuItem(id: Int!): MenuItem!
@@ -87,7 +88,7 @@ input CreateStorefrontInput {
   image: String!
   zip: [Float!]!
   menu: [MenuItemInput!] = []
-  coupon: [CouponInputType!] = []
+  coupons: [Int!]
 }
 
 input MenuItemInput {
@@ -95,18 +96,14 @@ input MenuItemInput {
   price: Int!
 }
 
-input CouponInputType {
-  discount: Int!
-}
-
 input CreateOrderInput {
   customerName: String!
   customerAddress: String!
-  lineItems: [DetailsInput!]!
-  coupons: [CouponInputType!]
+  lineItems: [OrderDetailsInput!]!
+  coupons: [Int!]
 }
 
-input DetailsInput {
+input OrderDetailsInput {
   id: String!
   mealName: String!
   price: Int!

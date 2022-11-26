@@ -1,4 +1,4 @@
-import { ObjectType, Field } from '@nestjs/graphql';
+import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 import { Coupon } from '../../copoun/entities/coupon.entity';
 
@@ -17,7 +17,11 @@ export class Orders {
   @Column()
   customerAddress: string;
 
-  @Field(() => [Coupon])
-  @Column('json', { nullable: true })
-  coupons?: Coupon[];
+  @Field(() => Int)
+  @Column()
+  totalPrice: number;
+
+  @Field(() => [Int])
+  @Column('int', { array: true, nullable: true })
+  coupons?: number[];
 }

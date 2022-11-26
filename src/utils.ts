@@ -1,9 +1,9 @@
 import { Coupon } from './copoun/entities/coupon.entity';
 import { CalcOrder } from './orders/entities/calcOrder.entity';
-import { DetailsInput } from './orders/entities/orderDetail.entity';
+import { OrderDetailsInput } from './orders/entities/orderDetail.entity';
 import { ITotalOrder } from './types';
 
-export const calcTotalMealsQuantity = (orderDetail: DetailsInput[]) => {
+export const calcTotalMealsQuantity = (orderDetail: OrderDetailsInput[]) => {
   let counter = {};
 
   orderDetail
@@ -14,8 +14,10 @@ export const calcTotalMealsQuantity = (orderDetail: DetailsInput[]) => {
   return counter;
 };
 
-export const removeDuplications = (duplicatedItemsArray: DetailsInput[]) => {
-  const unduplicatedItems: DetailsInput[] = [];
+export const removeDuplications = (
+  duplicatedItemsArray: OrderDetailsInput[],
+) => {
+  const unduplicatedItems: OrderDetailsInput[] = [];
 
   duplicatedItemsArray.forEach((meal) => {
     const isDuplicate = unduplicatedItems.find(
@@ -34,14 +36,15 @@ export const removeDuplications = (duplicatedItemsArray: DetailsInput[]) => {
 };
 
 export const calcOrderPrice = (
-  coupons: Pick<Coupon, 'discount'>[] = [],
-  orderDetail: number[],
+  coupons: number[] = [],
+  orderDetail: OrderDetailsInput[],
 ) => {
-  const totalPriceBeforeCoupons: number = orderDetail.reduce(
+  const totalPriceBeforeCoupons: number = orderDetail
+    .map((meal) => meal.price)
+    .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+  const couponsTotalPrice: number = coupons.reduce(
     (accumulator, currentValue) => accumulator + currentValue,
+    0,
   );
-  const couponsTotalPrice: number = coupons
-    .map((coupon) => coupon.discount)
-    .reduce((accumulator, currentValue) => accumulator + currentValue);
   return totalPriceBeforeCoupons - couponsTotalPrice;
 };

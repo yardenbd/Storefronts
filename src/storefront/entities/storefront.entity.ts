@@ -30,6 +30,10 @@ export class Storefront {
   image: string;
 
   @Field(() => [Int])
+  @Column('int', { array: true, nullable: true })
+  coupons: number[];
+
+  @Field(() => [Int])
   @Column('int', { array: true, nullable: false })
   zip: number[];
 
@@ -38,10 +42,4 @@ export class Storefront {
     cascade: true,
   })
   menu: MenuItem[];
-
-  @Field(() => [Coupon])
-  @OneToMany(() => Coupon, (coupon) => coupon.storefront, {
-    cascade: true,
-  })
-  coupon: Coupon[];
 }

@@ -1,5 +1,6 @@
 import { Field, InputType, Int } from '@nestjs/graphql';
 import { CreateOrderInput } from './orders/dto/create-order.input';
+import { Storefront } from './storefront/entities/storefront.entity';
 
 export type MockType<T> = {
   [P in keyof T]?: jest.Mock<unknown>;
@@ -23,3 +24,5 @@ export class Pagination {
   @Field(() => Int)
   skip: number;
 }
+
+export type OmittedMenuFromStorefront = Omit<Storefront, 'menu'>;
