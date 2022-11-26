@@ -25,7 +25,7 @@ export class CouponResolver {
   ) {
     return this.couponService.remove(copounToRemove);
   }
-  @Query(() => [Number], { name: 'FindAllCoupons' })
+  @Query(() => [Int], { name: 'FindAllCoupons' })
   findAllCoupons(
     @Args('query', {
       type: () => Pagination,

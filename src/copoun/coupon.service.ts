@@ -21,14 +21,15 @@ export class CouponService {
     console.log('createdCoupon', createdCoupon);
     return createdCoupon[1];
   }
-  findAll(query: Pagination = { skip: 0, take: 5 }) {
+  async findAll(query: Pagination = { skip: 0, take: 5 }) {
     const { skip, take } = query;
     return this.storefrontRepository
       .createQueryBuilder()
       .select('coupons')
       .skip(skip)
       .take(take)
-      .execute();
+      .execute()
+      .then((response) => response[0].coupons);
   }
   async update(updateCoupon: CopounInput & { couponToUpdate: number }) {
     const { coupon, couponToUpdate, id } = updateCoupon;
