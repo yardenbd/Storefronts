@@ -1,6 +1,6 @@
 import { InputType, Field } from '@nestjs/graphql';
 import { IsAlpha, IsUUID } from 'class-validator';
-import { CouponInputType } from 'src/copoun/entities/coupon.entity';
+import { CouponInputType } from '../../copoun/entities/coupon.entity';
 import { DetailsInput } from '../entities/orderDetail.entity';
 @InputType()
 export class CreateOrderInput {

@@ -28,12 +28,12 @@ describe('Storefront Resolver', () => {
   it('should be defined', () => {
     expect(resolver).toBeDefined();
   });
-  describe('Create order', () => {
-    it('should create a Stroefront', async () => {
-      const order = await resolver.createOrder(orderObject);
-      expect(order).toMatchObject(desiredOrder);
-    });
-  });
+  // describe('Create order', () => {
+  //   it('should create a Stroefront', async () => {
+  //     const createdOrder = await resolver.createOrder(orderObject);
+  //     expect(createdOrder).toMatchObject(desiredOrder);
+  //   });
+  // });
   describe('Calcultae order totals', () => {
     it('should Calcultae order totals', async () => {
       const order = resolver.calcOrderTotals(orderObject.orderId);

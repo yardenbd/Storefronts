@@ -33,11 +33,13 @@ type Orders {
 type OrderDetail {
   id: String!
   quantity: Int!
-  menuItemId: String!
 }
 
 type CalcOrder {
-  totalPrice: Float!
+  id: String!
+  quantity: Int!
+  price: Int!
+  coupons: Coupon!
 }
 
 type Query {
@@ -45,7 +47,7 @@ type Query {
   findByZip(zip: Float!, query: Pagination!): [Storefront!]!
   getMenu(id: String!): [MenuItem!]!
   findOneStorefront(id: String!): Storefront!
-  CalcOrder(createOrderInput: String!): CalcOrder!
+  calcOrderTotals(orderId: String!): CalcOrder!
   FindAllCoupons(query: Pagination!): [Float!]!
   findOneCoupon(copounInput: CopounInput!): Int!
   menuItem(id: Int!): MenuItem!

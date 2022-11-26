@@ -1,5 +1,5 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
-import { Orders } from 'src/orders/entities/order.entity';
+import { Orders } from '../../orders/entities/order.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -7,6 +7,7 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
+import { MenuItem } from 'src/menu-item/entities/menu-item.entity';
 @ObjectType()
 @Entity()
 export class OrderDetail {
@@ -18,11 +19,17 @@ export class OrderDetail {
   @Column()
   quantity: number;
 
-  @Field()
-  @Column()
+  @Column({ type: 'uuid' })
   menuItemId: string;
 
-  @Column()
+  @ManyToOne((type) => MenuItem, (MenuItem) => MenuItem, {
+    onDelete: 'SET NULL',
+    onUpdate: 'NO ACTION',
+  })
+  @JoinColumn({ name: 'menuItemId' })
+  menuItem: MenuItem;
+
+  @Column({ type: 'uuid' })
   orderId: string;
 
   @ManyToOne((type) => Orders, (order) => order, { onDelete: 'CASCADE' })

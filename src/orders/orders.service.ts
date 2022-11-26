@@ -5,11 +5,12 @@ import { Repository } from 'typeorm';
 import {
   calcOrderPrice,
   calcTotalMealsQuantity,
-  removeMealDuplication,
+  removeDuplications,
 } from '../utils';
 import { CreateOrderInput } from './dto/create-order.input';
-import { OrderDetail } from 'src/order-details/entities/order-detail.entity';
+import { OrderDetail } from '../order-details/entities/order-detail.entity';
 import { v4 as uuidv4 } from 'uuid';
+import { CalcOrder } from './entities/calcOrder.entity';
 @Injectable()
 export class OrdersService {
   constructor(
@@ -28,7 +29,7 @@ export class OrdersService {
     await this.ordersRepository.save(createdOrder);
     const { lineItems } = newOrderArgs;
     const quantity = calcTotalMealsQuantity(lineItems);
-    const unduplicatedItems = removeMealDuplication(lineItems);
+    const unduplicatedItems = removeDuplications(lineItems);
     unduplicatedItems.forEach(async (item) => {
       await this.orderDetailsRepository.save({
         orderId,
@@ -40,14 +41,18 @@ export class OrdersService {
   }
 
   async calcOrderTotals(orderId: string) {
-    // const selectedOrder = await this.ordersRepository.findOne({
-    //   where: { orderId },
-    // });
-    // const { orderDetail, coupons } = selectedOrder;
-    // console.log('orderDetail', orderDetail);
-    // console.log('coupons', coupons);
-    // const totalMeals = calcTotalMealsQuantity(orderDetail);
-    // const totalPrice = calcOrderPrice(coupons, orderDetail);
-    // return { totalMeals, totalPrice };
+    const joinQuery = `SELECT coupons, quantity ,menu_item.id, price FROM orders 
+    JOIN order_detail ON orders.id = order_detail."orderId"
+    JOIN menu_item ON order_detail."menuItemId" = menu_item.id
+    WHERE orders.id = $1`;
+    const allOrderItems = (await this.ordersRepository.query(joinQuery, [
+      orderId,
+    ])) as CalcOrder[];
+    const coupons = allOrderItems[0].coupons;
+    const calculatedOrderTotals = calcOrderPrice(
+      coupons,
+      allOrderItems.map((item) => item.price),
+    );
+    console.log('allOrderItems', allOrderItems);
   }
 }

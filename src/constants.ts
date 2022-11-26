@@ -1,8 +1,10 @@
 import { v4 as uuidv4 } from 'uuid';
 import { Coupon } from './copoun/entities/coupon.entity';
 import { MenuItem } from './menu-item/entities/menu-item.entity';
+import { CreateOrderInput } from './orders/dto/create-order.input';
 
 import { CalcOrder } from './orders/entities/calcOrder.entity';
+import { Orders } from './orders/entities/order.entity';
 import { CreateStorefrontInput } from './storefront/dto/create-storefront.input';
 import { UpdateStorefrontInput } from './storefront/dto/update-storefront.input';
 import { Storefront } from './storefront/entities/storefront.entity';
@@ -25,7 +27,12 @@ const menuItemsExpectations = (shouldReturnId: boolean) => {
     ),
   ]);
 };
-
+export const menu: Omit<MenuItem, 'storefront' | 'orderDetail'>[] = [
+  { id: uuidv4(), mealName: 'Sushi', price: 70 },
+  { id: uuidv4(), mealName: 'Nigiri', price: 40 },
+  { id: uuidv4(), mealName: 'Soup', price: 30 },
+  { id: uuidv4(), mealName: 'Noodels', price: 60 },
+];
 export const createStorefrontObj: CreateStorefrontInput = {
   address: 'Givaataim',
   coupon: [{ discount: 20 }, { discount: 30 }, { discount: 40 }],
@@ -80,17 +87,20 @@ export const desiredStorefront = {
   name: expect.any(String),
   id: expect.any(String),
 };
-export const orderObject = {
-  orderId: uuidv4(),
+export const orderObject: CreateOrderInput = {
   customerAddress: 'Tel Aviv',
-  customerName: 'Yarden',
-  coupons: [10, 20],
+  customerName: 'Yarden Ben Dahan',
+  lineItems: menu,
+  coupons: [{ discount: 10 }, { discount: 20 }],
 };
-export const desiredOrder = {
+
+export const desiredOrder: CreateOrderInput = {
   customerAddress: expect.any(String),
   customerName: expect.any(String),
-  orderDetail: menuItemsExpectations(true),
-  coupons: [10, 20],
+  lineItems: menuItemsExpectations(true),
+  coupons: expect.arrayContaining([
+    expect.objectContaining({ discount: expect.any(Number) }),
+  ]),
 };
 
 export const desiredLineItem = {
@@ -99,10 +109,12 @@ export const desiredLineItem = {
 };
 
 export const desiredCalcDetails: CalcOrder = {
-  totalMeals: expect.arrayContaining([
-    expect.objectContaining(desiredLineItem),
+  id: expect.any(String),
+  coupons: expect.arrayContaining([
+    expect.objectContaining({ discount: expect.any(Number) }),
   ]),
-  totalPrice: expect.any(Number),
+  price: expect.any(Number),
+  quantity: expect.any(Number),
 };
 export const storefrontArray = [storefrontObj, storefrontObj2, storefrontObj3];
 
@@ -113,10 +125,3 @@ export const updateStorefrontObj: UpdateStorefrontInput = {
   name: 'testname',
   address: 'testaddress',
 };
-
-export const menu: Omit<MenuItem, 'storefront'>[] = [
-  { id: uuidv4(), mealName: 'Sushi', price: 70 },
-  { id: uuidv4(), mealName: 'Nigiri', price: 40 },
-  { id: uuidv4(), mealName: 'Soup', price: 30 },
-  { id: uuidv4(), mealName: 'Noodels', price: 60 },
-];

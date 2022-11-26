@@ -1,4 +1,5 @@
 import { Field, InputType, Int, ObjectType } from '@nestjs/graphql';
+import { Coupon } from 'src/copoun/entities/coupon.entity';
 import { DetailsInput } from './orderDetail.entity';
 @InputType()
 export class CalcOrderInput {
@@ -9,7 +10,12 @@ export class CalcOrderInput {
 }
 @ObjectType()
 export class CalcOrder {
-  totalMeals: any[];
-  @Field(() => Number)
-  totalPrice: number;
+  @Field()
+  id: string;
+  @Field(() => Int)
+  quantity: number;
+  @Field(() => Int)
+  price: number;
+  @Field(() => Coupon)
+  coupons: Pick<Coupon, 'discount'>[];
 }

@@ -11,10 +11,10 @@ export class OrdersResolver {
   constructor(private readonly ordersService: OrdersService) {}
 
   @Query(() => CalcOrder, {
-    name: 'CalcOrder',
+    name: 'calcOrderTotals',
   })
   calcOrderTotals(
-    @Args('createOrderInput')
+    @Args('orderId')
     orderId: string,
   ) {
     return this.ordersService.calcOrderTotals(orderId);
