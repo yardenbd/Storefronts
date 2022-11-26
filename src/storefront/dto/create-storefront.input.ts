@@ -1,6 +1,6 @@
 import { InputType, Field, Int } from '@nestjs/graphql';
 import { IsAlpha } from 'class-validator';
-import { Coupon, CouponInputType } from 'src/copoun/entities/coupon.entity';
+import { Coupon, CouponInputType } from '../../copoun/entities/coupon.entity';
 @InputType()
 export class MenuItemInput {
   @Field(() => String)

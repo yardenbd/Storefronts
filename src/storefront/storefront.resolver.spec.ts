@@ -1,10 +1,13 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import {
+  createStorefrontObj,
   desiredMenuItem,
-  desiredStorefront,
-  pagintaionObj,
+  desiredCreatedStorefront,
   storefrontObj,
+  desiredStorefront,
   storefrontTestId,
+  updateStorefrontObj,
+  pagintaionObj,
 } from '../constants';
 import { CreateStorefrontInput } from './dto/create-storefront.input';
 import { StorefrontResolver } from './storefront.resolver';
@@ -45,14 +48,15 @@ describe('Storefront Resolver', () => {
   });
   describe('create', () => {
     it('should create a Stroefront', async () => {
-      const storefront = await resolver.createStorefront(storefrontObj);
-      expect(storefront).toMatchObject(desiredStorefront);
+      const storefront = await resolver.createStorefront(createStorefrontObj);
+      console.log('first', storefront);
+      expect(storefront).toMatchObject(desiredCreatedStorefront);
     });
   });
   describe('Find all Storefronts', () => {
     it('should find and return a list of customers', async () => {
-      const allRestratuns = await resolver.findAll(pagintaionObj);
-      expect(allRestratuns).toEqual(
+      const allStorefronts = await resolver.findAll(pagintaionObj);
+      expect(allStorefronts).toEqual(
         expect.arrayContaining([expect.objectContaining(desiredStorefront)]),
       );
     });
@@ -67,8 +71,11 @@ describe('Storefront Resolver', () => {
   });
   describe('Find all based on zip', () => {
     it('should find and return a customer invoice', async () => {
-      const response = await resolver.findBasedOnZipCode(4245, pagintaionObj);
-      expect(response).toEqual(
+      const allStorefronts = await resolver.findBasedOnZipCode(
+        4245,
+        pagintaionObj,
+      );
+      expect(allStorefronts).toEqual(
         expect.arrayContaining([expect.objectContaining(desiredStorefront)]),
       );
     });
@@ -81,12 +88,6 @@ describe('Storefront Resolver', () => {
   });
   describe('Update storefront', () => {
     it('should updates a single storefront ', async () => {
-      const updateStorefrontObj: UpdateStorefrontInput = {
-        id: storefrontTestId,
-        name: 'testname',
-        address: 'testaddress',
-      };
-
       const response = await resolver.updateStorefront(updateStorefrontObj);
       expect(response).toEqual(expect.objectContaining(updateStorefrontObj));
     });

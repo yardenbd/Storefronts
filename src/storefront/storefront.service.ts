@@ -5,7 +5,7 @@ import { UpdateStorefrontInput } from './dto/update-storefront.input';
 import { Repository, Any } from 'typeorm';
 import { Storefront } from './entities/storefront.entity';
 import { Pagination } from '../types';
-import { MenuItem } from 'src/menu-item/entities/menu-item.entity';
+import { MenuItem } from '../menu-item/entities/menu-item.entity';
 import { v4 as uuidv4 } from 'uuid';
 @Injectable()
 export class StorefrontService {

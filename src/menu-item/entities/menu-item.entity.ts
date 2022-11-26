@@ -1,6 +1,6 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
-import { OrderDetail } from 'src/order-details/entities/order-detail.entity';
-import { Storefront } from 'src/storefront/entities/storefront.entity';
+import { OrderDetail } from '../../order-details/entities/order-detail.entity';
+import { Storefront } from '../../storefront/entities/storefront.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,

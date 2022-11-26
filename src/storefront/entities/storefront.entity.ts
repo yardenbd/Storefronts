@@ -7,8 +7,8 @@ import {
   OneToMany,
   RelationId,
 } from 'typeorm';
-import { Coupon } from 'src/copoun/entities/coupon.entity';
-import { Orders } from 'src/orders/entities/order.entity';
+import { Coupon } from '../../copoun/entities/coupon.entity';
+import { Orders } from '../../orders/entities/order.entity';
 
 @ObjectType()
 @Entity()
