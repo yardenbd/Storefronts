@@ -1,17 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import {
-  orderObject,
-  desiredOrder,
-  desiredCalcOrder,
-  calcOrderObj,
-} from '../constants';
 import { MockType } from '../types';
 import { OrdersService } from './orders.service';
 import { Orders } from './entities/order.entity';
 import { OrderDetail } from '../order-details/entities/order-detail.entity';
 import { OrderDetailsService } from '../order-details/order-details.service';
+import { desiredOrder, orderObject } from './constants';
 
 describe('OrdersService', () => {
   let service: OrdersService;

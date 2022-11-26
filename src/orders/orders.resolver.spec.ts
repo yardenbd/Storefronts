@@ -1,10 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { desiredCalcOrder, desiredOrder, orderObject } from '../constants';
 import { CalcOrderInput } from './entities/calcOrder.entity';
 import { OrdersResolver } from './orders.resolver';
 import { CreateOrderInput } from './dto/create-order.input';
 import { OrdersService } from './orders.service';
-
+import { desiredCalcOrder, desiredOrder, orderObject } from './constants';
 describe('Storefront Resolver', () => {
   let resolver: OrdersResolver;
   const orderResolverMock = {

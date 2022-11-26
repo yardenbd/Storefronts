@@ -1,18 +1,17 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import {
-  createStorefrontObj,
-  desiredMenuItem,
-  desiredCreatedStorefront,
-  storefrontObj,
-  desiredStorefront,
-  storefrontTestId,
-  updateStorefrontObj,
-  pagintaionObj,
-} from '../constants';
+import { pagintaionObj } from '../constants';
 import { CreateStorefrontInput } from './dto/create-storefront.input';
 import { StorefrontResolver } from './storefront.resolver';
 import { StorefrontService } from './storefront.service';
 import { UpdateStorefrontInput } from './dto/update-storefront.input';
+import {
+  createStorefrontObj,
+  desiredCreatedStorefront,
+  desiredStorefront,
+  storefrontObj,
+  updateStorefrontObj,
+} from './constants';
+import { desiredMenuItem } from '../menu-item/constants';
 
 describe('Storefront Resolver', () => {
   let resolver: StorefrontResolver;
@@ -82,7 +81,7 @@ describe('Storefront Resolver', () => {
   });
   describe('Find one storefront', () => {
     it('should get a single storefront ', async () => {
-      const response = await resolver.findOne(storefrontTestId);
+      const response = await resolver.findOne(storefrontObj.id);
       expect(response).toMatchObject(desiredStorefront);
     });
   });

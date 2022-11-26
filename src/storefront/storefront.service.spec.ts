@@ -1,24 +1,21 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { getRepositoryToken, TypeOrmModule } from '@nestjs/typeorm';
+import { getRepositoryToken } from '@nestjs/typeorm';
 import { Storefront } from './entities/storefront.entity';
 import { StorefrontService } from './storefront.service';
 import { Repository } from 'typeorm';
 import { UpdateStorefrontInput } from './dto/update-storefront.input';
-import {
-  desiredStorefront,
-  storefrontObj,
-  storefrontTestId,
-  desiredMenuItem,
-  storefrontArray,
-  pagintaionObj,
-  createStorefrontObj,
-  desiredCreatedStorefront,
-  menu,
-} from '../constants';
 import { MockType } from '../types';
 import { MenuItemService } from '../menu-item/menu-item.service';
-import { MenuItemModule } from '../menu-item/menu-item.module';
 import { MenuItem } from '../menu-item/entities/menu-item.entity';
+import {
+  createStorefrontObj,
+  desiredCreatedStorefront,
+  desiredStorefront,
+  storefrontArray,
+  storefrontObj,
+} from './constants';
+import { pagintaionObj } from '../constants';
+import { desiredMenuItem, menu } from '../menu-item/constants';
 
 describe('StorefrontService', () => {
   let service: StorefrontService;
@@ -102,14 +99,14 @@ describe('StorefrontService', () => {
   describe('Find one storefront', () => {
     it('should get a single storefront ', async () => {
       storefrontRepositoryMock.findOne.mockReturnValue(storefrontObj);
-      const response = await service.findOne(storefrontTestId);
+      const response = await service.findOne(storefrontObj.id);
       expect(response).toMatchObject(desiredStorefront);
     });
   });
   describe('Update storefront', () => {
     it('should updates a single storefront ', async () => {
       const updateStorefrontObj: UpdateStorefrontInput = {
-        id: storefrontTestId,
+        id: storefrontObj.id,
         name: 'testname',
         address: 'testaddress',
       };
