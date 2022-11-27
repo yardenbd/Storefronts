@@ -1,9 +1,12 @@
 ## Instructions
 
 Storefront ordering system.
-In order to create a Store front in will need to provide few arguments
 
-For example : {
+In order to create a Store front in will need to provide few arguments
+For example :
+
+```bash
+ {
 address: "any address"
 coupons: [10, 20, 30]
 image: "https://picsum.photos/200/300"
@@ -16,8 +19,12 @@ menu: [
 { mealName: "Noodels", price: 60 }
 ]
 }
+```
 
-For creating an order {
+For creating an order
+
+```bash
+ {
 customerName: "any name"
 customerAddress: "any address"
 lineItems: [
@@ -29,6 +36,7 @@ price: 70
 ]
 coupons: [10,20]
 }
+```
 
 ## Installation
 
