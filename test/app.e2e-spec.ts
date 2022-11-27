@@ -2,7 +2,10 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import request = require('supertest');
 import { AppModule } from '../src/app.module';
-import { desiredCreatedStorefront } from '../src/storefront/constants';
+import {
+  desiredCreatedStorefront,
+  desiredStorefront,
+} from '../src/storefront/constants';
 
 describe('CustomerResolver (e2e)', () => {
   let app: INestApplication;
@@ -21,7 +24,7 @@ describe('CustomerResolver (e2e)', () => {
   const createStorefrontMutation = `mutation {
   createStorefront(
     createStorefrontInput: {
-      address: "Tel Aviv"
+      address: "Tel Aviv Hahagna 2"
       coupons: [10, 20, 30]
       image: "https://picsum.photos/200/300"
       name: "BP"
@@ -48,10 +51,20 @@ describe('CustomerResolver (e2e)', () => {
     }
   }
 }`;
-
+  const getAllStorefrontsQuery = `query {
+    findAllStorefronts(pagination:{take:5,skip:0})
+  {
+    id
+    name
+    image
+    address
+    coupons
+    zip
+  }
+}`;
   describe(gql, () => {
-    describe('cats', () => {
-      it('should get the cats array', () => {
+    describe('Storefront', () => {
+      it('should create a new Storefront', () => {
         return request(app.getHttpServer())
           .post(gql)
           .send({ query: createStorefrontMutation })
@@ -59,6 +72,20 @@ describe('CustomerResolver (e2e)', () => {
           .expect((res) => {
             expect(res.body.data.createStorefront).toMatchObject(
               desiredCreatedStorefront,
+            );
+          });
+      });
+      it('should getl all Storefronts', () => {
+        return request(app.getHttpServer())
+          .post(gql)
+          .send({ query: getAllStorefrontsQuery })
+          .expect(200)
+          .expect((res) => {
+            console.log('res', res.body.data.findAllStorefronts);
+            expect(res.body.data.findAllStorefronts).toEqual(
+              expect.arrayContaining([
+                expect.objectContaining(desiredStorefront),
+              ]),
             );
           });
       });

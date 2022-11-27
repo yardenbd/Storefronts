@@ -30,7 +30,7 @@ export class StorefrontResolver {
     return this.storefrontService.remove(id);
   }
 
-  @Query(() => [Storefront], { name: 'storefrontFindAll' })
+  @Query(() => [Storefront], { name: 'findAllStorefronts' })
   findAll(
     @Args('pagination', {
       type: () => Pagination,

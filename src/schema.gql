@@ -40,7 +40,7 @@ type OrderItem {
 }
 
 type Query {
-  storefrontFindAll(pagination: Pagination!): [Storefront!]!
+  findAllStorefronts(pagination: Pagination!): [Storefront!]!
   findByZip(zip: Float!, pagination: Pagination!): [Storefront!]!
   getMenu(id: String!): [MenuItem!]!
   findOneStorefront(id: String!): Storefront!
