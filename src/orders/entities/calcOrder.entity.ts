@@ -21,7 +21,7 @@ export class CalcOrder {
   coupons?: number[];
 }
 
-@ObjectType()
+@ObjectType({ isAbstract: true })
 class OrderItem {
   @Field()
   mealName: string;

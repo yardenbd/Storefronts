@@ -2,12 +2,6 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type MenuItem {
-  id: String!
-  mealName: String!
-  price: Int!
-}
-
 type Storefront {
   id: String!
   name: String!
@@ -18,6 +12,13 @@ type Storefront {
   menu: [MenuItem!]!
 }
 
+type MenuItem {
+  id: String!
+  mealName: String!
+  price: Int!
+  storefrontId: String!
+}
+
 type Orders {
   id: String!
   customerName: String!
@@ -26,16 +27,16 @@ type Orders {
   coupons: [Int!]!
 }
 
-type OrderItem {
-  mealName: String!
-  quantity: Int!
-  price: Int!
-}
-
 type OrderInformation {
   totalPrice: Int!
   coupons: [Int!]!
   menuItems: [OrderItem!]!
+}
+
+type OrderItem {
+  mealName: String!
+  quantity: Int!
+  price: Int!
 }
 
 type Query {

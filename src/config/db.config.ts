@@ -9,7 +9,7 @@ export const createDbConfig = (): TypeOrmModuleOptions => {
     username: process.env.DB_USERNAME,
     database: process.env.DATABASE,
     password: process.env.DB_PASSWORD,
-    entities: ['dist/**/*.entity{.ts,.js}'],
+    entities: [__dirname + '/../**/*.entity.{js,ts}'],
     synchronize: true,
     cache: {
       duration: 5000,
