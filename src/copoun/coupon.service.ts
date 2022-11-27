@@ -28,6 +28,7 @@ export class CouponService {
       .select('coupons')
       .skip(skip)
       .take(take)
+      .cache(true)
       .execute()
       .then((response) => response[0].coupons);
   }
@@ -58,6 +59,7 @@ export class CouponService {
       .select('coupons')
       .where('id = :id', { id })
       .andWhere(':coupon = ANY(coupons)', { coupon })
+      .cache(true)
       .execute()
       .then((response) => response[0].coupons);
 

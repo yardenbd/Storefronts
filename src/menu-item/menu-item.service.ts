@@ -30,7 +30,7 @@ export class MenuItemService {
   }
 
   findOne(id: string) {
-    return this.menuItemRepository.findOne({ where: { id } });
+    return this.menuItemRepository.findOne({ where: { id }, cache: true });
   }
 
   update(updateMenuItemInput: UpdateMenuItemInput) {

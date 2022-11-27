@@ -1,6 +1,6 @@
 import { InputType, Field, Int } from '@nestjs/graphql';
 import { OrderDetailsInput } from '../entities/orderDetail.entity';
-import { Matches, IsUUID, IsInt } from 'class-validator';
+import { Matches } from 'class-validator';
 
 const capitalAndLowercaseRegex = /^[A-Za-z.\s_-]+$/;
 @InputType()

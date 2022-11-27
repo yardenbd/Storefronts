@@ -32,6 +32,7 @@ export class StorefrontService {
   findBasedOnZipCode(zip: number, query: Pagination) {
     const { skip, take } = query;
     return this.storefrontRepository.find({
+      cache: true,
       where: { zip: Any[zip] },
       take,
       skip,
@@ -40,6 +41,7 @@ export class StorefrontService {
   getMenu(id: string) {
     return this.menuItemRepository.findOne({
       where: { storefront: { id } },
+      cache: true,
     });
   }
   findAll(query: Pagination = { skip: 0, take: 5 }) {
@@ -57,6 +59,7 @@ export class StorefrontService {
   update(updateStorefrontInput: UpdateStorefrontInput) {
     return this.storefrontRepository.save({
       ...updateStorefrontInput,
+      cache: true,
     });
   }
 

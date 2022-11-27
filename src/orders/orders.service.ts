@@ -53,7 +53,6 @@ export class OrdersService {
     const allOrderItems = (await this.ordersRepository.query(joinQuery, [
       orderId,
     ])) as CalcOrder[];
-    console.log('allOrderItemss', allOrderItems);
     const menuItems = allOrderItems.map(({ mealName, price, quantity }) => ({
       mealName,
       price,
