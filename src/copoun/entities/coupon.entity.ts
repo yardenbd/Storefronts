@@ -1,6 +1,5 @@
 import { ObjectType, Field, Int, InputType } from '@nestjs/graphql';
-import { Storefront } from '../../storefront/entities/storefront.entity';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @ObjectType()
 export class Coupon {

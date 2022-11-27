@@ -27,8 +27,8 @@ describe('CustomerResolver (e2e)', () => {
       return request(app.getHttpServer())
         .post(gql)
         .send({
-          query:
-            'query {storefrontFindAll(query: { take: 10, skip: 0 }) { id name address image zip coupons menu { mealName price } } } ',
+          pagination:
+            'pagination {storefrontFindAll(pagination: { take: 10, skip: 0 }) { id name address image zip coupons menu { mealName price } } } ',
         })
         .expect(200)
         .expect((res) => {

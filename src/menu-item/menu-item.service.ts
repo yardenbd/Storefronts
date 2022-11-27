@@ -20,8 +20,8 @@ export class MenuItemService {
     });
   }
 
-  findAll(query: Pagination = { skip: 0, take: 5 }) {
-    const { skip, take } = query;
+  findAll(pagination: Pagination = { skip: 0, take: 5 }) {
+    const { skip, take } = pagination;
     return this.menuItemRepository.find({
       take,
       skip,

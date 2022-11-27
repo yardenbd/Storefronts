@@ -8,13 +8,15 @@ export class MenuItemInput {
   @Field(() => Int)
   price: number;
 }
-const capitalAndLowercaseRegex = /^[A-Za-z.\s_-]+$/;
+
+const CUSTOMER_NAME_REGEX = /^[A-Za-z.\s_-]+$/;
+const ADDRESS_REGEX = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)/;
 @InputType()
 export class CreateStorefrontInput {
-  @Matches(capitalAndLowercaseRegex)
+  @Matches(CUSTOMER_NAME_REGEX)
   @Field()
   name: string;
-  @Matches(capitalAndLowercaseRegex)
+  @Matches(ADDRESS_REGEX)
   @Field()
   address: string;
   @Matches(/^\S*$/)

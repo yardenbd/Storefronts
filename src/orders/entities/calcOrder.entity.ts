@@ -1,5 +1,4 @@
 import { Field, InputType, Int, ObjectType } from '@nestjs/graphql';
-import { MenuItem } from '../../menu-item/entities/menu-item.entity';
 import { OrderDetailsInput } from './orderDetail.entity';
 @InputType()
 export class CalcOrderInput {

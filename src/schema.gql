@@ -39,14 +39,14 @@ type OrderInformation {
 }
 
 type Query {
-  storefrontFindAll(query: Pagination!): [Storefront!]!
-  findByZip(zip: Float!, query: Pagination!): [Storefront!]!
+  storefrontFindAll(pagination: Pagination!): [Storefront!]!
+  findByZip(zip: Float!, pagination: Pagination!): [Storefront!]!
   getMenu(id: String!): [MenuItem!]!
   findOneStorefront(id: String!): Storefront!
   calcOrderTotals(orderId: String!): OrderInformation!
-  FindAllCoupons(query: Pagination!): [Int!]!
+  FindAllCoupons(pagination: Pagination!): [Int!]!
   findOneCoupon(copounInput: CopounInput!): Int!
-  findAllMenuItems(query: Pagination!): [MenuItem!]!
+  findAllMenuItems(pagination: Pagination!): [MenuItem!]!
   findOneMenuItem(id: String!): MenuItem!
 }
 

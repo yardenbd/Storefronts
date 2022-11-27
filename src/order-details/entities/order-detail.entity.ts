@@ -22,7 +22,7 @@ export class OrderDetail {
   @Column({ type: 'uuid' })
   menuItemId: string;
 
-  @ManyToOne((type) => MenuItem, (MenuItem) => MenuItem, {
+  @ManyToOne(() => MenuItem, (MenuItem) => MenuItem, {
     onDelete: 'SET NULL',
     onUpdate: 'NO ACTION',
   })
@@ -32,7 +32,10 @@ export class OrderDetail {
   @Column({ type: 'uuid' })
   orderId: string;
 
-  @ManyToOne((type) => Orders, (order) => order, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Orders, (order) => order, {
+    onDelete: 'CASCADE',
+    onUpdate: 'NO ACTION',
+  })
   @JoinColumn({ name: 'orderId' })
   order: Orders;
 }

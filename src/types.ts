@@ -1,5 +1,4 @@
 import { Field, InputType, Int } from '@nestjs/graphql';
-import { CreateOrderInput } from './orders/dto/create-order.input';
 import { Storefront } from './storefront/entities/storefront.entity';
 
 export type MockType<T> = {

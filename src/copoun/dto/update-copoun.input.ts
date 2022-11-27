@@ -1,5 +1,5 @@
 import { InputType, Field, Int } from '@nestjs/graphql';
-import { IsAlpha, IsNumber, IsUUID } from 'class-validator';
+import { IsNumber, IsUUID } from 'class-validator';
 
 @InputType()
 export class UpdateCopounInput {

@@ -1,10 +1,7 @@
-import { Coupon } from './copoun/entities/coupon.entity';
-import { CalcOrder } from './orders/entities/calcOrder.entity';
 import { OrderDetailsInput } from './orders/entities/orderDetail.entity';
-import { ITotalOrder } from './types';
 
 export const calcTotalMealsQuantity = (orderDetail: OrderDetailsInput[]) => {
-  let counter = {};
+  const counter = {};
 
   orderDetail
     .map((order) => order.mealName)

@@ -1,6 +1,5 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
-import { Coupon } from '../../copoun/entities/coupon.entity';
 
 @ObjectType()
 @Entity({ name: 'orders' })

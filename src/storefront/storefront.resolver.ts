@@ -18,7 +18,9 @@ export class StorefrontResolver {
   }
   @Mutation(() => Storefront, { name: 'updateStorefront' })
   updateStorefront(
-    @Args('updateStorefrontInput', { type: () => CreateStorefrontInput })
+    @Args('updateStorefrontInput', {
+      type: () => CreateStorefrontInput,
+    })
     updateStorefrontInput: UpdateStorefrontInput,
   ) {
     return this.storefrontService.update(updateStorefrontInput);
@@ -30,24 +32,24 @@ export class StorefrontResolver {
 
   @Query(() => [Storefront], { name: 'storefrontFindAll' })
   findAll(
-    @Args('query', {
+    @Args('pagination', {
       type: () => Pagination,
     })
-    query: Pagination,
+    pagination?: Pagination,
   ) {
-    return this.storefrontService.findAll(query);
+    return this.storefrontService.findAll(pagination);
   }
 
   @Query(() => [Storefront], { name: 'findByZip' })
   findBasedOnZipCode(
     @Args('zip', { type: () => Number })
     zip: number,
-    @Args('query', {
+    @Args('pagination', {
       type: () => Pagination,
     })
-    query: Pagination,
+    pagination?: Pagination,
   ) {
-    return this.storefrontService.findBasedOnZipCode(zip, query);
+    return this.storefrontService.findBasedOnZipCode(zip, pagination);
   }
   @Query(() => [MenuItem], { name: 'getMenu' })
   getStorefrontMenu(@Args('id', { type: () => String }) id: string) {

@@ -21,8 +21,8 @@ export class CouponService {
     console.log('createdCoupon', createdCoupon);
     return createdCoupon[1];
   }
-  async findAll(query: Pagination = { skip: 0, take: 5 }) {
-    const { skip, take } = query;
+  async findAll(pagination: Pagination = { skip: 0, take: 5 }) {
+    const { skip, take } = pagination;
     return this.storefrontRepository
       .createQueryBuilder()
       .select('coupons')

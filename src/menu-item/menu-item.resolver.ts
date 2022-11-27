@@ -31,8 +31,10 @@ export class MenuItemResolver {
   }
 
   @Query(() => [MenuItem], { name: 'findAllMenuItems' })
-  findAll(@Args('query', { type: () => Pagination }) query: Pagination) {
-    return this.menuItemService.findAll(query);
+  findAll(
+    @Args('pagination', { type: () => Pagination }) pagination?: Pagination,
+  ) {
+    return this.menuItemService.findAll(pagination);
   }
 
   @Query(() => MenuItem, { name: 'findOneMenuItem' })

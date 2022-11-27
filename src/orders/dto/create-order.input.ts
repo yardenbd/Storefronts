@@ -2,14 +2,15 @@ import { InputType, Field, Int } from '@nestjs/graphql';
 import { OrderDetailsInput } from '../entities/orderDetail.entity';
 import { Matches } from 'class-validator';
 
-const capitalAndLowercaseRegex = /^[A-Za-z.\s_-]+$/;
+const CUSTOMER_NAME_REGEX = /^[A-Za-z.\s_-]+$/;
+const ADDRESS_REGEX = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)/;
 @InputType()
 export class CreateOrderInput {
-  @Matches(capitalAndLowercaseRegex)
+  @Matches(CUSTOMER_NAME_REGEX)
   @Field(() => String)
   customerName: string;
 
-  @Matches(capitalAndLowercaseRegex)
+  @Matches(ADDRESS_REGEX)
   @Field(() => String)
   customerAddress: string;
 

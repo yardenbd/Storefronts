@@ -29,8 +29,8 @@ export class StorefrontService {
     };
     return this.storefrontRepository.save(storefrontToCreate);
   }
-  findBasedOnZipCode(zip: number, query: Pagination) {
-    const { skip, take } = query;
+  findBasedOnZipCode(zip: number, pagination: Pagination) {
+    const { skip, take } = pagination;
     return this.storefrontRepository.find({
       cache: true,
       where: { zip: Any[zip] },
@@ -44,8 +44,8 @@ export class StorefrontService {
       cache: true,
     });
   }
-  findAll(query: Pagination = { skip: 0, take: 5 }) {
-    const { skip, take } = query;
+  findAll(pagination: Pagination = { skip: 0, take: 5 }) {
+    const { skip, take } = pagination;
     return this.storefrontRepository.find({
       take,
       skip,

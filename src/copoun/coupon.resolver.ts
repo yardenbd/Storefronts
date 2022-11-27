@@ -27,12 +27,12 @@ export class CouponResolver {
   }
   @Query(() => [Int], { name: 'FindAllCoupons' })
   findAllCoupons(
-    @Args('query', {
+    @Args('pagination', {
       type: () => Pagination,
     })
-    query: Pagination,
+    pagination?: Pagination,
   ) {
-    return this.couponService.findAll(query);
+    return this.couponService.findAll(pagination);
   }
   @Query(() => Int, { name: 'findOneCoupon' })
   findOne(
