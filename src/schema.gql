@@ -26,11 +26,6 @@ type Orders {
   coupons: [Int!]!
 }
 
-type OrderDetail {
-  id: String!
-  quantity: Int!
-}
-
 type OrderItem {
   mealName: String!
   quantity: Int!
@@ -53,8 +48,6 @@ type Query {
   findOneCoupon(copounInput: CopounInput!): Int!
   findAllMenuItems(query: Pagination!): [MenuItem!]!
   findOneMenuItem(id: String!): MenuItem!
-  orderDetails: [OrderDetail!]!
-  orderDetail(id: Int!): OrderDetail!
 }
 
 input Pagination {
@@ -78,9 +71,6 @@ type Mutation {
   createMenuItem(createMenuItemInput: CreateMenuItemInput!): MenuItem!
   updateMenuItem(updateMenuItemInput: UpdateMenuItemInput!): MenuItem!
   removeMenuItem(id: String!): MenuItem!
-  createOrderDetail(createOrderDetailInput: CreateOrderDetailInput!): OrderDetail!
-  updateOrderDetail(updateOrderDetailInput: UpdateOrderDetailInput!): OrderDetail!
-  removeOrderDetail(id: Int!): OrderDetail!
 }
 
 input CreateStorefrontInput {
@@ -127,16 +117,4 @@ input UpdateMenuItemInput {
   storefrontId: String
   price: Int
   id: String!
-}
-
-input CreateOrderDetailInput {
-  id: String!
-  quantity: Int!
-  orderid: String!
-}
-
-input UpdateOrderDetailInput {
-  id: String!
-  quantity: Int
-  orderid: String
 }

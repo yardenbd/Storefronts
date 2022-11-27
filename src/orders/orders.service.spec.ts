@@ -5,7 +5,6 @@ import { MockType } from '../types';
 import { OrdersService } from './orders.service';
 import { Orders } from './entities/order.entity';
 import { OrderDetail } from '../order-details/entities/order-detail.entity';
-import { OrderDetailsService } from '../order-details/order-details.service';
 import { desiredOrder, orderObject } from './constants';
 
 describe('OrdersService', () => {
@@ -24,7 +23,6 @@ describe('OrdersService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         OrdersService,
-        OrderDetailsService,
         {
           provide: getRepositoryToken(Orders),
           useValue: orderRepositoryMock,

@@ -1,5 +1,5 @@
 import { InputType, Field, Int } from '@nestjs/graphql';
-import { IsAlpha, IsAlphanumeric, Matches } from 'class-validator';
+import { Matches } from 'class-validator';
 @InputType()
 export class MenuItemInput {
   @Field(() => String)
@@ -8,7 +8,7 @@ export class MenuItemInput {
   @Field(() => Int)
   price: number;
 }
-const capitalAndLowercaseRegex = /^[a-zA-Z ]*/;
+const capitalAndLowercaseRegex = /^[A-Za-z.\s_-]+$/;
 @InputType()
 export class CreateStorefrontInput {
   @Matches(capitalAndLowercaseRegex)

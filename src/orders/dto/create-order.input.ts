@@ -1,17 +1,21 @@
 import { InputType, Field, Int } from '@nestjs/graphql';
-import { IsAlpha, IsUUID } from 'class-validator';
-import { CouponInputType } from '../../copoun/entities/coupon.entity';
 import { OrderDetailsInput } from '../entities/orderDetail.entity';
+import { Matches, IsUUID, IsInt } from 'class-validator';
+
+const capitalAndLowercaseRegex = /^[A-Za-z.\s_-]+$/;
 @InputType()
 export class CreateOrderInput {
-  @IsAlpha()
+  @Matches(capitalAndLowercaseRegex)
   @Field(() => String)
   customerName: string;
-  @IsAlpha()
+
+  @Matches(capitalAndLowercaseRegex)
   @Field(() => String)
   customerAddress: string;
+
   @Field(() => [OrderDetailsInput])
   lineItems: OrderDetailsInput[];
+
   @Field(() => [Int], { nullable: true })
   coupons?: number[];
 }
