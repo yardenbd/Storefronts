@@ -1,35 +1,42 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { MenuItemService } from './menu-item.service';
 import { MenuItem } from './entities/menu-item.entity';
 import { CreateMenuItemInput } from './dto/create-menu-item.input';
 import { UpdateMenuItemInput } from './dto/update-menu-item.input';
+import { Pagination } from '../types';
 
 @Resolver(() => MenuItem)
 export class MenuItemResolver {
   constructor(private readonly menuItemService: MenuItemService) {}
 
-  @Mutation(() => MenuItem)
-  createMenuItem(@Args('createMenuItemInput') createMenuItemInput: CreateMenuItemInput) {
+  @Mutation(() => MenuItem, { name: 'createMenuItem' })
+  createMenuItem(
+    @Args('createMenuItemInput', { type: () => CreateMenuItemInput })
+    createMenuItemInput: CreateMenuItemInput,
+  ) {
     return this.menuItemService.create(createMenuItemInput);
   }
 
-  @Query(() => [MenuItem], { name: 'menuItem' })
-  findAll() {
-    return this.menuItemService.findAll();
+  @Mutation(() => MenuItem, { name: 'updateMenuItem' })
+  updateMenuItem(
+    @Args('updateMenuItemInput', { type: () => UpdateMenuItemInput })
+    updateMenuItemInput: UpdateMenuItemInput,
+  ) {
+    return this.menuItemService.update(updateMenuItemInput);
   }
 
-  @Query(() => MenuItem, { name: 'menuItem' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.menuItemService.findOne(id);
-  }
-
-  @Mutation(() => MenuItem)
-  updateMenuItem(@Args('updateMenuItemInput') updateMenuItemInput: UpdateMenuItemInput) {
-    return this.menuItemService.update(updateMenuItemInput.id, updateMenuItemInput);
-  }
-
-  @Mutation(() => MenuItem)
-  removeMenuItem(@Args('id', { type: () => Int }) id: number) {
+  @Mutation(() => MenuItem, { name: 'removeMenuItem' })
+  removeMenuItem(@Args('id', { type: () => String }) id: string) {
     return this.menuItemService.remove(id);
+  }
+
+  @Query(() => [MenuItem], { name: 'findAllMenuItems' })
+  findAll(@Args('query', { type: () => Pagination }) query: Pagination) {
+    return this.menuItemService.findAll(query);
+  }
+
+  @Query(() => MenuItem, { name: 'findOneMenuItem' })
+  findOne(@Args('id', { type: () => String }) id: string) {
+    return this.menuItemService.findOne(id);
   }
 }

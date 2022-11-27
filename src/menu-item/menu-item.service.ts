@@ -1,26 +1,43 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import { CreateMenuItemInput } from './dto/create-menu-item.input';
 import { UpdateMenuItemInput } from './dto/update-menu-item.input';
-
+import { MenuItem } from './entities/menu-item.entity';
+import { Repository } from 'typeorm';
+import { Pagination } from 'src/types';
 @Injectable()
 export class MenuItemService {
+  constructor(
+    @InjectRepository(MenuItem)
+    private menuItemRepository: Repository<MenuItem>,
+  ) {}
   create(createMenuItemInput: CreateMenuItemInput) {
-    return 'This action adds a new menuItem';
+    const { mealName, price, storefrontId } = createMenuItemInput;
+    return this.menuItemRepository.save({
+      mealName,
+      price,
+      storefront: { id: storefrontId },
+    });
   }
 
-  findAll() {
-    return `This action returns all menuItem`;
+  findAll(query: Pagination = { skip: 0, take: 5 }) {
+    const { skip, take } = query;
+    return this.menuItemRepository.find({
+      take,
+      skip,
+      cache: true,
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} menuItem`;
+  findOne(id: string) {
+    return this.menuItemRepository.findOne({ where: { id } });
   }
 
-  update(id: number, updateMenuItemInput: UpdateMenuItemInput) {
-    return `This action updates a #${id} menuItem`;
+  update(updateMenuItemInput: UpdateMenuItemInput) {
+    return this.menuItemRepository.save(updateMenuItemInput);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} menuItem`;
+  remove(id: string) {
+    return this.menuItemRepository.delete({ id });
   }
 }

@@ -15,7 +15,7 @@ import { desiredMenuItem } from '../menu-item/constants';
 
 describe('Storefront Resolver', () => {
   let resolver: StorefrontResolver;
-  const storefrontServiceMock = {
+  const storefrontResolverMock = {
     create: jest.fn((storefront: CreateStorefrontInput) => storefront),
     findAll: jest.fn(() => [storefrontObj]),
     findOne: jest.fn((id: string) => storefrontObj),
@@ -36,7 +36,7 @@ describe('Storefront Resolver', () => {
         StorefrontResolver,
         {
           provide: StorefrontService,
-          useValue: storefrontServiceMock,
+          useValue: storefrontResolverMock,
         },
       ],
     }).compile();
@@ -53,7 +53,7 @@ describe('Storefront Resolver', () => {
     });
   });
   describe('Find all Storefronts', () => {
-    it('should find and return a list of customers', async () => {
+    it('should find and return a list of storefronts', async () => {
       const allStorefronts = await resolver.findAll(pagintaionObj);
       expect(allStorefronts).toEqual(
         expect.arrayContaining([expect.objectContaining(desiredStorefront)]),

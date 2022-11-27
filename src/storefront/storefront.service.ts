@@ -44,7 +44,11 @@ export class StorefrontService {
   }
   findAll(query: Pagination = { skip: 0, take: 5 }) {
     const { skip, take } = query;
-    return this.storefrontRepository.find({ take, skip });
+    return this.storefrontRepository.find({
+      take,
+      skip,
+      cache: true,
+    });
   }
 
   findOne(id: string) {

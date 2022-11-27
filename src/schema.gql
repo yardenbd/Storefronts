@@ -51,7 +51,8 @@ type Query {
   calcOrderTotals(orderId: String!): OrderInformation!
   FindAllCoupons(query: Pagination!): [Int!]!
   findOneCoupon(copounInput: CopounInput!): Int!
-  menuItem(id: Int!): MenuItem!
+  findAllMenuItems(query: Pagination!): [MenuItem!]!
+  findOneMenuItem(id: String!): MenuItem!
   orderDetails: [OrderDetail!]!
   orderDetail(id: Int!): OrderDetail!
 }
@@ -76,7 +77,7 @@ type Mutation {
   removeCoupon(CopounInput: CopounInput!): Int!
   createMenuItem(createMenuItemInput: CreateMenuItemInput!): MenuItem!
   updateMenuItem(updateMenuItemInput: UpdateMenuItemInput!): MenuItem!
-  removeMenuItem(id: Int!): MenuItem!
+  removeMenuItem(id: String!): MenuItem!
   createOrderDetail(createOrderDetailInput: CreateOrderDetailInput!): OrderDetail!
   updateOrderDetail(updateOrderDetailInput: UpdateOrderDetailInput!): OrderDetail!
   removeOrderDetail(id: Int!): OrderDetail!
@@ -116,14 +117,16 @@ input UpdateCopounInput {
 }
 
 input CreateMenuItemInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  mealName: String!
+  storefrontId: String!
+  price: Int!
 }
 
 input UpdateMenuItemInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+  mealName: String
+  storefrontId: String
+  price: Int
+  id: String!
 }
 
 input CreateOrderDetailInput {

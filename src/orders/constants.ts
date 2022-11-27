@@ -2,19 +2,19 @@ import { CreateOrderInput } from './dto/create-order.input';
 import { v4 as uuidv4 } from 'uuid';
 import { arrayOfNumbersExpectation } from '../constants';
 import { OrderInformation } from './entities/calcOrder.entity';
-import { menu, menuItemsExpectations } from '../menu-item/constants';
+import { menuItems, menuItemsExpectations } from '../menu-item/constants';
 export const orderObject: CreateOrderInput & { id: string } = {
   id: uuidv4(),
   customerAddress: 'Tel Aviv',
   customerName: 'Yarden Ben Dahan',
-  lineItems: menu,
+  lineItems: menuItems,
   coupons: [10, 20],
 };
 
 export const desiredOrder: CreateOrderInput = {
   customerAddress: expect.any(String),
   customerName: expect.any(String),
-  lineItems: menuItemsExpectations(true),
+  lineItems: menuItemsExpectations,
   coupons: arrayOfNumbersExpectation,
 };
 

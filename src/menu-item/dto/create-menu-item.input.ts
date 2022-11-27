@@ -2,6 +2,12 @@ import { InputType, Int, Field } from '@nestjs/graphql';
 
 @InputType()
 export class CreateMenuItemInput {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number;
+  @Field(() => String)
+  mealName: string;
+
+  @Field(() => String)
+  storefrontId: string;
+
+  @Field(() => Int)
+  price: number;
 }

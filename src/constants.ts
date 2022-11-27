@@ -5,3 +5,5 @@ export const arrayOfNumbersExpectation = expect.arrayContaining([
 ]);
 
 export const pagintaionObj: Pagination = { skip: 0, take: 10 };
+
+export const desiredDeletedObj = { raw: [], affected: expect.any(Number) };

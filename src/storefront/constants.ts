@@ -3,18 +3,13 @@ import { OmittedMenuFromStorefront } from '../types';
 import { CreateStorefrontInput } from './dto/create-storefront.input';
 import { v4 as uuidv4 } from 'uuid';
 import { UpdateStorefrontInput } from './dto/update-storefront.input';
-import { menuItemsExpectations } from '../menu-item/constants';
+import { menuItems, menuItemsExpectations } from '../menu-item/constants';
 export const createStorefrontObj: CreateStorefrontInput = {
   address: 'Givaataim',
   coupons: [20, 30, 40],
   image: 'https://picsum.photos/200/300',
   name: 'Japanika',
-  menu: [
-    { mealName: 'Sushi', price: 70 },
-    { mealName: 'Nigiri', price: 40 },
-    { mealName: 'Soup', price: 30 },
-    { mealName: 'Noodels', price: 60 },
-  ],
+  menu: menuItems,
   zip: [4245, 143, 442, 7751, 523, 662],
 };
 
@@ -47,7 +42,7 @@ const storefrontObj3: OmittedMenuFromStorefront = {
 export const desiredCreatedStorefront = {
   coupons: arrayOfNumbersExpectation,
   zip: arrayOfNumbersExpectation,
-  menu: menuItemsExpectations(false),
+  menu: menuItemsExpectations,
   address: expect.any(String),
   image: expect.any(String),
   name: expect.any(String),

@@ -14,8 +14,8 @@ import {
   storefrontArray,
   storefrontObj,
 } from './constants';
-import { pagintaionObj } from '../constants';
-import { desiredMenuItem, menu } from '../menu-item/constants';
+import { desiredDeletedObj, pagintaionObj } from '../constants';
+import { desiredMenuItem, menuItems } from '../menu-item/constants';
 
 describe('StorefrontService', () => {
   let service: StorefrontService;
@@ -70,7 +70,7 @@ describe('StorefrontService', () => {
   });
   describe('Find one menu', () => {
     it('should get a storefront menu', async () => {
-      menuItemRepositoryMock.findOne.mockReturnValue(menu);
+      menuItemRepositoryMock.findOne.mockReturnValue(menuItems);
       const response = await service.getMenu(storefrontObj.id);
       expect(response).toEqual(
         expect.arrayContaining([expect.objectContaining(desiredMenuItem)]),
@@ -117,10 +117,9 @@ describe('StorefrontService', () => {
   });
   describe('Delete storefront', () => {
     it('should updates a single storefront ', async () => {
-      const deleted = { raw: [], affected: expect.any(Number) };
-      storefrontRepositoryMock.delete.mockReturnValue(deleted);
+      storefrontRepositoryMock.delete.mockReturnValue(desiredDeletedObj);
       const response = await service.remove(storefrontObj.id);
-      expect(response).toMatchObject(deleted);
+      expect(response).toMatchObject(desiredDeletedObj);
     });
   });
 });
